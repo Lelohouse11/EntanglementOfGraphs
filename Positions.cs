@@ -63,9 +63,9 @@ namespace EntaglementOfGraphs
             return this;
         }
 
-        public Positions changeTurn(bool turn)
+        public Positions changeTurn()
         {
-            detectivesTurn = !turn;
+            detectivesTurn = !detectivesTurn;
             return this;
         }
 
@@ -88,7 +88,7 @@ namespace EntaglementOfGraphs
         public bool Equals(Positions other)
         {
             if (other.thief != thief) return false;
-            if (other.detectives != detectives) return false;
+            if (other.detectivesTurn != detectivesTurn) return false;
             for (int i = 0; i < detectives.Count; i++)
             {
                 if (other.detectives[i] != detectives[i]) return false;

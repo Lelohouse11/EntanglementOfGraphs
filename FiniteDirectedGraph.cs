@@ -62,7 +62,7 @@ namespace EntaglementOfGraphs
         public GameTree getGameTree(Positions startPos)
         {
             var gameTree = new GameTree(this, startPos);
-            return gameTree.connectAllIterationToGraph(startPos, true);
+            return gameTree.connectAllIterationToGraph(startPos);
 
         }
 
@@ -70,15 +70,12 @@ namespace EntaglementOfGraphs
         /// gibt alle möglichen Zustände durch nächsten Move zurück
         /// </summary>
         /// <param name="pos"></param>
-        /// <param name="detectivesTurn"></param>
         /// <returns></returns>
-        public List<Positions> getNextPossibleSteps(
-            Positions pos,
-            bool detectivesTurn)
+        public List<Positions> getNextPossibleSteps(Positions pos)
         {
             List<Positions> result = [];
 
-            if (detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
+            if (pos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
             {
                 result.Add(pos);
                 for (int i = 0; i < pos.detectives.Count; i++) // gehe jeden möglichen Move der Detectives durch
