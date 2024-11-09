@@ -1,4 +1,5 @@
 ﻿using QuikGraph;
+using QuikGraph.Algorithms;
 using QuikGraph.Graphviz;
 using System;
 using System.Collections.Generic;
@@ -59,11 +60,17 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="startPos"></param>
         /// <returns></returns>
-        public GameTree getGameTree(Positions startPos)
+        public GameTree getGameTree(Positions startPos, bool gameTreeTyp)
         {
             var gameTree = new GameTree(this, startPos);
-            return gameTree.connectAllIterationToGraph(startPos);
-
+            if (gameTreeTyp)
+            {
+                return gameTree.buildIterativGameTree(startPos);
+            }
+            else
+            {
+                return gameTree.buildRecusiveGameTree(gameTree.getPossibleFinalStates());
+            }
         }
 
         /// <summary>
@@ -94,6 +101,33 @@ namespace EntaglementOfGraphs
                         result.Add(pos.clone().moveThief(possibleMoves[i]));
                     }
                 }
+            }
+            return result;
+        }
+
+        public List<Positions> getPreviousPossibleSteps(Positions pos) 
+        {
+            List <Positions> result = [];
+
+            if (pos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
+            {
+                foreach (var edge in this.Edges)
+                {
+                    if (edge.Target.Equals(pos.thief))
+                    {
+                        var previousPos = pos.clone();
+                        previousPos.thief = edge.Source;
+                        result.Add(previousPos);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var edge in this.Edges)
+                {
+
+                }
+                
             }
             return result;
         }

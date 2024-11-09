@@ -52,6 +52,11 @@ namespace EntaglementOfGraphs
             return this;
         }
 
+        public Positions setDetectivePos(int detective, int newPos) 
+        {
+            detectives[detective] = newPos;
+            return this;
+        }
         /// <summary>
         /// bewegt den Dieb
         /// </summary>

@@ -29,7 +29,7 @@ To-Dos:
         Console.WriteLine(graph.createDot());
         Console.WriteLine();
 
-        var gameTree = graph.getGameTree(new Positions(1,1,true));
+        var gameTree = graph.getGameTree(new Positions(1,1,true), true);
         Console.WriteLine("Erstellen des Gametrees erfolgreich!");
         Console.WriteLine($"Der Gametree hat {gameTree.VertexCounter} Knoten und {gameTree.EdgeCounter} Kanten.");
         /*

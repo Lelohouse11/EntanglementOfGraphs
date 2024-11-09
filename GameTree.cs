@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
+    // Testing durch Torus grapgen seite 2
     internal class GameTree : AdjacencyGraph<Positions, Edge<Positions>>
     {
         public int VertexCounter = 1;
         public int EdgeCounter = 0;
-        public readonly int detectiveCount;
+        public readonly int detectiveAmount;
         public readonly FiniteDirectedGraph graph;
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace EntaglementOfGraphs
         public GameTree(FiniteDirectedGraph _graph, Positions startPos) 
         {
             this.AddVertex(startPos);
-            detectiveCount = startPos.detectives.Count;
+            detectiveAmount = startPos.detectives.Count;
             graph = _graph;
             Console.WriteLine($"Startknoten hinzugefügt: {startPos.thief} ({string.Join(",", startPos.detectives)}) {startPos.detectivesTurn}");
         }
@@ -42,7 +43,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public GameTree connectAllIterationToGraph(Positions pos)
+        public GameTree buildIterativGameTree(Positions pos)
         {
             var nextStep = graph.getNextPossibleSteps(pos);
             if (nextStep.Count() != 0)
@@ -63,13 +64,24 @@ namespace EntaglementOfGraphs
                     Console.WriteLine($"Kante von {pos.thief} ({string.Join(",", pos.detectives)}) {pos.detectivesTurn} zu {targetPos.thief} ({string.Join(",", targetPos.detectives)}) {targetPos.detectivesTurn} hinzugefügt.");
                     if (isNewPos == null || pos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
                     {
-                        connectAllIterationToGraph(targetPos.changeTurn()); //rekursiver Aufruf
+                        buildIterativGameTree(targetPos.changeTurn()); //rekursiver Aufruf
                     }
                     
                 }
             }
             return this;
         }
+
+        public GameTree buildRecusiveGameTree(List<Positions> currentStates) 
+        { 
+            foreach (var vertex in currentStates)
+            {
+
+            }
+         return this;
+        }
+
+
 
         public bool containsPosition(Positions pos)
         {
@@ -87,6 +99,29 @@ namespace EntaglementOfGraphs
                 if (p.Equals(pos)) return p;
             }
             return null;
+        }
+        
+        /// <summary>
+        /// Gibt die möglichen Endzustände des Gametrees zurück
+        /// </summary>
+        /// <returns></returns>
+        public List<Positions> getPossibleFinalStates()
+        {
+            var result = new List<Positions>();
+            foreach (var vertex in graph.Vertices)
+            {
+                var temp = graph.getOutgoingVertex(vertex);
+                if (temp.Count <= detectiveAmount)
+                {
+                    var finalState = new Positions(detectiveAmount, vertex, false);
+                    for (var i = 0; i < temp.Count; i++)
+                    {
+                        finalState.setDetectivePos(i, temp[i]);
+                    }
+                    result.Add(finalState);
+                }
+            }
+            return result;
         }
     }
 }
