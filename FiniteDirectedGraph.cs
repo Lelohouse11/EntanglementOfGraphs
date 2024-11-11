@@ -28,6 +28,7 @@ namespace EntaglementOfGraphs
                 this.AddEdge(new Edge<int>(edge.Item1,edge.Item2));
             }
         }
+
         /// <summary>
         /// erstellt String von .dot Datei für spätere Visualisierung
         /// </summary>
@@ -53,8 +54,6 @@ namespace EntaglementOfGraphs
             return result;
         }
 
-
-
         /// <summary>
         /// erstellt einen GameTree (kompleter Spielverlauf)
         /// </summary>
@@ -63,13 +62,30 @@ namespace EntaglementOfGraphs
         public GameTree getGameTree(Positions startPos, bool gameTreeTyp)
         {
             var gameTree = new GameTree(this, startPos);
-            if (gameTreeTyp)
+            if (gameTreeTyp) //wenn ierativer Aufbau
             {
                 return gameTree.buildIterativGameTree(startPos);
             }
-            else
+            else // wenn rekursiver Aufbau
             {
-                return gameTree.buildRecusiveGameTree(gameTree.getPossibleFinalStates());
+                var finalStates = gameTree.getPossibleFinalStates();
+                foreach (var finalState in finalStates) //fügt alle möglichen Endzustände hinzu
+                {
+                    gameTree.AddVertex(finalState);
+                    gameTree.vertexCounter++;
+                    Console.WriteLine($"Endknoten hinzugefügt: {finalState.thief} ({string.Join(",", finalState.detectives)}) {finalState.detectivesTurn}");                    
+                }
+
+                foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
+                {
+                    if (gameTree.OutEdges(startPos).Count() == 0)
+                    {
+                        gameTree.buildRecursiveGameTree(finalState);
+                    }
+
+                    Console.WriteLine(gameTree.OutEdges(startPos).Count());
+                }
+                return gameTree;
             }
         }
 
@@ -109,79 +125,45 @@ namespace EntaglementOfGraphs
         {
             List <Positions> result = [];
 
-            if (pos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
+            if (pos.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran
             {
-                foreach (var edge in this.Edges)
+                foreach (var edge in Edges)
                 {
-                    if (edge.Target.Equals(pos.thief))
+                    if (edge.Target.Equals(pos.thief)) // alle möglichen Knoten von den der Dieb kommen kann
                     {
-                        var previousPos = pos.clone();
+                        var previousPos = pos.clone().changeTurn();
                         previousPos.thief = edge.Source;
-                        result.Add(previousPos);
+                        result.Add(previousPos); // werden zum Result hinzugefügt
                     }
                 }
             }
-            else
+            else // wenn Dieb dran ist waren davor die Detektive dran
             {
-                foreach (var edge in this.Edges)
+                if (pos.detectives.Contains(pos.thief)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
                 {
-
+                    foreach (var vertex in Vertices.Except(pos.detectives)) //bewegt den Dieb zu jedem möglichen Knoten
+                    {
+                        var previousPos = pos.clone().changeTurn();
+                        previousPos.detectives[pos.detectives.IndexOf(pos.thief)] = vertex;
+                        result.Add(previousPos);
+                    }                    
                 }
-                
+                else // Diebe haben sich nicht bewegt
+                {
+                    result.Add(pos.clone().changeTurn()); // gleiche Position wird hinzugefügt, nur mit der Info das Dieb dran war
+                }
             }
             return result;
         }
 
-        // veraltet
-        public bool IsEntanglement(int initalPos, int candidate)
+        /// <summary>
+        /// nutzt den rekursiven Gamtree um Entanglement zu überprüfen
+        /// </summary>
+        /// <param name="initalPos"></param>
+        /// <returns></returns>
+        public bool IsEntanglement(Positions initalPos)
         {
-            Random rnd = new Random();
-            int thiefPos = initalPos; // Dieb startet am Start
-            List<int> detectivePos = new List<int>();
-
-            for (int i = 0; i < candidate; i++) // es werden "candidate" viele Detectives hinzugefügt
-            {
-                detectivePos.Add(this.VertexCount + 1);
-                // ihnen wird die startpos zugewiesen (Anzahl der Knoten+1 steht für noch nicht auf Graph)
-            }
-
-            var gameHistory = new List<(int, List<int>)>();
-
-            while (true)
-            {
-                int randomIntInRange = rnd.Next(0, candidate); // Zufälliger Zug der Detectives
-                if (randomIntInRange != candidate)
-                {
-                    detectivePos[randomIntInRange] = thiefPos; // Zug wird ausgeführt
-                }
-
-                List<int> possibleMoves = getOutgoingVertex(thiefPos).Except(detectivePos).ToList(); // mögliche Züge des Diebes
-
-                if (possibleMoves.Count() == 0)
-                {
-                    return true; // es gibt keine möglichen Züge mehr
-                }
-                else
-                {
-                    int nextMove = rnd.Next(0, possibleMoves.Count() - 1); // zufällger Zug für den Dieb
-                    thiefPos = possibleMoves[nextMove]; // Zug wird ausgeführt
-                }
-
-                if (!detectivePos.Exists(x => x == candidate))
-                {
-                    var sortedDPos = detectivePos.OrderByDescending(x => x).ToList();
-                    (int, List<int>) currentState = (thiefPos, sortedDPos);
-
-                    if (gameHistory.Exists(x => x.Item1 == thiefPos && x.Item2.SequenceEqual(sortedDPos))) // cycle detection um entlosschleife zu verhindern (noch nicht vollständig)
-                    {
-                        return false;
-                    }
-
-                    gameHistory.Add((thiefPos, sortedDPos));
-                }
-
-
-            }
+            return getGameTree(initalPos,false).OutEdges(initalPos).Count() != 0;            
         }
 
 

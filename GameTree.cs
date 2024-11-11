@@ -11,10 +11,11 @@ namespace EntaglementOfGraphs
     // Testing durch Torus grapgen seite 2
     internal class GameTree : AdjacencyGraph<Positions, Edge<Positions>>
     {
-        public int VertexCounter = 1;
-        public int EdgeCounter = 0;
+        public int vertexCounter = 1;
+        public int edgeCounter = 0;
         public readonly int detectiveAmount;
         public readonly FiniteDirectedGraph graph;
+        public readonly Positions startPosition;
 
         /// <summary>
         /// erstellt GameTree mit Startwerten
@@ -23,7 +24,8 @@ namespace EntaglementOfGraphs
         /// <param name="startPos"></param>
         public GameTree(FiniteDirectedGraph _graph, Positions startPos) 
         {
-            this.AddVertex(startPos);
+            AddVertex(startPos);
+            startPosition = startPos;
             detectiveAmount = startPos.detectives.Count;
             graph = _graph;
             Console.WriteLine($"Startknoten hinzugefügt: {startPos.thief} ({string.Join(",", startPos.detectives)}) {startPos.detectivesTurn}");
@@ -54,13 +56,13 @@ namespace EntaglementOfGraphs
                     if (isNewPos == null) // prüft ob nextPos neu ist
                     {
                         AddVertex(nextPos);
-                        VertexCounter++;
+                        vertexCounter++;
                         Console.WriteLine($"Knoten hinzugefügt: {nextPos.thief} ({string.Join(",", nextPos.detectives)}) {nextPos.detectivesTurn}");
                     }
 
                     var targetPos = isNewPos ?? nextPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
                     AddEdge(new Edge<Positions>(pos, targetPos));
-                    EdgeCounter++;
+                    edgeCounter++;
                     Console.WriteLine($"Kante von {pos.thief} ({string.Join(",", pos.detectives)}) {pos.detectivesTurn} zu {targetPos.thief} ({string.Join(",", targetPos.detectives)}) {targetPos.detectivesTurn} hinzugefügt.");
                     if (isNewPos == null || pos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
                     {
@@ -72,17 +74,55 @@ namespace EntaglementOfGraphs
             return this;
         }
 
-        public GameTree buildRecusiveGameTree(List<Positions> currentStates) 
-        { 
-            foreach (var vertex in currentStates)
+        /// <summary>
+        /// baut den GameTree rekursiv auf, allerdings nur bis zum Punkt das Detektiv einen Weg hat das er sicher gewinnt
+        /// </summary>
+        /// <param name="currentPos"></param>
+        public void buildRecursiveGameTree(Positions currentPos) //fügt noch doppelte knoten hinzu und funktioniert bei Zyklen noch nicht richtig
+        {
+            foreach (var previousPos in graph.getPreviousPossibleSteps(currentPos)) // gehe die vorig möglichen Spielzustände durch
             {
+                bool shouldBeAdded = true;
 
-            }
-         return this;
+                if (!previousPos.detectivesTurn) //wenn der Deib dran ist muss jeder möglicher Zug schon im GameTree gespeichert sein
+                {
+                    foreach (var vertex in graph.getNextPossibleSteps(previousPos)) 
+                    {
+                        if (!containsPosition(vertex)) 
+                        {
+                            shouldBeAdded = false;
+                        }
+                    }
+                }
+
+                if (shouldBeAdded)
+                {
+                    var isNewPos = getExistingPosition(previousPos);
+                    if (isNewPos == null) // prüft ob previousPos neu ist
+                    {
+                        AddVertex(previousPos);
+                        vertexCounter++;
+                        Console.WriteLine($"Knoten hinzugefügt: {previousPos.thief} ({string.Join(",", previousPos.detectives)}) {previousPos.detectivesTurn}");
+                    }
+
+                    var targetPos = isNewPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
+                    AddEdge(new Edge<Positions>(targetPos, currentPos));
+                    edgeCounter++;
+                    Console.WriteLine($"Kante von {targetPos.thief} ({string.Join(",", targetPos.detectives)}) {targetPos.detectivesTurn} zu {currentPos.thief} ({string.Join(",", currentPos.detectives)}) {currentPos.detectivesTurn} hinzugefügt.");
+                    if (isNewPos == null || targetPos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
+                    {
+                        buildRecursiveGameTree(targetPos); //rekursiver Aufruf
+                    }
+                }
+            }        
         }
 
 
-
+        /// <summary>
+        /// prüft ob gegebener Knoten schon im GameTree vorhanden ist
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public bool containsPosition(Positions pos)
         {
             foreach (var p in Vertices)
@@ -92,6 +132,12 @@ namespace EntaglementOfGraphs
             return false;
         }
 
+
+        /// <summary>
+        /// gibt schon vorhandene Position zurück, wenn Position doppelt
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public Positions? getExistingPosition(Positions pos)
         {
             foreach (var p in Vertices)
@@ -108,15 +154,16 @@ namespace EntaglementOfGraphs
         public List<Positions> getPossibleFinalStates()
         {
             var result = new List<Positions>();
-            foreach (var vertex in graph.Vertices)
+            foreach (var vertex in graph.Vertices) //geht jeden Knoten des Graphen durch
             {
-                var temp = graph.getOutgoingVertex(vertex);
-                if (temp.Count <= detectiveAmount)
+                var outgoingVertices = graph.getOutgoingVertex(vertex);
+                var OutgoingVerticesCount = outgoingVertices.Count;
+                if (OutgoingVerticesCount <= detectiveAmount) // prüft ob Fluchtmöglichkeiten von Detektiven blockiert werden können
                 {
                     var finalState = new Positions(detectiveAmount, vertex, false);
-                    for (var i = 0; i < temp.Count; i++)
+                    for (var i = 0; i < OutgoingVerticesCount; i++)
                     {
-                        finalState.setDetectivePos(i, temp[i]);
+                        finalState.setDetectivePos(i, outgoingVertices[i]); // setzt Detektive auf die Fluchtmöglichkeit
                     }
                     result.Add(finalState);
                 }

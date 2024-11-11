@@ -25,13 +25,15 @@ To-Dos:
 */
     private static void Main(string[] args)
     {        
-        var graph = new FiniteDirectedGraph([1,2], [(1,2),(2,1)]);
+        var graph = new FiniteDirectedGraph([1,2,3], [(1,2),(2,3),(3,1)]);
         Console.WriteLine(graph.createDot());
         Console.WriteLine();
 
-        var gameTree = graph.getGameTree(new Positions(1,1,true), true);
-        Console.WriteLine("Erstellen des Gametrees erfolgreich!");
-        Console.WriteLine($"Der Gametree hat {gameTree.VertexCounter} Knoten und {gameTree.EdgeCounter} Kanten.");
+        Console.WriteLine(graph.IsEntanglement(new Positions(1, 1, true)));
+
+        //var gameTree = graph.getGameTree(new Positions(1,1,true), false);
+        //Console.WriteLine("Erstellen des Gametrees erfolgreich!");
+        //Console.WriteLine($"Der Gametree hat {gameTree.vertexCounter} Knoten und {gameTree.edgeCounter} Kanten.");
         /*
         //Berechnung des Entanglements
         int temp = graph.VertexCount-1;
