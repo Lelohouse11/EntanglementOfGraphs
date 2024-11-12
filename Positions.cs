@@ -9,7 +9,7 @@ namespace EntaglementOfGraphs
     public class Positions 
     {
         public int thief;
-        public List<int> detectives = new List<int>();
+        protected SortedSet<int> detectives = new();
         public bool detectivesTurn;
 
         /// <summary>
@@ -56,6 +56,11 @@ namespace EntaglementOfGraphs
         {
             detectives[detective] = newPos;
             return this;
+        }
+
+        public int getDetectivePos(int detective) 
+        {
+            return detectives[detective];
         }
         /// <summary>
         /// bewegt den Dieb

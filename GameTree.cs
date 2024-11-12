@@ -75,45 +75,44 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// baut den GameTree rekursiv auf, allerdings nur bis zum Punkt das Detektiv einen Weg hat das er sicher gewinnt
+        /// baut den GameTree rekursiv auf, allerdings nur bis zum Punkt das Detektiv einen Weg hat, 
+        /// dass er sicher gewinnt
         /// </summary>
         /// <param name="currentPos"></param>
         public void buildRecursiveGameTree(Positions currentPos) //fügt noch doppelte knoten hinzu und funktioniert bei Zyklen noch nicht richtig
         {
-            foreach (var previousPos in graph.getPreviousPossibleSteps(currentPos)) // gehe die vorig möglichen Spielzustände durch
+            var previousPossibleSteps = graph.getPreviousPossibleSteps(currentPos);
+            foreach (var previousPos in previousPossibleSteps) // gehe die vorig möglichen Spielzustände durch
             {
-                bool shouldBeAdded = true;
-
                 if (!previousPos.detectivesTurn) //wenn der Deib dran ist muss jeder möglicher Zug schon im GameTree gespeichert sein
                 {
-                    foreach (var vertex in graph.getNextPossibleSteps(previousPos)) 
+                    var nextPossibleSteps = graph.getNextPossibleSteps(previousPos);
+                    foreach (var vertex in nextPossibleSteps) 
                     {
                         if (!containsPosition(vertex)) 
                         {
-                            shouldBeAdded = false;
+                            continue;
                         }
                     }
                 }
 
-                if (shouldBeAdded)
+                var isExistingPos = getExistingPosition(previousPos);
+                if (isExistingPos == null) // prüft ob previousPos neu ist
                 {
-                    var isNewPos = getExistingPosition(previousPos);
-                    if (isNewPos == null) // prüft ob previousPos neu ist
-                    {
-                        AddVertex(previousPos);
-                        vertexCounter++;
-                        Console.WriteLine($"Knoten hinzugefügt: {previousPos.thief} ({string.Join(",", previousPos.detectives)}) {previousPos.detectivesTurn}");
-                    }
-
-                    var targetPos = isNewPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
-                    AddEdge(new Edge<Positions>(targetPos, currentPos));
-                    edgeCounter++;
-                    Console.WriteLine($"Kante von {targetPos.thief} ({string.Join(",", targetPos.detectives)}) {targetPos.detectivesTurn} zu {currentPos.thief} ({string.Join(",", currentPos.detectives)}) {currentPos.detectivesTurn} hinzugefügt.");
-                    if (isNewPos == null || targetPos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
-                    {
-                        buildRecursiveGameTree(targetPos); //rekursiver Aufruf
-                    }
+                    AddVertex(previousPos);
+                    vertexCounter++;
+                    Console.WriteLine($"Knoten hinzugefügt: {previousPos.thief} ({string.Join(",", previousPos.detectives)}) {previousPos.detectivesTurn}");
                 }
+
+                var sourcePos = isExistingPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
+                AddEdge(new Edge<Positions>(sourcePos, currentPos));
+                edgeCounter++;
+                Console.WriteLine($"Kante von {sourcePos.thief} ({string.Join(",", sourcePos.detectives)}) {sourcePos.detectivesTurn} zu {currentPos.thief} ({string.Join(",", currentPos.detectives)}) {currentPos.detectivesTurn} hinzugefügt.");
+                if (isExistingPos == null) // Wenn NextPos neu oder Detektive sich nicht bewegen
+                {
+                    buildRecursiveGameTree(sourcePos); //rekursiver Aufruf
+                }
+             
             }        
         }
 

@@ -81,9 +81,8 @@ namespace EntaglementOfGraphs
                     if (gameTree.OutEdges(startPos).Count() == 0)
                     {
                         gameTree.buildRecursiveGameTree(finalState);
+                        Console.WriteLine(gameTree.OutEdges(startPos).Count());
                     }
-
-                    Console.WriteLine(gameTree.OutEdges(startPos).Count());
                 }
                 return gameTree;
             }
@@ -125,7 +124,7 @@ namespace EntaglementOfGraphs
         {
             List <Positions> result = [];
 
-            if (pos.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran
+            if (pos.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran (pos enthält den Zug des Dieb)
             {
                 foreach (var edge in Edges)
                 {
@@ -137,16 +136,21 @@ namespace EntaglementOfGraphs
                     }
                 }
             }
-            else // wenn Dieb dran ist waren davor die Detektive dran
+            else // wenn Dieb dran ist waren davor die Detektive dran (Detektive dran)
             {
                 if (pos.detectives.Contains(pos.thief)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
                 {
+                    var detectiveIndex = pos.detectives.IndexOf(pos.thief);
+                    var previousPos = pos.clone().changeTurn();
+                    previousPos.detectives[detectiveIndex] = -1;
+                    result.Add(previousPos);
                     foreach (var vertex in Vertices.Except(pos.detectives)) //bewegt den Dieb zu jedem möglichen Knoten
                     {
-                        var previousPos = pos.clone().changeTurn();
-                        previousPos.detectives[pos.detectives.IndexOf(pos.thief)] = vertex;
+                        previousPos = pos.clone().changeTurn();
+                        previousPos.detectives[detectiveIndex] = vertex;
                         result.Add(previousPos);
-                    }                    
+                    }
+                    
                 }
                 else // Diebe haben sich nicht bewegt
                 {
