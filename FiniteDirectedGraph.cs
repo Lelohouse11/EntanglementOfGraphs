@@ -73,7 +73,7 @@ namespace EntaglementOfGraphs
                 {
                     gameTree.AddVertex(finalState);
                     gameTree.vertexCounter++;
-                    Console.WriteLine($"Endknoten hinzugefügt: {finalState.thief} ({string.Join(",", finalState.detectives)}) {finalState.detectivesTurn}");                    
+                    Console.WriteLine($"Endknoten hinzugefügt: {finalState.toString()}");                    
                 }
 
                 foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
@@ -107,7 +107,7 @@ namespace EntaglementOfGraphs
             }
             else
             {
-                List<int> possibleMoves = getOutgoingVertex(pos.thief).Except(pos.detectives).ToList(); // mögliche Züge des Diebes
+                List<int> possibleMoves = getOutgoingVertex(pos.thief).Except(pos.detectives.Values.ToList()).ToList(); // mögliche Züge des Diebes
 
                 if (possibleMoves.Count != 0) //prüft ob Züge möglich sind
                 {
@@ -138,16 +138,17 @@ namespace EntaglementOfGraphs
             }
             else // wenn Dieb dran ist waren davor die Detektive dran (Detektive dran)
             {
-                if (pos.detectives.Contains(pos.thief)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
+                if (pos.detectives.ContainsValue(pos.thief)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
                 {
-                    var detectiveIndex = pos.detectives.IndexOf(pos.thief);
                     var previousPos = pos.clone().changeTurn();
-                    previousPos.detectives[detectiveIndex] = -1;
+                    previousPos.detectives.Remove(pos.thief);
+                    previousPos.detectives.Add(-1, -1);
                     result.Add(previousPos);
-                    foreach (var vertex in Vertices.Except(pos.detectives)) //bewegt den Dieb zu jedem möglichen Knoten
+                    foreach (var vertex in Vertices.Except(pos.detectives.Values.ToList())) //bewegt den Dieb zu jedem möglichen Knoten
                     {
                         previousPos = pos.clone().changeTurn();
-                        previousPos.detectives[detectiveIndex] = vertex;
+                        previousPos.detectives.Remove(pos.thief);
+                        previousPos.detectives.Add(vertex, vertex);
                         result.Add(previousPos);
                     }
                     

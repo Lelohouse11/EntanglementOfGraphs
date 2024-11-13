@@ -9,7 +9,7 @@ namespace EntaglementOfGraphs
     public class Positions 
     {
         public int thief;
-        protected SortedSet<int> detectives = new();
+        public SortedList<int,int> detectives = new();
         public bool detectivesTurn;
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace EntaglementOfGraphs
         {
             for (int i = 0; i < detectiveAmount; i++)
             {
-                detectives.Add(-1);
+                detectives.Add(-1,-1);
             }
             thief = initalThief;
             detectivesTurn = initialTurn;
@@ -34,11 +34,14 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public Positions clone()
         {
-            var temp = new Positions(0,0,true);
-            temp.thief = thief;
-            temp.detectivesTurn = detectivesTurn;
-            temp.detectives = detectives.ToArray().ToList();
-            return temp;
+            var cloned = new Positions(0,0,true);
+            cloned.thief = thief;
+            cloned.detectivesTurn = detectivesTurn;
+            foreach (var i in detectives)
+            {
+                cloned.detectives.Add(i.Value,i.Value);
+            }
+            return cloned;
         }
 
         /// <summary>
@@ -48,20 +51,11 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public Positions moveDetective(int detective)
         {
-            detectives[detective] = thief;
+            detectives.RemoveAt(detective);
+            detectives.Add(thief, thief);
             return this;
         }
 
-        public Positions setDetectivePos(int detective, int newPos) 
-        {
-            detectives[detective] = newPos;
-            return this;
-        }
-
-        public int getDetectivePos(int detective) 
-        {
-            return detectives[detective];
-        }
         /// <summary>
         /// bewegt den Dieb
         /// </summary>
@@ -79,21 +73,6 @@ namespace EntaglementOfGraphs
             return this;
         }
 
-        //int IComparable<Positions>.CompareTo(Positions? other)
-        //{
-        //    if (other.thief < thief) return 1;
-        //    if (other.thief > thief) return -1;
-        //    for (int i = 0;i < detectives.Count; i++)
-        //    {
-        //        if (other.detectives[i] < detectives[i]) return 1;
-        //        if (other.detectives[i] > detectives[i]) return -1;
-        //    }
-        //    return 0;
-        //}
-        //public  int CompareTo(object? obj)
-        //{
-        //    return CompareTo(obj as Positions);
-        //}
 
         public bool Equals(Positions other)
         {
@@ -101,10 +80,15 @@ namespace EntaglementOfGraphs
             if (other.detectivesTurn != detectivesTurn) return false;
             for (int i = 0; i < detectives.Count; i++)
             {
-                if (other.detectives[i] != detectives[i]) return false;
+                if (other.detectives.Values[i] != detectives.Values[i]) return false;
             }
             return true;
         }
 
+        public String toString()
+        {
+
+            return $"({thief}, ({string.Join(",",detectives.Values.ToArray())}), {detectivesTurn})";
+        }
     }
 }
