@@ -22,7 +22,7 @@ namespace EntaglementOfGraphs
         {
             for (int i = 0; i < detectiveAmount; i++)
             {
-                detectives.Add(-1,-1);
+                detectives.Add(-(i+1),-1);
             }
             thief = initalThief;
             detectivesTurn = initialTurn;
@@ -39,7 +39,7 @@ namespace EntaglementOfGraphs
             cloned.detectivesTurn = detectivesTurn;
             foreach (var i in detectives)
             {
-                cloned.detectives.Add(i.Value,i.Value);
+                cloned.detectives.Add(i.Key,i.Value);
             }
             return cloned;
         }

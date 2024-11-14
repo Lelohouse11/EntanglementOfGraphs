@@ -108,7 +108,7 @@ namespace EntaglementOfGraphs
                 AddEdge(new Edge<Positions>(sourcePos, currentPos));
                 edgeCounter++;
                 Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
-                if (isExistingPos == null) // Wenn NextPos neu oder Detektive sich nicht bewegen
+                if (isExistingPos == null) // Wenn NextPos neu
                 {
                     buildRecursiveGameTree(sourcePos); //rekursiver Aufruf
                 }

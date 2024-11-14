@@ -26,10 +26,11 @@ To-Dos:
     private static void Main(string[] args)
     {        
         var graph = new FiniteDirectedGraph([1,2,3], [(1,2),(2,3),(3,1)]);
-        Console.WriteLine(graph.createDot());
-        Console.WriteLine();
+        var graph2 = new FiniteDirectedGraph(3, 3);
+        //Console.WriteLine(graph.createDot());
+        //Console.WriteLine();
 
-        Console.WriteLine(graph.minEntanglement(1));
+        Console.WriteLine(graph2.minEntanglement(0));
 
         //var gameTree = graph.getGameTree(new Positions(1,1,true), false);
         //Console.WriteLine("Erstellen des Gametrees erfolgreich!");

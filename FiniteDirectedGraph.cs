@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//fixpoint itteration impl.
+//weitere Klasse an grahen zum testen finden
+// was passiert wenn Torus graph x torrus Graph
+
+
 namespace EntaglementOfGraphs
 {
     internal class FiniteDirectedGraph : AdjacencyGraph<int, Edge<int>>
@@ -20,13 +25,35 @@ namespace EntaglementOfGraphs
         { 
            foreach (var vertex in vertexes)
            {
-                this.AddVertex(vertex);
+                AddVertex(vertex);
            }
 
             foreach (var edge in edges)
             {
-                this.AddEdge(new Edge<int>(edge.Item1,edge.Item2));
+                AddEdge(new Edge<int>(edge.Item1,edge.Item2));
             }
+        }
+
+        public FiniteDirectedGraph(int mTorus, int nTorus) 
+        {
+            AddVertex(0);
+            for (int i = 1; i < mTorus; i++) 
+            {
+                AddVertex(i);
+                AddEdge(new Edge<int>(i-1,i));
+            }
+            for (int i = mTorus;i < nTorus+mTorus; i++) 
+            {  
+                AddVertex(i);
+                AddEdge(new Edge<int>(i - 1, i));
+                for (int j = 0; j < mTorus; j++)
+                {
+                    AddEdge(new Edge<int> (j,i)); // in beide Richtungen?
+                    AddEdge(new Edge<int>(i,j)); // in beide Richtungen?
+
+                }
+            }
+               
         }
 
         /// <summary>
@@ -142,7 +169,7 @@ namespace EntaglementOfGraphs
                 {
                     var previousPos = pos.clone().changeTurn();
                     previousPos.detectives.Remove(pos.thief);
-                    previousPos.detectives.Add(-1, -1);
+                    previousPos.detectives.Add(-1, -1); //Same key Problem
                     result.Add(previousPos);
                     foreach (var vertex in Vertices.Except(pos.detectives.Values.ToList())) //bewegt den Dieb zu jedem möglichen Knoten
                     {
@@ -182,8 +209,5 @@ namespace EntaglementOfGraphs
             }
             return -1;
         }
-
-
-
     }
 }
