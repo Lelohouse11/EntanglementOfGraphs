@@ -164,11 +164,23 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// nutzt den rekursiven Gamtree um Entanglement zu überprüfen
         /// </summary>
-        /// <param name="initalPos"></param>
+        /// <param name="startPos"></param>
         /// <returns></returns>
-        public bool IsEntanglement(Positions initalPos)
+        public bool IsEntanglement(Positions startPos)
         {
-            return getGameTree(initalPos,false).OutEdges(initalPos).Count() != 0;            
+            return getGameTree(startPos,false).OutEdges(startPos).Count() != 0;            
+        }
+
+        public int minEntanglement(int startPosOfThief)
+        {
+            for (int i = 0; i < VertexCount; i++)
+            {
+                if (IsEntanglement(new Positions(i, startPosOfThief, true)))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
 

@@ -29,7 +29,7 @@ To-Dos:
         Console.WriteLine(graph.createDot());
         Console.WriteLine();
 
-        Console.WriteLine(graph.IsEntanglement(new Positions(1, 1, true)));
+        Console.WriteLine(graph.minEntanglement(1));
 
         //var gameTree = graph.getGameTree(new Positions(1,1,true), false);
         //Console.WriteLine("Erstellen des Gametrees erfolgreich!");
