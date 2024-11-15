@@ -28,7 +28,7 @@ namespace EntaglementOfGraphs
             startPosition = startPos;
             detectiveAmount = startPos.detectives.Count;
             graph = _graph;
-            Console.WriteLine($"Startknoten hinzugefügt: {startPos.toString()}");
+            //Console.WriteLine($"Startknoten hinzugefügt: {startPos.toString()}");
         }
         /// <summary>
         /// erstellt String von .dot Datei für spätere Visualisierung
@@ -57,13 +57,13 @@ namespace EntaglementOfGraphs
                     {
                         AddVertex(nextPos);
                         vertexCounter++;
-                        Console.WriteLine($"Knoten hinzugefügt: {nextPos.toString()}");
+                        //Console.WriteLine($"Knoten hinzugefügt: {nextPos.toString()}");
                     }
 
                     var targetPos = isNewPos ?? nextPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
                     AddEdge(new Edge<Positions>(pos, targetPos));
                     edgeCounter++;
-                    Console.WriteLine($"Kante von {pos.toString()} zu {targetPos.toString()} hinzugefügt.");
+                    //Console.WriteLine($"Kante von {pos.toString()} zu {targetPos.toString()} hinzugefügt.");
                     if (isNewPos == null || pos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
                     {
                         buildIterativGameTree(targetPos.changeTurn()); //rekursiver Aufruf
@@ -101,13 +101,13 @@ namespace EntaglementOfGraphs
                 {
                     AddVertex(previousPos);
                     vertexCounter++;
-                    Console.WriteLine($"Knoten hinzugefügt: {previousPos.toString()}");
+                    //Console.WriteLine($"Knoten hinzugefügt: {previousPos.toString()}");
                 }
 
                 var sourcePos = isExistingPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
                 AddEdge(new Edge<Positions>(sourcePos, currentPos));
                 edgeCounter++;
-                Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
+                //Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
                 if (isExistingPos == null) // Wenn NextPos neu
                 {
                     buildRecursiveGameTree(sourcePos); //rekursiver Aufruf
@@ -155,15 +155,15 @@ namespace EntaglementOfGraphs
             var result = new List<Positions>();
             foreach (var vertex in graph.Vertices) //geht jeden Knoten des Graphen durch
             {
-                var outgoingVertices = graph.getOutgoingVertex(vertex);
+                var outgoingVertices = graph.getOutgoingVertex(vertex).Distinct().ToList();
                 var OutgoingVerticesCount = outgoingVertices.Count;
                 if (OutgoingVerticesCount <= detectiveAmount) // prüft ob Fluchtmöglichkeiten von Detektiven blockiert werden können
                 {
                     var finalState = new Positions(detectiveAmount, vertex, false);
-                    for (var i = 0; i < OutgoingVerticesCount; i++)
+                    for (var i = 1; i <= OutgoingVerticesCount; i++)
                     {
-                        finalState.detectives.Remove(-1);
-                        finalState.detectives.Add(outgoingVertices[i], outgoingVertices[i]);// setzt Detektive auf die Fluchtmöglichkeit
+                        finalState.detectives.Remove(-i);
+                        finalState.detectives.Add(outgoingVertices[i-1], outgoingVertices[i-1]);// setzt Detektive auf die Fluchtmöglichkeit
                     }
                     result.Add(finalState);
                 }

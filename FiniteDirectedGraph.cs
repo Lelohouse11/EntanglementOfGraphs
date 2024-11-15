@@ -7,11 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//fixpoint itteration impl.
-//weitere Klasse an grahen zum testen finden
-// was passiert wenn Torus graph x torrus Graph
-
-
 namespace EntaglementOfGraphs
 {
     internal class FiniteDirectedGraph : AdjacencyGraph<int, Edge<int>>
@@ -100,7 +95,7 @@ namespace EntaglementOfGraphs
                 {
                     gameTree.AddVertex(finalState);
                     gameTree.vertexCounter++;
-                    Console.WriteLine($"Endknoten hinzugefügt: {finalState.toString()}");                    
+                    //Console.WriteLine($"Endknoten hinzugefügt: {finalState.toString()}");                    
                 }
 
                 foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
@@ -108,7 +103,7 @@ namespace EntaglementOfGraphs
                     if (gameTree.OutEdges(startPos).Count() == 0)
                     {
                         gameTree.buildRecursiveGameTree(finalState);
-                        Console.WriteLine(gameTree.OutEdges(startPos).Count());
+                        //Console.WriteLine(gameTree.OutEdges(startPos).Count());
                     }
                 }
                 return gameTree;
@@ -169,7 +164,17 @@ namespace EntaglementOfGraphs
                 {
                     var previousPos = pos.clone().changeTurn();
                     previousPos.detectives.Remove(pos.thief);
-                    previousPos.detectives.Add(-1, -1); //Same key Problem
+                    bool detectiveNotAdded = true;
+                    int i = 1;
+                    while (detectiveNotAdded) 
+                    { 
+                        if(!previousPos.detectives.ContainsKey(-i))
+                        {
+                            previousPos.detectives.Add(-i, -1);
+                            detectiveNotAdded = false;
+                        }
+                        i++;
+                    }
                     result.Add(previousPos);
                     foreach (var vertex in Vertices.Except(pos.detectives.Values.ToList())) //bewegt den Dieb zu jedem möglichen Knoten
                     {

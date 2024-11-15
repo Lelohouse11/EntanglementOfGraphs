@@ -14,38 +14,34 @@ using static QuikGraph.Algorithms.Assignment.HungarianAlgorithm;
 
 internal class Program
 {
-   
 
-    /*
+
+/*
 To-Dos:
-- bricht zu früh ab
-    - Positionen der Detectives stimmen nicht
-- Kreislauferkennung einbauen
+- ixi richtig aber ixj immer ein zu wenig
+- fixpoint itteration impl.
+- weitere Klasse an grahen zum testen finden
+- was passiert wenn Torus graph x torrus Graph
 
 */
     private static void Main(string[] args)
-    {        
-        var graph = new FiniteDirectedGraph([1,2,3], [(1,2),(2,3),(3,1)]);
-        var graph2 = new FiniteDirectedGraph(3, 3);
-        //Console.WriteLine(graph.createDot());
-        //Console.WriteLine();
-
-        Console.WriteLine(graph2.minEntanglement(0));
-
-        //var gameTree = graph.getGameTree(new Positions(1,1,true), false);
-        //Console.WriteLine("Erstellen des Gametrees erfolgreich!");
-        //Console.WriteLine($"Der Gametree hat {gameTree.vertexCounter} Knoten und {gameTree.edgeCounter} Kanten.");
-        /*
-        //Berechnung des Entanglements
-        int temp = graph.VertexCount-1;
-        while (IsEntanglement(graph, 1, temp))
+    {
+        for (int i = 1; i <= 5; i++)
         {
-            temp--;
-            Console.WriteLine($"Das Entanglement ist:{temp + 1}");
+            for (int j = 1; j <= 5; j++)
+            {
+                var testGraphEnt = new FiniteDirectedGraph(i, j).minEntanglement(0);
+                if (i == j)
+                {
+                    Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == i}");
+                    Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {i}");
+                }
+                else
+                {
+                    Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == (int.Min(i, j) + 1)}");
+                    Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {int.Min(i, j) + 1}");
+                }
+            }
         }
-
-        Console.WriteLine($"Das minimalste Entanglement ist:{temp+1}");
-        */
-
     }
 }
