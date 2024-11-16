@@ -31,13 +31,38 @@ namespace EntaglementOfGraphs
 
         public FiniteDirectedGraph(int mTorus, int nTorus) 
         {
-            AddVertex(0);
-            for (int i = 1; i < mTorus; i++) 
+            mTorus = mTorus + 1;
+            nTorus = nTorus + 1;
+            if (mTorus == 1)
             {
-                AddVertex(i);
-                AddEdge(new Edge<int>(i-1,i));
+                AddVertex(0);
+                AddEdge(new Edge<int>(0, 0));
             }
-            for (int i = mTorus;i < nTorus+mTorus; i++) 
+            else
+            {
+                AddVertex(0);
+                for (int i = 1; i < mTorus; i++)
+                {
+                    AddVertex(i);
+                    AddEdge(new Edge<int>(i - 1, i));
+                }
+            }
+            if (nTorus == 1)
+            {
+                AddVertex(mTorus);
+                AddEdge(new Edge<int>(mTorus, mTorus));
+            }
+            else
+            {
+                AddVertex(mTorus);
+            }
+            for (int j = 0; j < mTorus; j++)
+            {
+                AddEdge(new Edge<int>(j, mTorus)); // in beide Richtungen?
+                AddEdge(new Edge<int>(mTorus, j)); // in beide Richtungen?
+
+            }
+            for (int i = mTorus+1;i < nTorus+mTorus; i++) 
             {  
                 AddVertex(i);
                 AddEdge(new Edge<int>(i - 1, i));
@@ -198,7 +223,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="startPos"></param>
         /// <returns></returns>
-        public bool IsEntanglement(Positions startPos)
+        public bool isEntanglement(Positions startPos)
         {
             return getGameTree(startPos,false).OutEdges(startPos).Count() != 0;            
         }
@@ -207,7 +232,7 @@ namespace EntaglementOfGraphs
         {
             for (int i = 0; i < VertexCount; i++)
             {
-                if (IsEntanglement(new Positions(i, startPosOfThief, true)))
+                if (isEntanglement(new Positions(i, startPosOfThief, true)))
                 {
                     return i;
                 }

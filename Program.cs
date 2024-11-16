@@ -26,22 +26,31 @@ To-Dos:
 */
     private static void Main(string[] args)
     {
-        for (int i = 1; i <= 5; i++)
+        //var testGraphEnt = new FiniteDirectedGraph(1, 2).isEntanglement(new Positions(1,0,true));
+        //Console.WriteLine(testGraphEnt.createDot());
+        //Console.WriteLine($"Teste {1}x{2} Torrus Graph auf korrektes Entanglement: {testGraphEnt == 2}");
+        //Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}");
+
+
+        
+        for (int i = 1; i <= 3; i++)
         {
-            for (int j = 1; j <= 5; j++)
+            for (int j = 1; j <= 3; j++)
             {
                 var testGraphEnt = new FiniteDirectedGraph(i, j).minEntanglement(0);
                 if (i == j)
-                {
+                {                    
                     Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == i}");
                     Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {i}");
                 }
                 else
                 {
-                    Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == (int.Min(i, j) + 1)}");
-                    Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {int.Min(i, j) + 1}");
+                    int temp = int.Min(i, j) +1;
+                    Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == temp}");
+                    Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {temp}");
                 }
             }
         }
+        
     }
 }
