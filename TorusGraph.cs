@@ -7,53 +7,38 @@ using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
-    internal class TorusGraph : FiniteDirectedGraph<int>
+    internal class TorusGraph : FiniteDirectedGraph<TorusVertex>
     {
         public TorusGraph(int mTorus, int nTorus)
         {
-            mTorus = mTorus + 1;
-            nTorus = nTorus + 1;
-            if (mTorus == 1)
+            for (int i = 0; i < mTorus; i++)
             {
-                AddVertex(0);
-                AddEdge(new Edge<int>(0, 0));
-            }
-            else
-            {
-                AddVertex(0);
-                for (int i = 1; i < mTorus; i++)
+                for (int j = 0; j < nTorus; j++)
                 {
-                    AddVertex(i);
-                    AddEdge(new Edge<int>(i - 1, i));
-                }
-            }
-            if (nTorus == 1)
-            {
-                AddVertex(mTorus);
-                AddEdge(new Edge<int>(mTorus, mTorus));
-            }
-            else
-            {
-                AddVertex(mTorus);
-            }
-            for (int j = 0; j < mTorus; j++)
-            {
-                AddEdge(new Edge<int>(j, mTorus)); // in beide Richtungen?
-                AddEdge(new Edge<int>(mTorus, j)); // in beide Richtungen?
-
-            }
-            for (int i = mTorus + 1; i < nTorus + mTorus; i++)
-            {
-                AddVertex(i);
-                AddEdge(new Edge<int>(i - 1, i));
-                for (int j = 0; j < mTorus; j++)
-                {
-                    AddEdge(new Edge<int>(j, i)); // in beide Richtungen?
-                    AddEdge(new Edge<int>(i, j)); // in beide Richtungen?
-
+                    var newVertex = new TorusVertex(i,j);
+                    AddVertex(newVertex);                    
                 }
             }
 
+            foreach (var vertex in Vertices)
+            {
+                foreach (var nextVertex in Vertices.Except([vertex]))
+                {
+                    if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (nextVertex.ErsterWert + 1)) || //bewegung auf ersten Graphen einen weiter auf Kreis
+                       ((vertex.ErsterWert == nextVertex.ErsterWert) && vertex.ZweiterWert == (nextVertex.ZweiterWert + 1)))    //bewegung auf zweiten Graphen einen weiter auf Kreis
+                    {
+                        AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
+                        AddEdge(new Edge<TorusVertex>(nextVertex, vertex));
+                    }
+                    if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (mTorus-1) && (nextVertex.ErsterWert == 0)) || //Endpunkt mit Anfangspunkt verbinden
+                       ((vertex.ErsterWert == nextVertex.ErsterWert) && vertex.ZweiterWert == (nTorus - 1) && (nextVertex.ZweiterWert == 0)))
+                    {
+                        AddEdge(new Edge<TorusVertex>(nextVertex,vertex));
+                        AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
+                    }
+                }
+
+            }
         }
     }
 }

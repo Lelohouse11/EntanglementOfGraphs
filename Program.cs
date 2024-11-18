@@ -26,28 +26,32 @@ To-Dos:
 */
     private static void Main(string[] args)
     {
-        //var testGraph = new TorusGraph(1, 2);
-        //var testGraphEnt = testGraph.isEntanglement(new Positions<int>(5,0,true));
-        //Console.WriteLine(testGraph.createDot());
-        //Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}");
 
-
-        
-        for (int i = 1; i <= 3; i++)
+        if (false)
         {
-            for (int j = 1; j <= 3; j++)
+            var testGraph = new TorusGraph(3, 3);
+            var testGraphEnt = testGraph.isEntanglement(new Positions<TorusVertex>(1,new TorusVertex(0,0),true));
+            Console.WriteLine(testGraph.createDot());
+            Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}");
+        }
+        else
+        {
+            for (int i = 1; i <= 3; i++)
             {
-                var testGraphEnt = new TorusGraph(i, j).minEntanglement(0);
-                if (i == j)
-                {                    
-                    Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == i}");
-                    Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {i}");
-                }
-                else
+                for (int j = 1; j <= 3; j++)
                 {
-                    int temp = int.Min(i, j) +1;
-                    Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == temp}");
-                    Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {temp}");
+                    var testGraphEnt = new TorusGraph(i, j).minEntanglement(new TorusVertex(0, 0));
+                    if (i == j)
+                    {
+                        Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == i}");
+                        Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {i}");
+                    }
+                    else
+                    {
+                        int temp = int.Min(i, j) + 1;
+                        Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == temp}");
+                        Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {temp}");
+                    }
                 }
             }
         }
