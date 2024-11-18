@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 namespace EntaglementOfGraphs
 {
     // Testing durch Torus grapgen seite 2
-    internal class GameTree : AdjacencyGraph<Positions, Edge<Positions>>
+    internal class GameTree<V> : AdjacencyGraph<Positions<V>, Edge<Positions<V>>> where V : IComparable<V>, IEquatable<V>
     {
         public int vertexCounter = 1;
         public int edgeCounter = 0;
         public readonly int detectiveAmount;
-        public readonly FiniteDirectedGraph graph;
-        public readonly Positions startPosition;
+        public readonly FiniteDirectedGraph<V> graph;
+        public readonly Positions<V> startPosition;
 
         /// <summary>
         /// erstellt GameTree mit Startwerten
         /// </summary>
         /// <param name="_graph"></param>
         /// <param name="startPos"></param>
-        public GameTree(FiniteDirectedGraph _graph, Positions startPos) 
+        public GameTree(FiniteDirectedGraph<V> _graph, Positions<V> startPos) 
         {
             AddVertex(startPos);
             startPosition = startPos;
-            detectiveAmount = startPos.detectives.Count;
+            detectiveAmount = startPos.detectiveAmount;
             graph = _graph;
             //Console.WriteLine($"Startknoten hinzugefügt: {startPos.toString()}");
         }
@@ -36,7 +36,7 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public String createDot()
         {
-            var graphviz = new GraphvizAlgorithm<Positions, Edge<Positions>>(this);
+            var graphviz = new GraphvizAlgorithm<Positions<V>, Edge<Positions<V>>>(this);
             return graphviz.Generate();
         }
 
@@ -45,7 +45,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public GameTree buildIterativGameTree(Positions pos)
+        public GameTree<V> buildIterativGameTree(Positions<V> pos)
         {
             var nextStep = graph.getNextPossibleSteps(pos);
             if (nextStep.Count() != 0)
@@ -61,7 +61,7 @@ namespace EntaglementOfGraphs
                     }
 
                     var targetPos = isNewPos ?? nextPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
-                    AddEdge(new Edge<Positions>(pos, targetPos));
+                    AddEdge(new Edge<Positions<V>>(pos, targetPos));
                     edgeCounter++;
                     //Console.WriteLine($"Kante von {pos.toString()} zu {targetPos.toString()} hinzugefügt.");
                     if (isNewPos == null || pos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
@@ -79,7 +79,7 @@ namespace EntaglementOfGraphs
         /// dass er sicher gewinnt
         /// </summary>
         /// <param name="currentPos"></param>
-        public void buildRecursiveGameTree(Positions currentPos) //fügt noch doppelte knoten hinzu und funktioniert bei Zyklen noch nicht richtig
+        public void buildRecursiveGameTree(Positions<V> currentPos) //fügt noch doppelte knoten hinzu und funktioniert bei Zyklen noch nicht richtig
         {
             var previousPossibleSteps = graph.getPreviousPossibleSteps(currentPos);
             foreach (var previousPos in previousPossibleSteps) // gehe die vorig möglichen Spielzustände durch
@@ -105,7 +105,7 @@ namespace EntaglementOfGraphs
                 }
 
                 var sourcePos = isExistingPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
-                AddEdge(new Edge<Positions>(sourcePos, currentPos));
+                AddEdge(new Edge<Positions<V>>(sourcePos, currentPos));
                 edgeCounter++;
                 //Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
                 if (isExistingPos == null) // Wenn NextPos neu
@@ -122,7 +122,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public bool containsPosition(Positions pos)
+        public bool containsPosition(Positions<V> pos)
         {
             foreach (var p in Vertices)
             {
@@ -137,7 +137,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public Positions? getExistingPosition(Positions pos)
+        public Positions<V>? getExistingPosition(Positions<V> pos)
         {
             foreach (var p in Vertices)
             {
@@ -150,20 +150,19 @@ namespace EntaglementOfGraphs
         /// Gibt die möglichen Endzustände des Gametrees zurück
         /// </summary>
         /// <returns></returns>
-        public List<Positions> getPossibleFinalStates()
+        public List<Positions<V>> getPossibleFinalStates()
         {
-            var result = new List<Positions>();
+            var result = new List<Positions<V>>();
             foreach (var vertex in graph.Vertices) //geht jeden Knoten des Graphen durch
             {
                 var outgoingVertices = graph.getOutgoingVertex(vertex).Distinct().ToList();
                 var OutgoingVerticesCount = outgoingVertices.Count;
                 if (OutgoingVerticesCount <= detectiveAmount) // prüft ob Fluchtmöglichkeiten von Detektiven blockiert werden können
                 {
-                    var finalState = new Positions(detectiveAmount, vertex, false);
-                    for (var i = 1; i <= OutgoingVerticesCount; i++)
+                    var finalState = new Positions<V>(detectiveAmount, vertex, false);
+                    for (var i = 0; i < OutgoingVerticesCount; i++)
                     {
-                        finalState.detectives.Remove(-i);
-                        finalState.detectives.Add(outgoingVertices[i-1], outgoingVertices[i-1]);// setzt Detektive auf die Fluchtmöglichkeit
+                        finalState.detectives.Add(outgoingVertices[i]);// setzt Detektive auf die Fluchtmöglichkeit
                     }
                     result.Add(finalState);
                 }

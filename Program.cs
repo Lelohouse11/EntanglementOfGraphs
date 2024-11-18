@@ -26,9 +26,9 @@ To-Dos:
 */
     private static void Main(string[] args)
     {
-        //var testGraphEnt = new FiniteDirectedGraph(1, 2).isEntanglement(new Positions(1,0,true));
-        //Console.WriteLine(testGraphEnt.createDot());
-        //Console.WriteLine($"Teste {1}x{2} Torrus Graph auf korrektes Entanglement: {testGraphEnt == 2}");
+        //var testGraph = new TorusGraph(1, 2);
+        //var testGraphEnt = testGraph.isEntanglement(new Positions<int>(5,0,true));
+        //Console.WriteLine(testGraph.createDot());
         //Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}");
 
 
@@ -37,7 +37,7 @@ To-Dos:
         {
             for (int j = 1; j <= 3; j++)
             {
-                var testGraphEnt = new FiniteDirectedGraph(i, j).minEntanglement(0);
+                var testGraphEnt = new TorusGraph(i, j).minEntanglement(0);
                 if (i == j)
                 {                    
                     Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == i}");

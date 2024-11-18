@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
-    public class Positions 
+    public class Positions <V> where V : IComparable<V>, IEquatable<V>
     {
-        public int thief;
-        public SortedList<int,int> detectives = new();
+        public V thief;
+        public SortedSet<V> detectives = new();
         public bool detectivesTurn;
+        public int detectiveAmount;
 
         /// <summary>
         /// erstellt Position im GameTree
@@ -18,12 +20,15 @@ namespace EntaglementOfGraphs
         /// <param name="detectiveAmount"></param>
         /// <param name="initalThief"></param>
         /// <param name="initialTurn"></param>
-        public Positions(int detectiveAmount, int initalThief, bool initialTurn) 
+        public Positions(int detectiveAmount, V initalThief, bool initialTurn) 
         {
+            /*
             for (int i = 0; i < detectiveAmount; i++)
             {
                 detectives.Add(-(i+1),-1);
             }
+            */
+            this.detectiveAmount = detectiveAmount;
             thief = initalThief;
             detectivesTurn = initialTurn;
         }
@@ -32,14 +37,12 @@ namespace EntaglementOfGraphs
         /// clont Instanz zur weitere Verarbeitung
         /// </summary>
         /// <returns></returns>
-        public Positions clone()
+        public Positions<V> clone()
         {
-            var cloned = new Positions(0,0,true);
-            cloned.thief = thief;
-            cloned.detectivesTurn = detectivesTurn;
+            var cloned = new Positions<V>(0,thief, detectivesTurn);
             foreach (var i in detectives)
             {
-                cloned.detectives.Add(i.Key,i.Value);
+                cloned.detectives.Add(i);
             }
             return cloned;
         }
@@ -49,10 +52,13 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="detective"></param>
         /// <returns></returns>
-        public Positions moveDetective(int detective)
+        public Positions<V> moveDetective(V? detective)
         {
-            detectives.RemoveAt(detective);
-            detectives.Add(thief, thief);
+            if (detective != null)
+            {
+                detectives.Remove(detective);
+            }
+            detectives.Add(thief);
             return this;
         }
 
@@ -61,26 +67,27 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="newPos"></param>
         /// <returns></returns>
-        public Positions moveThief(int newPos)
+        public Positions<V> moveThief(V newPos)
         {
             thief= newPos;
             return this;
         }
 
-        public Positions changeTurn()
+        public Positions<V> changeTurn()
         {
             detectivesTurn = !detectivesTurn;
             return this;
         }
 
 
-        public bool Equals(Positions other)
+        public bool Equals(Positions<V> other)
         {
-            if (other.thief != thief) return false;
+            if (!other.thief.Equals(thief)) return false;
             if (other.detectivesTurn != detectivesTurn) return false;
+            if (other.detectives.Count != detectives.Count) return false;
             for (int i = 0; i < detectives.Count; i++)
             {
-                if (other.detectives.Values[i] != detectives.Values[i]) return false;
+                if (!other.detectives.ElementAt(i).Equals(detectives.ElementAt(i))) return false;
             }
             return true;
         }
@@ -88,7 +95,7 @@ namespace EntaglementOfGraphs
         public String toString()
         {
 
-            return $"({thief}, ({string.Join(",",detectives.Values.ToArray())}), {detectivesTurn})";
+            return $"({thief}, ({string.Join(",",detectives.ToArray())}), {detectivesTurn})";
         }
     }
 }
