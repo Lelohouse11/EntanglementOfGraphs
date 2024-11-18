@@ -33,6 +33,11 @@ namespace EntaglementOfGraphs
         {
             return ErsterWert == other.ErsterWert && ZweiterWert == other.ZweiterWert;            
         }
+
+        public string toString()
+        {
+            return $"({ErsterWert},{ZweiterWert})";
+        }
     }
 }
         

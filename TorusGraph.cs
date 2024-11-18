@@ -13,10 +13,11 @@ namespace EntaglementOfGraphs
         {
             for (int i = 0; i < mTorus; i++)
             {
+                AddVertex(new TorusVertex(i,0));
                 for (int j = 0; j < nTorus; j++)
                 {
-                    var newVertex = new TorusVertex(i,j);
-                    AddVertex(newVertex);                    
+                    AddVertex(new TorusVertex(i, j));
+                    //Console.WriteLine($"Knoten hinzugefügt: ({i},{j})");
                 }
             }
 
@@ -27,15 +28,18 @@ namespace EntaglementOfGraphs
                     if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (nextVertex.ErsterWert + 1)) || //bewegung auf ersten Graphen einen weiter auf Kreis
                        ((vertex.ErsterWert == nextVertex.ErsterWert) && vertex.ZweiterWert == (nextVertex.ZweiterWert + 1)))    //bewegung auf zweiten Graphen einen weiter auf Kreis
                     {
-                        AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
                         AddEdge(new Edge<TorusVertex>(nextVertex, vertex));
+
+                        //Console.WriteLine($"Kante von {nextVertex.toString()} zu {vertex.toString()} hinzugefügt.");
                     }
+                    
                     if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (mTorus-1) && (nextVertex.ErsterWert == 0)) || //Endpunkt mit Anfangspunkt verbinden
                        ((vertex.ErsterWert == nextVertex.ErsterWert) && vertex.ZweiterWert == (nTorus - 1) && (nextVertex.ZweiterWert == 0)))
                     {
-                        AddEdge(new Edge<TorusVertex>(nextVertex,vertex));
                         AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
+                        //Console.WriteLine($"Kante von {vertex.toString()} zu {nextVertex.toString()} hinzugefügt.");
                     }
+                    
                 }
 
             }
