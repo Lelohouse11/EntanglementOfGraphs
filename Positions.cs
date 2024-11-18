@@ -39,7 +39,7 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public Positions<V> clone()
         {
-            var cloned = new Positions<V>(0,thief, detectivesTurn);
+            var cloned = new Positions<V>(detectiveAmount,thief, detectivesTurn);
             foreach (var i in detectives)
             {
                 cloned.detectives.Add(i);

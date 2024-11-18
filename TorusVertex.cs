@@ -23,7 +23,7 @@ namespace EntaglementOfGraphs
             int result = ErsterWert.CompareTo(other.ErsterWert);
             if (result == 0)
             {
-                result = ZweiterWert.CompareTo(other.ZweiterWert);
+                return ZweiterWert.CompareTo(other.ZweiterWert);
             }
             return result;
 

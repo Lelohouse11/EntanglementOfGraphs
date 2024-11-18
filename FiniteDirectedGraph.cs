@@ -86,7 +86,7 @@ namespace EntaglementOfGraphs
                     if (gameTree.OutEdges(startPos).Count() == 0)
                     {
                         gameTree.buildRecursiveGameTree(finalState);
-                        Console.WriteLine(gameTree.OutEdges(startPos).Count());
+                        //Console.WriteLine(gameTree.OutEdges(startPos).Count());
                     }
                 }
                 return gameTree;

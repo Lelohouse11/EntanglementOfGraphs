@@ -84,6 +84,7 @@ namespace EntaglementOfGraphs
             var previousPossibleSteps = graph.getPreviousPossibleSteps(currentPos);
             foreach (var previousPos in previousPossibleSteps) // gehe die vorig möglichen Spielzustände durch
             {
+                bool addingPreviousPos = true;
                 if (!previousPos.detectivesTurn) //wenn der Deib dran ist muss jeder möglicher Zug schon im GameTree gespeichert sein
                 {
                     var nextPossibleSteps = graph.getNextPossibleSteps(previousPos);
@@ -91,28 +92,31 @@ namespace EntaglementOfGraphs
                     {
                         if (!containsPosition(vertex)) 
                         {
+                            addingPreviousPos = false;
                             continue;
                         }
                     }
                 }
 
-                var isExistingPos = getExistingPosition(previousPos);
-                if (isExistingPos == null) // prüft ob previousPos neu ist
+                if (addingPreviousPos)
                 {
-                    AddVertex(previousPos);
-                    vertexCounter++;
-                    //Console.WriteLine($"Knoten hinzugefügt: {previousPos.toString()}");
-                }
+                    var isExistingPos = getExistingPosition(previousPos);
+                    if (isExistingPos == null) // prüft ob previousPos neu ist
+                    {
+                        AddVertex(previousPos);
+                        vertexCounter++;
+                        //Console.WriteLine($"Knoten hinzugefügt: {previousPos.toString()}");
+                    }
 
-                var sourcePos = isExistingPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
-                AddEdge(new Edge<Positions<V>>(sourcePos, currentPos));
-                edgeCounter++;
-                //Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
-                if (isExistingPos == null) // Wenn NextPos neu
-                {
-                    buildRecursiveGameTree(sourcePos); //rekursiver Aufruf
+                    var sourcePos = isExistingPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
+                    AddEdge(new Edge<Positions<V>>(sourcePos, currentPos));
+                    edgeCounter++;
+                    //Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
+                    if (isExistingPos == null) // Wenn NextPos neu
+                    {
+                        buildRecursiveGameTree(sourcePos); //rekursiver Aufruf
+                    }
                 }
-             
             }        
         }
 
