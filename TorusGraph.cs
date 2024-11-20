@@ -29,13 +29,13 @@ namespace EntaglementOfGraphs
                     {
                         AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
 
-                        //Console.WriteLine($"Kante von {vertex.toString()} zu {nextVertex.toString()} hinzugefügt.");
+                        //Console.WriteLine($"Kante von {vertex.ToString()} zu {nextVertex.ToString()} hinzugefügt.");
                     }                    
                     else if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (mTorus-1) && (nextVertex.ErsterWert == 0)) || //Endpunkt mit Anfangspunkt verbinden
                        ((vertex.ErsterWert == nextVertex.ErsterWert) && vertex.ZweiterWert == (nTorus - 1) && (nextVertex.ZweiterWert == 0)))
                     {
                         AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
-                        //Console.WriteLine($"Kante von {vertex.toString()} zu {nextVertex.toString()} hinzugefügt.");
+                        //Console.WriteLine($"Kante von {vertex.ToString()} zu {nextVertex.ToString()} hinzugefügt.");
                     }
                     
                 }

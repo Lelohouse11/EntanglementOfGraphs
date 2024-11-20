@@ -86,7 +86,7 @@ namespace EntaglementOfGraphs
                     if (gameTree.OutEdges(startPos).Count() == 0)
                     {
                         gameTree.buildRecursiveGameTree(finalState);
-                        //Console.WriteLine(gameTree.OutEdges(startPos).Count());
+                        //Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameTree.OutEdges(startPos).Count()}");
                     }
                 }
                 return gameTree;
@@ -104,14 +104,14 @@ namespace EntaglementOfGraphs
 
             if (pos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
             {
-                result.Add(pos);
+                result.Add(pos.changeTurn());
                 if (pos.detectiveAmount > pos.detectives.Count)
                 {
-                    result.Add(pos.clone().moveDetective(default(V)));
+                    result.Add(pos.clone().moveDetective(default(V)).changeTurn());
                 }
                 foreach (var detective in pos.detectives) // gehe jeden möglichen Move der Detectives durch
                 {
-                    result.Add(pos.clone().moveDetective(detective));
+                    result.Add(pos.clone().moveDetective(detective).changeTurn());
                 }
             }
             else
@@ -122,7 +122,7 @@ namespace EntaglementOfGraphs
                 {
                     for (int i = 0; i < possibleMoves.Count(); i++) // geht jeden möglichen Zug
                     {
-                        result.Add(pos.clone().moveThief(possibleMoves[i]));
+                        result.Add(pos.clone().moveThief(possibleMoves[i]).changeTurn());
                     }
                 }
             }

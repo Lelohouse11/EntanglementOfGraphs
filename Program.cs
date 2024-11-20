@@ -30,7 +30,8 @@ To-Dos:
         if (false)
         {
             var testGraph = new TorusGraph(2, 3);
-            var testGraphEnt = testGraph.isEntanglement(new Positions<TorusVertex>(2,new TorusVertex(0,0),true));
+            Console.WriteLine("-------------------------------------------------------------");
+            var testGraphEnt = testGraph.isEntanglement(new Positions<TorusVertex>(3,new TorusVertex(0,0),true));
             //Console.WriteLine(testGraph.createDot());
             Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}");
         }

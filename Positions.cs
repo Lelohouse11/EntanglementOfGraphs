@@ -95,7 +95,7 @@ namespace EntaglementOfGraphs
         public String toString()
         {
 
-            return $"({thief}, ({string.Join(",",detectives.ToArray())}), {detectivesTurn})";
+            return $"({thief.ToString()}, ({string.Join(",",detectives.ToArray())}), {detectivesTurn})";
         }
     }
 }

@@ -34,7 +34,7 @@ namespace EntaglementOfGraphs
             return ErsterWert == other.ErsterWert && ZweiterWert == other.ZweiterWert;            
         }
 
-        public string toString()
+        public override string ToString()
         {
             return $"({ErsterWert},{ZweiterWert})";
         }

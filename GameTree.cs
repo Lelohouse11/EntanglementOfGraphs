@@ -3,6 +3,7 @@ using QuikGraph.Graphviz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,7 +67,7 @@ namespace EntaglementOfGraphs
                     //Console.WriteLine($"Kante von {pos.toString()} zu {targetPos.toString()} hinzugefügt.");
                     if (isNewPos == null || pos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
                     {
-                        buildIterativGameTree(targetPos.changeTurn()); //rekursiver Aufruf
+                        buildIterativGameTree(targetPos); //rekursiver Aufruf
                     }
                     
                 }
@@ -90,8 +91,10 @@ namespace EntaglementOfGraphs
                     var nextPossibleSteps = graph.getNextPossibleSteps(previousPos);
                     foreach (var vertex in nextPossibleSteps) 
                     {
+                        //Console.WriteLine($"Position {previousPos.toString()} führt zu {vertex.toString()}");
                         if (!containsPosition(vertex)) 
                         {
+                            //Console.WriteLine($"Position {previousPos.toString()} führt nicht sicher zu sieg");
                             addingPreviousPos = false;
                             continue;
                         }
@@ -160,18 +163,43 @@ namespace EntaglementOfGraphs
             foreach (var vertex in graph.Vertices) //geht jeden Knoten des Graphen durch
             {
                 var outgoingVertices = graph.getOutgoingVertex(vertex).Distinct().ToList();
-                var OutgoingVerticesCount = outgoingVertices.Count;
-                if (OutgoingVerticesCount <= detectiveAmount) // prüft ob Fluchtmöglichkeiten von Detektiven blockiert werden können
+                var outgoingVerticesCount = outgoingVertices.Count;
+                if (outgoingVerticesCount <= detectiveAmount) // prüft ob Fluchtmöglichkeiten von Detektiven blockiert werden können
                 {
-                    var finalState = new Positions<V>(detectiveAmount, vertex, false);
-                    for (var i = 0; i < OutgoingVerticesCount; i++)
+                    var tempState = new Positions<V>(detectiveAmount, vertex, false);
+                    for (var i = 0; i < outgoingVerticesCount; i++)
                     {
-                        finalState.detectives.Add(outgoingVertices[i]);// setzt Detektive auf die Fluchtmöglichkeit
+                        tempState.detectives.Add(outgoingVertices[i]);// setzt Detektive auf die Fluchtmöglichkeit
                     }
-                    result.Add(finalState);
+                    for (var i = outgoingVerticesCount; i < detectiveAmount; i++)
+                    {
+                        var emptyPos = graph.Vertices.Except(outgoingVertices).ToList();
+                        tempState.detectives.Add(emptyPos[i]);
+                    }
+                    result.Add(tempState);
+                    //addAllDetektives(tempState, outgoingVertices, result);
                 }
             }
             return result;
+        }
+
+        private void addAllDetektives(Positions<V> pos, List<V> blockedVertices, List<Positions<V>> result)
+        {
+            
+            foreach (var vertex in graph.Vertices.Except(blockedVertices)) //Konten die noch frei sind
+            {               
+                var finalState = pos.clone();
+                finalState.detectives.Add(vertex);
+                blockedVertices.Add(vertex);
+                if (blockedVertices.Count == detectiveAmount)
+                {
+                    result.Add(finalState);
+                }
+                else
+                {
+                    addAllDetektives(finalState, blockedVertices, result);
+                }                
+            }
         }
     }
 }
