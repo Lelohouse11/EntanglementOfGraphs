@@ -12,6 +12,8 @@ namespace EntaglementOfGraphs
     // Testing durch Torus grapgen seite 2
     internal class GameTree<V> : AdjacencyGraph<Positions<V>, Edge<Positions<V>>> where V : IComparable<V>, IEquatable<V>
     {
+        bool debug = false;
+
         public int vertexCounter = 1;
         public int edgeCounter = 0;
         public readonly int detectiveAmount;
@@ -29,7 +31,10 @@ namespace EntaglementOfGraphs
             startPosition = startPos;
             detectiveAmount = startPos.detectiveAmount;
             graph = _graph;
-            //Console.WriteLine($"Startknoten hinzugefügt: {startPos.toString()}");
+            if (debug)
+            {
+                Console.WriteLine($"Startknoten hinzugefügt: {startPos.toString()}");
+            }
         }
         /// <summary>
         /// erstellt String von .dot Datei für spätere Visualisierung
@@ -58,13 +63,19 @@ namespace EntaglementOfGraphs
                     {
                         AddVertex(nextPos);
                         vertexCounter++;
-                        //Console.WriteLine($"Knoten hinzugefügt: {nextPos.toString()}");
+                        if (debug)
+                        {
+                            Console.WriteLine($"Knoten hinzugefügt: {nextPos.toString()}");
+                        }
                     }
 
                     var targetPos = isNewPos ?? nextPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
                     AddEdge(new Edge<Positions<V>>(pos, targetPos));
                     edgeCounter++;
-                    //Console.WriteLine($"Kante von {pos.toString()} zu {targetPos.toString()} hinzugefügt.");
+                    if (debug)
+                    {
+                        Console.WriteLine($"Kante von {pos.toString()} zu {targetPos.toString()} hinzugefügt.");
+                    }
                     if (isNewPos == null || pos.detectivesTurn) // Wenn NextPos neu oder Detektive sich nicht bewegen
                     {
                         buildIterativGameTree(targetPos); //rekursiver Aufruf
@@ -91,10 +102,16 @@ namespace EntaglementOfGraphs
                     var nextPossibleSteps = graph.getNextPossibleSteps(previousPos);
                     foreach (var vertex in nextPossibleSteps) 
                     {
-                        //Console.WriteLine($"Position {previousPos.toString()} führt zu {vertex.toString()}");
+                        if (debug)
+                        {
+                            Console.WriteLine($"Position {previousPos.toString()} führt zu {vertex.toString()}");
+                        }
                         if (!containsPosition(vertex)) 
                         {
-                            //Console.WriteLine($"Position {previousPos.toString()} führt nicht sicher zu sieg");
+                            if (debug)
+                            {
+                                Console.WriteLine($"Position {previousPos.toString()} führt nicht sicher zu sieg");
+                            }
                             addingPreviousPos = false;
                             continue;
                         }
@@ -108,13 +125,19 @@ namespace EntaglementOfGraphs
                     {
                         AddVertex(previousPos);
                         vertexCounter++;
-                        //Console.WriteLine($"Knoten hinzugefügt: {previousPos.toString()}");
+                        if (debug)
+                        {
+                            Console.WriteLine($"Knoten hinzugefügt: {previousPos.toString()}");
+                        }
                     }
 
                     var sourcePos = isExistingPos ?? previousPos; // wenn nextPos nicht neu, alte vorhandene Pos benutzen
                     AddEdge(new Edge<Positions<V>>(sourcePos, currentPos));
                     edgeCounter++;
-                    //Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
+                    if (debug)
+                    {
+                        Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
+                    }
                     if (isExistingPos == null) // Wenn NextPos neu
                     {
                         buildRecursiveGameTree(sourcePos); //rekursiver Aufruf
@@ -176,8 +199,14 @@ namespace EntaglementOfGraphs
                         var emptyPos = graph.Vertices.Except(outgoingVertices).ToList();
                         tempState.detectives.Add(emptyPos[i]);
                     }
-                    result.Add(tempState);
-                    //addAllDetektives(tempState, outgoingVertices, result);
+                    if (tempState.detectives.Count == outgoingVerticesCount)
+                    {
+                        result.Add(tempState);
+                    }
+                    else
+                    {
+                        addAllDetektives(tempState, outgoingVertices, result);
+                    }
                 }
             }
             return result;
@@ -185,7 +214,7 @@ namespace EntaglementOfGraphs
 
         private void addAllDetektives(Positions<V> pos, List<V> blockedVertices, List<Positions<V>> result)
         {
-            
+            var temp = blockedVertices.ToArray().ToList();   
             foreach (var vertex in graph.Vertices.Except(blockedVertices)) //Konten die noch frei sind
             {               
                 var finalState = pos.clone();
@@ -198,7 +227,8 @@ namespace EntaglementOfGraphs
                 else
                 {
                     addAllDetektives(finalState, blockedVertices, result);
-                }                
+                }
+                blockedVertices = temp;
             }
         }
     }

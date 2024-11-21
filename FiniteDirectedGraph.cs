@@ -11,6 +11,7 @@ namespace EntaglementOfGraphs
 {
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
+        bool debug = false;
         /// <summary>
         /// Konstruktor für Grapherstellung
         /// </summary>
@@ -78,7 +79,10 @@ namespace EntaglementOfGraphs
                 {
                     gameTree.AddVertex(finalState);
                     gameTree.vertexCounter++;
-                    //Console.WriteLine($"Endknoten hinzugefügt: {finalState.toString()}");                    
+                    if (debug)
+                    {
+                        Console.WriteLine($"Endknoten hinzugefügt: {finalState.toString()}");
+                    }
                 }
 
                 foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
@@ -86,7 +90,10 @@ namespace EntaglementOfGraphs
                     if (gameTree.OutEdges(startPos).Count() == 0)
                     {
                         gameTree.buildRecursiveGameTree(finalState);
-                        //Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameTree.OutEdges(startPos).Count()}");
+                        if (debug)
+                        {
+                            Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameTree.OutEdges(startPos).Count()}");
+                        }
                     }
                 }
                 return gameTree;
@@ -181,7 +188,6 @@ namespace EntaglementOfGraphs
 
         public int minEntanglement(V startPosOfThief)
         {
-            Console.WriteLine(VertexCount);
             for (int i = 0; i <= VertexCount; i++)
             {
                 if (isEntanglement(new Positions<V>(i, startPosOfThief, true)))

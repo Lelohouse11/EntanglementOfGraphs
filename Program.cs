@@ -29,7 +29,7 @@ To-Dos:
 
         if (false)
         {
-            var testGraph = new TorusGraph(2, 3);
+            var testGraph = new TorusGraph(3, 3);
             Console.WriteLine("-------------------------------------------------------------");
             var testGraphEnt = testGraph.isEntanglement(new Positions<TorusVertex>(3,new TorusVertex(0,0),true));
             //Console.WriteLine(testGraph.createDot());
@@ -37,9 +37,9 @@ To-Dos:
         }
         else
         {
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 5; i++)
             {
-                for (int j = 1; j <= 3; j++)
+                for (int j = 1; j <= 5; j++)
                 {
                     var testGraphEnt = new TorusGraph(i, j).minEntanglement(new TorusVertex(0, 0));
                     if (i == j)
