@@ -27,13 +27,13 @@ To-Dos:
     private static void Main(string[] args)
     {
 
-        if (false)
+        if (true)
         {
-            var testGraph = new TorusGraph(3, 3);
+            var testGraph = new TorusGraph(1, 2);
             Console.WriteLine("-------------------------------------------------------------");
-            var testGraphEnt = testGraph.isEntanglement(new Positions<TorusVertex>(3,new TorusVertex(0,0),true));
+            var testGraphEnt = testGraph.getGameTree(new Positions<TorusVertex>(2, new TorusVertex(0, 0), true),GameTreeTyp.Fixpoint);
             //Console.WriteLine(testGraph.createDot());
-            Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}");
+            Console.WriteLine($"GameTree erfolgreich erstellt");
         }
         else
         {

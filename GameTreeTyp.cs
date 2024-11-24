@@ -9,7 +9,7 @@ namespace EntaglementOfGraphs
     internal enum GameTreeTyp
     {
         Iterativ,
-        Recursiv,
-        Fixpoint 
+        Rekursiv,
+        Fixpoint
     }
 }

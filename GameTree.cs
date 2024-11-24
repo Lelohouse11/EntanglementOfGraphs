@@ -12,7 +12,7 @@ namespace EntaglementOfGraphs
     // Testing durch Torus grapgen seite 2
     internal class GameTree<V> : AdjacencyGraph<Positions<V>, Edge<Positions<V>>> where V : IComparable<V>, IEquatable<V>
     {
-        bool debug = false;
+        bool debug = true;
 
         public int vertexCounter = 1;
         public int edgeCounter = 0;
@@ -25,7 +25,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="_graph"></param>
         /// <param name="startPos"></param>
-        public GameTree(FiniteDirectedGraph<V> _graph, Positions<V> startPos) 
+        public GameTree(FiniteDirectedGraph<V> _graph, Positions<V> startPos)
         {
             AddVertex(startPos);
             startPosition = startPos;
@@ -36,6 +36,7 @@ namespace EntaglementOfGraphs
                 Console.WriteLine($"Startknoten hinzugefügt: {startPos.toString()}");
             }
         }
+
         /// <summary>
         /// erstellt String von .dot Datei für spätere Visualisierung
         /// </summary>
@@ -80,7 +81,7 @@ namespace EntaglementOfGraphs
                     {
                         buildIterativGameTree(targetPos); //rekursiver Aufruf
                     }
-                    
+
                 }
             }
             return this;
@@ -91,7 +92,7 @@ namespace EntaglementOfGraphs
         /// dass er sicher gewinnt
         /// </summary>
         /// <param name="currentPos"></param>
-        public void buildRecursiveGameTree(Positions<V> currentPos) //fügt noch doppelte knoten hinzu und funktioniert bei Zyklen noch nicht richtig
+        public void buildRecursiveGameTree(Positions<V> currentPos)
         {
             var previousPossibleSteps = graph.getPreviousPossibleSteps(currentPos);
             foreach (var previousPos in previousPossibleSteps) // gehe die vorig möglichen Spielzustände durch
@@ -100,13 +101,13 @@ namespace EntaglementOfGraphs
                 if (!previousPos.detectivesTurn) //wenn der Deib dran ist muss jeder möglicher Zug schon im GameTree gespeichert sein
                 {
                     var nextPossibleSteps = graph.getNextPossibleSteps(previousPos);
-                    foreach (var vertex in nextPossibleSteps) 
+                    foreach (var vertex in nextPossibleSteps)
                     {
                         if (debug)
                         {
                             Console.WriteLine($"Position {previousPos.toString()} führt zu {vertex.toString()}");
                         }
-                        if (!containsPosition(vertex)) 
+                        if (!containsPosition(vertex))
                         {
                             if (debug)
                             {
@@ -143,8 +144,123 @@ namespace EntaglementOfGraphs
                         buildRecursiveGameTree(sourcePos); //rekursiver Aufruf
                     }
                 }
-            }        
+            }
         }
+
+        /// <summary>
+        /// baut den GameTree durch eine Fixpointiteration auf
+        /// </summary>
+        public void buildFixpointGameTree()
+        {
+            var possibleConnections = new List<(Positions<V>, Positions<V>)>();
+            var temp = new List<Positions<V>>();
+            bool continueFixpoint = false;
+            var allVertices = Vertices.ToList();
+            foreach (var currentPos in allVertices)
+            {
+                if (!currentPos.detectivesTurn) //wenn detektiv vorher dran war wird alles hinzugefügt
+                {
+                    foreach (var previousPos in graph.getPreviousPossibleSteps(currentPos)) // alle Knoten
+                    {
+                        var isNewVertex = getExistingPosition(previousPos); //checken ob schon vorhandener Knoten
+                        if (isNewVertex == null)
+                        {
+                            AddVertex(previousPos); // Hinzufügen, wenn neu
+                            if (debug)
+                            {
+                                Console.WriteLine($"Knoten hinzugefügt: {previousPos.toString()}");
+                            }
+                            continueFixpoint = true;
+                        }
+                        var sourcePos = isNewVertex ?? previousPos;
+                        AddEdge(new Edge<Positions<V>>(sourcePos, currentPos)); // Kante hinzufügen
+                        if (debug)
+                        {
+                            Console.WriteLine($"Kante von {sourcePos.toString()} zu {currentPos.toString()} hinzugefügt.");
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var previousPos in graph.getPreviousPossibleSteps(currentPos)) // alle Knoten
+                    {
+                        var isNewVertex = getExistingPosition(previousPos); //checken ob schon vorhandener Knoten
+                        if (isNewVertex == null)
+                        {
+                            possibleConnections.Add((previousPos, currentPos)); // Hinzufügen, wenn neu
+                            temp.Add(previousPos);
+                            continueFixpoint = true;
+                        }
+                    }
+                }
+            }
+            if (continueFixpoint) // erste verbindungen hinzufügen, die inerhalb von possibleConnections noch bestehen,
+                                  // dann gucken ob alle next possible steps in GameTree oder Temp sind.
+                                  // Wenn ja drin lassen
+                                  // Wenn nein, aus liste löschen und alle vorgänger die in possibleConnections sind auch
+                                  // Wenn mit oben fertig, dann alle von possibleConnections in GameTree einfügen
+            {
+                continueFixpoint = false ;
+                bool winningPreviousPos = true;
+                Console.WriteLine("-----While-Schleife betreten!-----");
+                while (winningPreviousPos) // Iteriert solange durch die Liste, bis keine Änderungen mehr vorgenohmen werden, da dann alle Konten sicher gewinnen
+                {
+                    var temp2 = temp.ToArray().ToList(); // Liste zum Überprüfen der Änderung
+                    foreach (var previousPos in temp)
+                    {
+                        foreach (var targetVertex in graph.getNextPossibleSteps(previousPos)) // checkt, ob alle ausgehenden Kanten wieder in den GameTree führen
+                        {
+                            if (!(containsPosition(targetVertex) || temp.Contains(targetVertex)))
+                            {
+                                temp.Remove(targetVertex);
+                            }
+                        }                        
+                    }
+                    foreach (var tempItem in temp)
+                    {
+                        foreach (var temp2Item in temp2)
+                        {
+                            if (tempItem.Equals(temp2Item))
+                            {
+                                winningPreviousPos = false;
+                                Console.WriteLine("-----Keine Änderung mehr Festgestellt, Schleife wird verlassen!-----");
+                                continue;
+                            }
+                        }
+                    }                    
+                }
+                foreach (var vertex in temp) // fügt alle sicheren Knoten hinzu
+                {
+                    AddVertex(vertex);
+                    if (debug)
+                    {
+                        Console.WriteLine($"Knoten hinzugefügt: {vertex.toString()}");
+                    }
+                    continueFixpoint = true;
+                }
+                foreach(var vertex in temp) //fügt zu den Knoten alle Edges hinzu
+                {
+                    foreach(var targetVertex in graph.getNextPossibleSteps(vertex))
+                    {
+                        AddEdge(new Edge<Positions<V>>(vertex, targetVertex));
+                        if (debug)
+                        {
+                            Console.WriteLine($"Kante von {vertex.toString()} zu {targetVertex.toString()} hinzugefügt.");
+                        }
+                    }
+                }
+            }
+            if (continueFixpoint)
+            {
+                buildFixpointGameTree();
+            }
+            else 
+            {
+                Console.WriteLine("----------Keine neuen Knoten mehr gefunden!----------");
+            }
+        }
+
+    
 
 
         /// <summary>
@@ -160,7 +276,6 @@ namespace EntaglementOfGraphs
             }
             return false;
         }
-
 
         /// <summary>
         /// gibt schon vorhandene Position zurück, wenn Position doppelt
@@ -212,6 +327,12 @@ namespace EntaglementOfGraphs
             return result;
         }
 
+        /// <summary>
+        /// Hilfsfunktion für FinalStates um alle möglichen freien Detektive zu positioniernen
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="blockedVertices"></param>
+        /// <param name="result"></param>
         private void addAllDetektives(Positions<V> pos, List<V> blockedVertices, List<Positions<V>> result)
         {
             var temp = blockedVertices.ToArray().ToList();   
