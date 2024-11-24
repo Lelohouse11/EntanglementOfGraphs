@@ -11,7 +11,7 @@ namespace EntaglementOfGraphs
 {
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
-        readonly bool debug = true;
+        readonly bool debug = false;
 
         /// <summary>
         /// Konstruktor für Grapherstellung
@@ -93,7 +93,7 @@ namespace EntaglementOfGraphs
                 {
                     if (gameTree.OutEdges(startPos).Count() == 0)
                     {
-                        gameTree.buildRecursiveGameTree(finalState);
+                        gameTree.buildRecursiveGameTree(finalState,1);
                         if (debug)
                         {
                             Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameTree.OutEdges(startPos).Count()}");
@@ -113,6 +113,7 @@ namespace EntaglementOfGraphs
                     }
                 }
                 gameTree.buildFixpointGameTree();
+                return gameTree;
             }
             return null;
         }
@@ -205,7 +206,10 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public bool isEntanglement(Positions<V> startPos)
         {
-            return getGameTree(startPos, GameTreeTyp.Rekursiv)?.OutEdges(startPos).Any() ?? false;
+            var gameTree =getGameTree(startPos, GameTreeTyp.Fixpoint);
+            //Console.WriteLine(gameTree.OutEdges(startPos).Count());
+            return gameTree.OutEdges(startPos).Any();
+
         }
 
         /// <summary>
