@@ -30,6 +30,9 @@ namespace EntaglementOfGraphs
             }
         }
 
+        /// <summary>
+        /// Konstruktor für andere Graphenklassen
+        /// </summary>
         public FiniteDirectedGraph()
         {
 
@@ -65,14 +68,14 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="startPos"></param>
         /// <returns></returns>
-        public GameTree<V> getGameTree(Positions<V> startPos, bool gameTreeTyp)
+        public GameTree<V>? getGameTree(Positions<V> startPos, GameTreeTyp gameTreeTyp)
         {
             var gameTree = new GameTree<V>(this, startPos);
-            if (gameTreeTyp) //wenn ierativer Aufbau
+            if (gameTreeTyp == GameTreeTyp.Iterativ) //wenn iterativer Aufbau
             {
                 return gameTree.buildIterativGameTree(startPos);
             }
-            else // wenn rekursiver Aufbau
+            else if (gameTreeTyp == GameTreeTyp.Recursiv) // wenn rekursiver Aufbau
             {
                 var finalStates = gameTree.getPossibleFinalStates();
                 foreach (var finalState in finalStates) //fügt alle möglichen Endzustände hinzu
@@ -98,6 +101,11 @@ namespace EntaglementOfGraphs
                 }
                 return gameTree;
             }
+            else if (gameTreeTyp == GameTreeTyp.Fixpoint)
+            {
+                //ToDo: fixpoint iteration
+            }
+            return null;
         }
 
         /// <summary>
@@ -136,6 +144,11 @@ namespace EntaglementOfGraphs
             return result;
         }
 
+        /// <summary>
+        /// gibt alle möglichen vorigen Spielzüge zurück
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public List<Positions<V>> getPreviousPossibleSteps(Positions<V> pos) 
         {
             List <Positions<V>> result = [];
@@ -183,19 +196,25 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public bool isEntanglement(Positions<V> startPos)
         {
-            return getGameTree(startPos,false).OutEdges(startPos).Count() != 0;            
+            return getGameTree(startPos, GameTreeTyp.Recursiv).OutEdges(startPos).Any();  
+            // Wenn Edge von Startknoten gefunden wurde gibt es einen sicheren Weg zu gewinnen         
         }
 
-        public int minEntanglement(V startPosOfThief)
+        /// <summary>
+        /// Berechnet minimales Entanglemnet
+        /// </summary>
+        /// <param name="startPosOfThief"></param>
+        /// <returns></returns>
+        public int? minEntanglement(V startPosOfThief)
         {
-            for (int i = 0; i <= VertexCount; i++)
+            for (int i = 0; i <= VertexCount; i++) // geht von 0 bis Anzahl an Knoten
             {
-                if (isEntanglement(new Positions<V>(i, startPosOfThief, true)))
+                if (isEntanglement(new Positions<V>(i, startPosOfThief, true))) //prüft Entanglment
                 {
-                    return i;
+                    return i; //minimalstes Entanglement
                 }
             }
-            return -1;
+            return null; // Fehler wenn kein Entanglement gefunden wurde
         }
     }
 }

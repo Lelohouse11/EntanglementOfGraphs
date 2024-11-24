@@ -10,11 +10,17 @@ namespace EntaglementOfGraphs
     internal class TorusGraph : FiniteDirectedGraph<TorusVertex>
     {
         bool debug = false;
+
+        /// <summary>
+        /// erstellt mxn Torus Graph
+        /// </summary>
+        /// <param name="mTorus"></param>
+        /// <param name="nTorus"></param>
         public TorusGraph(int mTorus, int nTorus)
         {
-            for (int i = 0; i < mTorus; i++)
+            for (int i = 0; i < mTorus; i++) // m Knoten
             {
-                for (int j = 0; j < nTorus; j++)
+                for (int j = 0; j < nTorus; j++) // n Knoten
                 {
                     AddVertex(new TorusVertex(i, j));
                     if (debug)
@@ -24,13 +30,14 @@ namespace EntaglementOfGraphs
                 }
             }
             
-            foreach (var vertex in Vertices)
+            foreach (var vertex in Vertices) // fügt Edges Hinzu
             {
                 foreach (var nextVertex in Vertices)
                 {
                     if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && (vertex.ErsterWert + 1) == nextVertex.ErsterWert) || //bewegung auf ersten Graphen einen weiter auf Kreis
                        ((vertex.ErsterWert == nextVertex.ErsterWert) && (vertex.ZweiterWert + 1) == nextVertex.ZweiterWert))    //bewegung auf zweiten Graphen einen weiter auf Kreis
                     {
+                        // Folgender Knoten im Kreis
                         AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
 
                         if (debug)
@@ -41,6 +48,7 @@ namespace EntaglementOfGraphs
                     else if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (mTorus-1) && (nextVertex.ErsterWert == 0)) || //Endpunkt mit Anfangspunkt verbinden
                        ((vertex.ErsterWert == nextVertex.ErsterWert) && vertex.ZweiterWert == (nTorus - 1) && (nextVertex.ZweiterWert == 0)))
                     {
+                        // Endender Knoten wird mit Anfangsknoten verbunden
                         AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
 
                         if (debug)

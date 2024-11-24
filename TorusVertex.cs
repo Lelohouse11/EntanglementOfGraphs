@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
+    /// <summary>
+    /// Sturktur für Torusknoten (x,x)
+    /// </summary>
     public struct TorusVertex : IComparable<TorusVertex>, IEquatable<TorusVertex>
     {
         public int ErsterWert { get; set; }
