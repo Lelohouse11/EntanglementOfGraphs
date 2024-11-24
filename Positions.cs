@@ -80,7 +80,7 @@ namespace EntaglementOfGraphs
         }
 
 
-        public bool Equals(Positions<V> other)
+        public bool equals(Positions<V> other)
         {
             if (!other.thief.Equals(thief)) return false;
             if (other.detectivesTurn != detectivesTurn) return false;
