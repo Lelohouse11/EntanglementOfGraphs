@@ -11,7 +11,7 @@ namespace EntaglementOfGraphs
 {
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
-        readonly bool debug = false;
+        private readonly bool debug = false;
 
         /// <summary>
         /// Konstruktor für Grapherstellung
@@ -43,7 +43,7 @@ namespace EntaglementOfGraphs
         /// erstellt String von .dot Datei für spätere Visualisierung
         /// </summary>
         /// <returns></returns>
-        public String createDot()
+        public String CreateDot()
         {
             var graphviz = new GraphvizAlgorithm<V, Edge<V>>(this);
             return graphviz.Generate();
@@ -54,7 +54,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public List<V> getOutgoingVertex(V vertex)
+        public List<V> GetOutgoingVertex(V vertex)
         {
             List<V> result = [];
             foreach (var edge in this.OutEdges(vertex))
@@ -69,31 +69,31 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="startPos"></param>
         /// <returns></returns>
-        public GameTree<V>? getGameTree(Positions<V> startPos, GameTreeTyp gameTreeTyp)
+        public GameTree<V> GetGameTree(Positions<V> startPos, GameTreeTyp gameTreeTyp)
         {
             var gameTree = new GameTree<V>(this, startPos);
             if (gameTreeTyp == GameTreeTyp.Iterativ) //wenn ierativer Aufbau
             {
-                return gameTree.buildIterativGameTree(startPos);
+                return gameTree.BuildIterativGameTree(startPos);
             }
             else if (gameTreeTyp == GameTreeTyp.Rekursiv) // wenn rekursiver Aufbau
             {
-                var finalStates = gameTree.getPossibleFinalStates();
+                var finalStates = gameTree.GetPossibleFinalStates();
                 foreach (var finalState in finalStates) //fügt alle möglichen Endzustände hinzu
                 {
                     gameTree.AddVertex(finalState);
                     gameTree.vertexCounter++;
                     if (debug)
                     {
-                        Console.WriteLine($"Endknoten hinzugefügt: {finalState.toString()}");
+                        Console.WriteLine($"Endknoten hinzugefügt: {finalState}");
                     }
                 }
 
                 foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
                 {
-                    if (gameTree.OutEdges(startPos).Count() == 0)
+                    if (!gameTree.OutEdges(startPos).Any())
                     {
-                        gameTree.buildRecursiveGameTree(finalState,1);
+                        gameTree.BuildRecursiveGameTree(finalState,1);
                         if (debug)
                         {
                             Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameTree.OutEdges(startPos).Count()}");
@@ -104,18 +104,18 @@ namespace EntaglementOfGraphs
             }
             else if (gameTreeTyp == GameTreeTyp.Fixpoint)
             {
-                foreach (var vertex in gameTree.getPossibleFinalStates())
+                foreach (var vertex in gameTree.GetPossibleFinalStates())
                 {
                     gameTree.AddVertex(vertex);
                     if (debug)
                     {
-                        Console.WriteLine($"Endknoten hinzugefügt: {vertex.toString()}");
+                        Console.WriteLine($"Endknoten hinzugefügt: {vertex}");
                     }
                 }
-                gameTree.buildFixpointGameTree();
+                gameTree.BuildFixpointGameTree();
                 return gameTree;
             }
-            return null;
+            return gameTree;
         }
 
         /// <summary>
@@ -123,31 +123,31 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public List<Positions<V>> getNextPossibleSteps(Positions<V> pos)
+        public List<Positions<V>> GetNextPossibleSteps(Positions<V> pos)
         {
             List<Positions<V>> result = [];
 
             if (pos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
             {
-                result.Add(pos.changeTurn());
+                result.Add(pos.ChangeTurn());
                 if (pos.detectiveAmount > pos.detectives.Count)
                 {
-                    result.Add(pos.clone().moveDetective(default(V)).changeTurn());
+                    result.Add(pos.Clone().MoveDetective(default).ChangeTurn());
                 }
                 foreach (var detective in pos.detectives) // gehe jeden möglichen Move der Detectives durch
                 {
-                    result.Add(pos.clone().moveDetective(detective).changeTurn());
+                    result.Add(pos.Clone().MoveDetective(detective).ChangeTurn());
                 }
             }
             else
             {
-                List<V> possibleMoves = getOutgoingVertex(pos.thief).Except(pos.detectives.ToList()).ToList(); // mögliche Züge des Diebes
+                List<V> possibleMoves = GetOutgoingVertex(pos.thief).Except(pos.detectives.ToList()).ToList(); // mögliche Züge des Diebes
 
                 if (possibleMoves.Count != 0) //prüft ob Züge möglich sind
                 {
                     for (int i = 0; i < possibleMoves.Count; i++) // geht jeden möglichen Zug
                     {
-                        result.Add(pos.clone().moveThief(possibleMoves[i]).changeTurn());
+                        result.Add(pos.Clone().MoveThief(possibleMoves[i]).ChangeTurn());
                     }
                 }
             }
@@ -159,7 +159,7 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public List<Positions<V>> getPreviousPossibleSteps(Positions<V> pos) 
+        public List<Positions<V>> GetPreviousPossibleSteps(Positions<V> pos) 
         {
             List <Positions<V>> result = [];
 
@@ -169,7 +169,7 @@ namespace EntaglementOfGraphs
                 {
                     if (edge.Target.Equals(pos.thief)) // alle möglichen Knoten von den der Dieb kommen kann
                     {
-                        var previousPos = pos.clone().changeTurn();
+                        var previousPos = pos.Clone().ChangeTurn();
                         previousPos.thief = edge.Source;
                         result.Add(previousPos); // werden zum Result hinzugefügt
                     }
@@ -179,12 +179,12 @@ namespace EntaglementOfGraphs
             {
                 if (pos.detectives.Contains(pos.thief)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
                 {
-                    var previousPos = pos.clone().changeTurn();
+                    var previousPos = pos.Clone().ChangeTurn();
                     previousPos.detectives.Remove(pos.thief);                    
                     result.Add(previousPos);
                     foreach (var vertex in Vertices.Except(pos.detectives.ToList())) //bewegt den Dieb zu jedem möglichen Knoten
                     {
-                        previousPos = pos.clone().changeTurn();
+                        previousPos = pos.Clone().ChangeTurn();
                         previousPos.detectives.Remove(pos.thief);
                         previousPos.detectives.Add(vertex);
                         result.Add(previousPos);
@@ -193,7 +193,7 @@ namespace EntaglementOfGraphs
                 }
                 else // Diebe haben sich nicht bewegt
                 {
-                    result.Add(pos.clone().changeTurn()); // gleiche Position wird hinzugefügt, nur mit der Info das Dieb dran war
+                    result.Add(pos.Clone().ChangeTurn()); // gleiche Position wird hinzugefügt, nur mit der Info das Dieb dran war
                 }
             }
             return result;
@@ -204,9 +204,9 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="startPos"></param>
         /// <returns></returns>
-        public bool isEntanglement(Positions<V> startPos)
+        public bool IsEntanglement(Positions<V> startPos)
         {
-            var gameTree =getGameTree(startPos, GameTreeTyp.Fixpoint);
+            var gameTree = GetGameTree(startPos, GameTreeTyp.Fixpoint);
             //Console.WriteLine(gameTree.OutEdges(startPos).Count());
             return gameTree.OutEdges(startPos).Any();
 
@@ -217,11 +217,11 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="startPosOfThief"></param>
         /// <returns></returns>
-        public int? minEntanglement(V startPosOfThief)
+        public int? MinEntanglement(V startPosOfThief)
         {
             for (int i = 0; i <= VertexCount; i++) // geht von 0 bis Anzahl an Knoten
             {
-                if (isEntanglement(new Positions<V>(i, startPosOfThief, true))) //prüft Entanglment
+                if (IsEntanglement(new Positions<V>(i, startPosOfThief, true))) //prüft Entanglment
                 {
                     return i; //minimalstes Entanglement
                 }

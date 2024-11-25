@@ -31,7 +31,7 @@ To-Dos:
         {
             var testGraph = new TorusGraph(2, 2);
             Console.WriteLine("-------------------------------------------------------------");
-            var gameTree = testGraph.getGameTree(new Positions<TorusVertex>(2,new TorusVertex(0, 0),true), GameTreeTyp.Fixpoint);
+            var gameTree = testGraph.GetGameTree(new Positions<TorusVertex>(2,new TorusVertex(0, 0),true), GameTreeTyp.Fixpoint);
             //var testGraphEnt = testGraph.isEntanglement(new Positions<TorusVertex>(4, new TorusVertex(0, 0), true));
             //Console.WriteLine(testGraph.createDot());
             //Console.WriteLine($"Entanglement ist : {testGraphEnt}");
@@ -42,7 +42,7 @@ To-Dos:
             {
                 for (int j = 1; j <= 5; j++)
                 {
-                    var testGraphEnt = new TorusGraph(i, j).minEntanglement(new TorusVertex(0, 0));
+                    var testGraphEnt = new TorusGraph(i, j).MinEntanglement(new TorusVertex(0, 0));
                     if (i == j)
                     {
                         Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == i}");

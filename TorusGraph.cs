@@ -9,7 +9,7 @@ namespace EntaglementOfGraphs
 {
     internal class TorusGraph : FiniteDirectedGraph<TorusVertex>
     {
-        bool debug = false;
+        private readonly bool debug = false;
 
         /// <summary>
         /// erstellt mxn Torus Graph
@@ -42,7 +42,7 @@ namespace EntaglementOfGraphs
 
                         if (debug)
                         {
-                            Console.WriteLine($"Kante von {vertex.ToString()} zu {nextVertex.ToString()} hinzugefügt.");
+                            Console.WriteLine($"Kante von {vertex} zu {nextVertex} hinzugefügt.");
                         }
                     }                    
                     else if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (mTorus-1) && (nextVertex.ErsterWert == 0)) || //Endpunkt mit Anfangspunkt verbinden
@@ -53,7 +53,7 @@ namespace EntaglementOfGraphs
 
                         if (debug)
                         {
-                            Console.WriteLine($"Kante von {vertex.ToString()} zu {nextVertex.ToString()} hinzugefügt.");
+                            Console.WriteLine($"Kante von {vertex} zu {nextVertex} hinzugefügt.");
                         }
                     }
                     

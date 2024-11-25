@@ -9,17 +9,11 @@ namespace EntaglementOfGraphs
     /// <summary>
     /// Sturktur für Torusknoten (x,x)
     /// </summary>
-    public struct TorusVertex : IComparable<TorusVertex>, IEquatable<TorusVertex>
+    public struct TorusVertex(int ersterWert, int zweiterWert) : IComparable<TorusVertex>, IEquatable<TorusVertex>
     {
-        public int ErsterWert { get; set; }
+        public int ErsterWert { get; set; } = ersterWert;
 
-        public int ZweiterWert { get; set; }
-
-        public TorusVertex(int ersterWert, int zweiterWert)
-        {
-            ErsterWert = ersterWert;
-            ZweiterWert = zweiterWert;
-        }
+        public int ZweiterWert { get; set; } = zweiterWert;
 
         public int CompareTo(TorusVertex other)
         {
