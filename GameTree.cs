@@ -2,6 +2,7 @@
 using QuikGraph.Graphviz;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -227,7 +228,7 @@ namespace EntaglementOfGraphs
             return (goOn,startPosReached);
         }
 
-    
+
 
 
         /// <summary>
@@ -237,25 +238,31 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public bool ContainsPosition(Positions<V> pos)
         {
+            return Vertices.AsParallel().Any(p => p.Equals(pos));
+            /*
             foreach (var p in Vertices)
             {
                 if (p.Equals(pos)) return true;
             }
             return false;
+            */
         }
 
-        /// <summary>
-        /// gibt schon vorhandene Position zurück, wenn Position doppelt
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <returns></returns>
+    /// <summary>
+    /// gibt schon vorhandene Position zurück, wenn Position doppelt
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
         public Positions<V>? GetExistingPosition(Positions<V> pos)
         {
+            return Vertices.AsParallel().FirstOrDefault(p => p.Equals(pos));
+            /*
             foreach (var p in Vertices)
             {
                 if (p.Equals(pos)) return p;
             }
             return null;
+            */
         }
         
         /// <summary>
