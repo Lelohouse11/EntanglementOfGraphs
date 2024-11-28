@@ -34,10 +34,7 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// Konstruktor für andere Graphentypen
         /// </summary>
-        public FiniteDirectedGraph()
-        {
-
-        } 
+        public FiniteDirectedGraph(){} 
         
         /// <summary>
         /// erstellt String von .dot Datei für spätere Visualisierung
@@ -65,9 +62,10 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// erstellt einen GameTree (kompleter Spielverlauf)
+        /// erstellt einen GameTree (Spielverlauf) auf verschiedene Art und Weisen
         /// </summary>
         /// <param name="startPos"></param>
+        /// <param name="gameTreeTyp"></param>
         /// <returns></returns>
         public GameTree<V> GetGameTree(Positions<V> startPos, GameTreeTyp gameTreeTyp)
         {
@@ -82,18 +80,16 @@ namespace EntaglementOfGraphs
                 foreach (var finalState in finalStates) //fügt alle möglichen Endzustände hinzu
                 {
                     gameTree.AddVertex(finalState);
-                    gameTree.vertexCounter++;
                     if (debug)
                     {
                         Console.WriteLine($"Endknoten hinzugefügt: {finalState}");
                     }
                 }
-
                 foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
                 {
                     if (!gameTree.OutEdges(startPos).Any())
                     {
-                        gameTree.BuildRecursiveGameTree(finalState,1);
+                        gameTree.BuildRecursiveGameTree(finalState);
                         if (debug)
                         {
                             Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameTree.OutEdges(startPos).Count()}");
@@ -206,7 +202,7 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public bool IsEntanglement(Positions<V> startPos)
         {
-            var gameTree = GetGameTree(startPos, GameTreeTyp.Fixpoint);
+            var gameTree = GetGameTree(startPos, GameTreeTyp.Rekursiv);
             //Console.WriteLine(gameTree.OutEdges(startPos).Count());
             return gameTree.OutEdges(startPos).Any();
 
