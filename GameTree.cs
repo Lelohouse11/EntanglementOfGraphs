@@ -1,5 +1,4 @@
 ﻿using QuikGraph;
-using QuikGraph.Graphviz;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -39,11 +38,11 @@ namespace EntaglementOfGraphs
         /// erstellt String von .dot Datei für spätere Visualisierung
         /// </summary>
         /// <returns></returns>
-        public String CreateDot()
-        {
-            var graphviz = new GraphvizAlgorithm<Positions<V>, Edge<Positions<V>>>(this);
-            return graphviz.Generate();
-        }
+        //public String CreateDot()
+        //{
+        //    var graphviz = new GraphvizAlgorithm<Positions<V>, Edge<Positions<V>>>(this);
+        //    return graphviz.Generate();
+        //}
 
         /// <summary>
         /// verbindet alle gefundenen Iterationen des Gametrees zu GameTree

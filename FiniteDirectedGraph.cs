@@ -1,8 +1,10 @@
-﻿using QuikGraph;
+﻿using Microsoft.Msagl.Drawing;
+using QuikGraph;
 using QuikGraph.Algorithms;
-using QuikGraph.Graphviz;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,15 +38,48 @@ namespace EntaglementOfGraphs
         /// </summary>
         public FiniteDirectedGraph(){} 
         
+
+        public Microsoft.Msagl.Drawing.Graph CreateMsagl()
+        {
+            var msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
+            msaglGraph.AddNode("-1");
+            foreach (var edge in Edges)
+            {
+                msaglGraph.AddEdge(edge.Source.ToString(),edge.Target.ToString());
+            }
+            return msaglGraph;
+        }
         /// <summary>
         /// erstellt String von .dot Datei für spätere Visualisierung
         /// </summary>
         /// <returns></returns>
-        public String CreateDot()
+        public void CreateImage()
         {
-            var graphviz = new GraphvizAlgorithm<V, Edge<V>>(this);
-            return graphviz.Generate();
+            Microsoft.Msagl.Drawing.Graph msaglGraph = this.CreateMsagl();   
+            
+            Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+            renderer.CalculateLayout();
+            int width = 50;
+            Bitmap bitmap = new Bitmap(width, (int)(msaglGraph.Height * (width / msaglGraph.Width)), PixelFormat.Format32bppPArgb);
+            renderer.Render(bitmap);
+            bitmap.Save("test.png");
         }
+
+        protected Microsoft.Msagl.Drawing.Graph msaglGraph;
+        protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer;
+
+        public void CreateImage(PictureBox pb)
+        {
+            msaglGraph = this.CreateMsagl();
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+            renderer.CalculateLayout();
+        }
+
+        public void DrawImage(Graphics g,PictureBox pb)
+        {
+              renderer.Render(g, pb.ClientRectangle);
+        }
+
 
         /// <summary>
         /// gibt die ereichbaren Knoten von einem anderen Knoten zurück

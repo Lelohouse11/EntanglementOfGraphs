@@ -1,62 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using EntaglementOfGraphs;
-using QuikGraph;
-using QuikGraph.Graphviz;
-using static QuikGraph.Algorithms.Assignment.HungarianAlgorithm;
+using System.Diagnostics;
 
-internal class Program
+namespace EntanglementOfGraphs
 {
-
-
-/*
-To-Dos:
-- ixi richtig aber ixj immer ein zu wenig
-- fixpoint itteration impl.
-- weitere Klasse an grahen zum testen finden
-- was passiert wenn Torus graph x torrus Graph
-
-*/
-    private static void Main(string[] args)
+    internal static class Program
     {
-
-        if (false)
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            var testGraph = new TorusGraph(2, 2);
-            Console.WriteLine("-------------------------------------------------------------");
-            var gameTree = testGraph.GetGameTree(new Positions<TorusVertex>(2,new TorusVertex(0, 0),true), GameTreeTyp.Fixpoint);
-            //var testGraphEnt = testGraph.isEntanglement(new Positions<TorusVertex>(4, new TorusVertex(0, 0), true));
-            //Console.WriteLine(testGraph.createDot());
-            //Console.WriteLine($"Entanglement ist : {testGraphEnt}");
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Form1());
         }
-        else
-        {
-            for (int i = 1; i <= 5; i++)
-            {
-                for (int j = 1; j <= 5; j++)
-                {
-                    var testGraphEnt = new TorusGraph(i, j).MinEntanglement(new TorusVertex(0, 0));
-                    if (i == j)
-                    {
-                        Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == i}");
-                        Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {i}");
-                    }
-                    else
-                    {
-                        int temp = int.Min(i, j) + 1;
-                        Console.WriteLine($"Teste {i}x{j} Torrus Graph auf korrektes Entanglement: {testGraphEnt == temp}");
-                        Console.WriteLine($"Ausgerechnetes Entamglement ist: {testGraphEnt}, korrekt wäre: {temp}");
-                    }
-                }
-            }
-        }
-        
     }
 }
