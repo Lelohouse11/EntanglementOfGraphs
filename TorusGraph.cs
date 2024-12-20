@@ -11,6 +11,8 @@ namespace EntaglementOfGraphs
     {
         private readonly bool debug = false;
 
+        public TorusGraph() { }
+
         /// <summary>
         /// erstellt mxn Torus Graph
         /// </summary>

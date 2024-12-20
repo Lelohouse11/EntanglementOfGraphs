@@ -42,29 +42,17 @@ namespace EntaglementOfGraphs
         public Microsoft.Msagl.Drawing.Graph CreateMsagl()
         {
             var msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
-            msaglGraph.AddNode("-1");
+            foreach (var vertex in Vertices)
+            {
+                msaglGraph.AddNode(vertex.ToString());
+            }
             foreach (var edge in Edges)
             {
                 msaglGraph.AddEdge(edge.Source.ToString(),edge.Target.ToString());
             }
             return msaglGraph;
         }
-        /// <summary>
-        /// erstellt String von .dot Datei für spätere Visualisierung
-        /// </summary>
-        /// <returns></returns>
-        public void CreateImage()
-        {
-            Microsoft.Msagl.Drawing.Graph msaglGraph = this.CreateMsagl();   
-            
-            Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
-            renderer.CalculateLayout();
-            int width = 50;
-            Bitmap bitmap = new Bitmap(width, (int)(msaglGraph.Height * (width / msaglGraph.Width)), PixelFormat.Format32bppPArgb);
-            renderer.Render(bitmap);
-            bitmap.Save("test.png");
-        }
-
+        
         protected Microsoft.Msagl.Drawing.Graph msaglGraph;
         protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer;
 
