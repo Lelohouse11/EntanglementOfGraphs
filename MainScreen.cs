@@ -6,7 +6,7 @@ namespace EntanglementOfGraphs
 {
     public partial class MainScreen
     {
-        bool whichGraph=true;
+        bool whichGraph = true;
         FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
         TorusGraph tGraph;
 
@@ -37,9 +37,9 @@ namespace EntanglementOfGraphs
             if (isNumber)
             {
                 graph.AddVertex(vertex);
-                vertexInput.Clear();
                 graph.CreateImage(GraphPicture);
                 GraphPicture.Refresh();
+                vertexInput.Clear();
             }
             else
             {
@@ -141,10 +141,10 @@ namespace EntanglementOfGraphs
 
             if (isNTorusNumber && isMTorusNumber)
             {
-                tGraph = new TorusGraph(nTorus,mTorus);
+                tGraph = new TorusGraph(nTorus, mTorus);
                 tGraph.CreateImage(GraphPicture);
                 GraphPicture.Refresh();
-                TextOutput.Text = tGraph.MinEntanglement(new TorusVertex(0,0)).ToString();
+                TextOutput.Text = tGraph.MinEntanglement(new TorusVertex(0, 0)).ToString();
                 torusN.Clear();
                 torusM.Clear();
             }
@@ -154,6 +154,36 @@ namespace EntanglementOfGraphs
                 torusN.Clear();
                 torusM.Clear();
             }
+        }
+
+        private void playGraph_Click(object sender, EventArgs e)
+        {
+            TextOutput.Clear();
+            int startPos;
+            bool isNumber = int.TryParse(startPosInput.Text, out startPos);
+            if (isNumber)
+            {
+                if (startPos <= graph.VertexCount)
+                {                    
+                    startPosInput.Clear();
+                    graphCreate.Hide();
+                    TorusCreate.Hide();
+                    computeOrGame.Hide();
+                   
+                }
+                else
+                {
+                    TextOutput.Text = "Bitte einen exsistierenden Knoten eingeben.";
+                    startPosInput.Clear();
+                }
+            }
+            else
+            {
+                TextOutput.Text = "Bitte eine Ganzzahl für die Startposition eingeben.";
+                startPosInput.Clear();
+            }
+
+
         }
     }
 }

@@ -19,6 +19,7 @@ namespace EntaglementOfGraphs
         public SortedSet<V> detectives = [];
         public bool detectivesTurn = initialTurn;
         public int detectiveAmount = detectiveAmount;
+        public int? flag = null;
 
         /// <summary>
         /// clont Instanz zur weitere Verarbeitung
@@ -27,6 +28,7 @@ namespace EntaglementOfGraphs
         public Positions<V> Clone()
         {
             var cloned = new Positions<V>(detectiveAmount,thief, detectivesTurn);
+            cloned.flag = flag;
             foreach (var i in detectives)
             {
                 cloned.detectives.Add(i);
@@ -85,6 +87,15 @@ namespace EntaglementOfGraphs
                 if (!other.detectives.ElementAt(i).Equals(detectives.ElementAt(i))) return false;
             }
             return true;
+        }
+
+        public V getMovedDetective (Positions<V> nextPos)
+        {
+            for (int i = 0; i < detectives.Count; i++)
+            {
+                if (!nextPos.detectives.ElementAt(i).Equals(detectives.ElementAt(i))) return detectives.ElementAt(i);
+            }
+            return default;
         }
 
         /// <summary>

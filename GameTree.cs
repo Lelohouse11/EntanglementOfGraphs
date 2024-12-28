@@ -1,4 +1,5 @@
-﻿using QuikGraph;
+﻿using EntanglementOfGraphs;
+using QuikGraph;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +17,8 @@ namespace EntaglementOfGraphs
         public readonly int detectiveAmount;
         public readonly FiniteDirectedGraph<V> graph;
         public readonly Positions<V> startPosition;
+        public readonly List<Move<V>> detectiveStrategy = [];
+        public readonly List<Move<V>> thiefStrategy = [];
 
         /// <summary>
         /// erstellt GameTree mit Startwerten
@@ -33,16 +36,108 @@ namespace EntaglementOfGraphs
                 Console.WriteLine($"Startknoten hinzugefügt: {startPos}");
             }
         }
+               
+        public void CreateDetectiveStrategy ()
+        {
+            FlagIterativGameTree(GetPossibleFinalStates());
+            var allVertices = Vertices.ToList();
+            foreach (var vertex in allVertices)
+            {
+                if (vertex.detectivesTurn)
+                {
+                    nextDetectiveMove(vertex);
+                }
+            }
+        }
 
-        /// <summary>
-        /// erstellt String von .dot Datei für spätere Visualisierung
-        /// </summary>
-        /// <returns></returns>
-        //public String CreateDot()
-        //{
-        //    var graphviz = new GraphvizAlgorithm<Positions<V>, Edge<Positions<V>>>(this);
-        //    return graphviz.Generate();
-        //}
+        public void CreateThiefStrategy()
+        {
+            FlagIterativGameTree(GetPossibleFinalStates());
+            var allVertices = Vertices.ToList();
+            foreach (var vertex in allVertices)
+            {
+                if (!vertex.detectivesTurn)
+                {
+                    nextThiefMove(vertex);
+                }
+            }
+        }
+
+        private void nextDetectiveMove(Positions<V> currentPos)
+        {
+            List<Positions<V>> result = [];
+            var outgoingVertex = GetOutgoingVertex(currentPos);
+            int? minFlagOfTarget = VertexCount;
+            foreach (var vertex in outgoingVertex)
+            {
+                if ((vertex.flag < minFlagOfTarget) && (vertex.flag != null))
+                {
+                    minFlagOfTarget = vertex.flag;
+                }
+            }
+            foreach (var vertex in outgoingVertex)
+            {
+                if (minFlagOfTarget < currentPos.flag)
+                {
+                    if (vertex.flag == minFlagOfTarget)
+                    {
+                        result.Add(vertex);
+                    }
+                }
+            }
+            detectiveStrategy.Add(new Move<V>(currentPos,result));
+        }
+
+        private void nextThiefMove(Positions<V> currentPos)
+        {
+            List<Positions<V>> result = [];
+            var nextPossibleSteps = graph.GetNextPossibleSteps(currentPos);
+            int? maxFlagOfTarget = 0;
+            foreach (var vertex in nextPossibleSteps)
+            {
+                if (vertex.flag == null) 
+                {
+                    maxFlagOfTarget = null;
+                    break;
+                }
+                if (vertex.flag > maxFlagOfTarget)
+                {
+                    maxFlagOfTarget = vertex.flag;
+                }
+            }
+            foreach (var vertex in nextPossibleSteps)
+            {               
+                if (vertex.flag == maxFlagOfTarget)
+                {
+                    result.Add(vertex);
+                }                
+            }
+            thiefStrategy.Add(new Move<V>(currentPos, result));
+        }
+
+        public V BestDetectiveMove(Positions<V> currentPos)
+        {
+            foreach (var move in detectiveStrategy)
+            {
+                if(move.source.Equals(currentPos))
+                {
+                    return currentPos.getMovedDetective(move.target.First());
+                }
+            }
+            return currentPos.detectives.First();
+        }
+
+        public V BestThiefMove(Positions<V> currentPos)
+        {
+            foreach (var move in thiefStrategy)
+            {
+                if (move.source.Equals(currentPos))
+                {
+                    return move.target.First().thief;
+                }
+            }
+            return default;
+        }
 
         /// <summary>
         /// verbindet alle gefundenen Iterationen des Gametrees zu GameTree
@@ -79,6 +174,24 @@ namespace EntaglementOfGraphs
                 }
             }
             return this;
+        }
+
+        private void FlagIterativGameTree(List<Positions<V>> currentPos)
+        {
+            foreach (var pos in currentPos)
+            {
+                List<Positions<V>> exsistingPreviousPos = [];
+                foreach (var previousPos in graph.GetPreviousPossibleSteps(pos))
+                {
+                    if (previousPos.flag == null)
+                    {
+                        var temp = GetExistingPosition(previousPos);
+                        temp.flag = pos.flag + 1;
+                        exsistingPreviousPos.Add(temp);
+                    }
+                }
+                FlagIterativGameTree(exsistingPreviousPos);
+            }
         }
 
         /// <summary>
@@ -133,7 +246,7 @@ namespace EntaglementOfGraphs
                     }
                     else // Dieb war davor dran
                     {
-                        foreach (var previousPos in graph.GetPreviousPossibleSteps(currentPos)) // alle Knoten mit den man jetzigen Knoten ereichen kann
+                        foreach (var previousPos in graph.GetPreviousPossibleSteps(currentPos)) // alle Knoten mit den man den jetzigen Knoten ereichen kann
                         {                            
                             continueFixpoint = continueFixpoint || AddThiefVertex(previousPos); // fügt Diebknoten hinzu
                         }
@@ -186,7 +299,6 @@ namespace EntaglementOfGraphs
             }
             return goOn;
         }
-
 
         /// <summary>
         /// fügt Knoten hinzu, wo der Detektiv dran ist
@@ -270,6 +382,7 @@ namespace EntaglementOfGraphs
                     for (var i = 0; i < outgoingVerticesCount; i++)
                     {
                         tempState.detectives.Add(outgoingVertices[i]);// setzt Detektive auf die Fluchtmöglichkeit
+                        tempState.flag = 0;
                     }
                                        
                     if (detectiveAmount == outgoingVerticesCount)
@@ -306,6 +419,16 @@ namespace EntaglementOfGraphs
                     AddAllDetektivesToState(finalState, result);
                 }
             }
+        }
+
+        public List<Positions<V>> GetOutgoingVertex(Positions<V> vertex)
+        {
+            List<Positions<V>> result = [];
+            foreach (var edge in this.OutEdges(vertex))
+            {
+                result.Add(edge.Target);
+            }
+            return result;
         }
     }
 }

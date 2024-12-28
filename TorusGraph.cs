@@ -20,6 +20,7 @@ namespace EntaglementOfGraphs
         /// <param name="nTorus"></param>
         public TorusGraph(int mTorus, int nTorus)
         {
+            //AddVertex(new TorusVertex(-1, -1));
             for (int i = 0; i < mTorus; i++) // m Knoten
             {
                 for (int j = 0; j < nTorus; j++) // n Knoten

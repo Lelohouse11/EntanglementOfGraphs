@@ -14,6 +14,8 @@ namespace EntaglementOfGraphs
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
         private readonly bool debug = false;
+        protected Microsoft.Msagl.Drawing.Graph msaglGraph;
+        protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer;
 
         /// <summary>
         /// Konstruktor für Grapherstellung
@@ -22,10 +24,10 @@ namespace EntaglementOfGraphs
         /// <param name="edges"></param>
         public FiniteDirectedGraph(List<V> vertexes, List<(V,V)> edges) 
         { 
-           foreach (var vertex in vertexes)
-           {
+            foreach (var vertex in vertexes)
+            {
                 AddVertex(vertex);
-           }
+            }
 
             foreach (var edge in edges)
             {
@@ -36,9 +38,15 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// Konstruktor für andere Graphentypen
         /// </summary>
-        public FiniteDirectedGraph(){} 
-        
+        public FiniteDirectedGraph()
+        {
 
+        } 
+        
+        /// <summary>
+        /// Erstellt Graph den man Zeichnen kann
+        /// </summary>
+        /// <returns></returns>
         public Microsoft.Msagl.Drawing.Graph CreateMsagl()
         {
             var msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
@@ -51,21 +59,38 @@ namespace EntaglementOfGraphs
                 msaglGraph.AddEdge(edge.Source.ToString(),edge.Target.ToString());
             }
             return msaglGraph;
-        }
+        }     
         
-        protected Microsoft.Msagl.Drawing.Graph msaglGraph;
-        protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer;
-
+        /// <summary>
+        /// Erstellt ein mögöiches Layout des Graphen bereit gezeichnet zu werden.
+        /// </summary>
+        /// <param name="pb"></param>
         public void CreateImage(PictureBox pb)
         {
-            msaglGraph = this.CreateMsagl();
+            msaglGraph = CreateMsagl();
             renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+            
             renderer.CalculateLayout();
         }
 
+        /// <summary>
+        /// Zeichnet den Graphen
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="pb"></param>
         public void DrawImage(Graphics g,PictureBox pb)
         {
               renderer.Render(g, pb.ClientRectangle);
+        }
+
+        /// <summary>
+        /// Färbt gegebenen Knoten ind gegebener Farbe ein
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <param name="color"></param>
+        public void ColorVertex (string vertex, Microsoft.Msagl.Drawing.Color color)
+        {
+            msaglGraph.FindNode(vertex).Attr.FillColor = color;
         }
 
 
@@ -79,7 +104,7 @@ namespace EntaglementOfGraphs
             List<V> result = [];
             foreach (var edge in this.OutEdges(vertex))
             {
-                result.Add(edge.GetOtherVertex(vertex));
+                result.Add(edge.Target);
             }
             return result;
         }
@@ -125,6 +150,7 @@ namespace EntaglementOfGraphs
             {
                 foreach (var vertex in gameTree.GetPossibleFinalStates())
                 {
+                    vertex.flag = 0;
                     gameTree.AddVertex(vertex);
                     if (debug)
                     {
