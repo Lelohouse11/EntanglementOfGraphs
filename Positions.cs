@@ -19,7 +19,7 @@ namespace EntaglementOfGraphs
         public SortedSet<V> detectives = [];
         public bool detectivesTurn = initialTurn;
         public int detectiveAmount = detectiveAmount;
-        public int? flag = null;
+        public double flag; // GewinnWahrscheinlichkeit für Detektiv bei Zufälliger Zugwahl von Dieb + Anzahl an Zügen bis Sieg
 
         /// <summary>
         /// clont Instanz zur weitere Verarbeitung
@@ -89,6 +89,11 @@ namespace EntaglementOfGraphs
             return true;
         }
 
+        /// <summary>
+        /// gibt den Detektive zurück der Position geändert hat
+        /// </summary>
+        /// <param name="nextPos"></param>
+        /// <returns></returns>
         public V getMovedDetective (Positions<V> nextPos)
         {
             for (int i = 0; i < detectives.Count; i++)

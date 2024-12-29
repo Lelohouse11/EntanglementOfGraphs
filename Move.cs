@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace EntanglementOfGraphs
 {
-    internal class Move<V> where V : IComparable<V>, IEquatable<V>
-    {
-        public Positions<V> source;
-        public List<Positions<V>> target;
-
-        public Move(Positions<V> s, List<Positions<V>> t) 
-        {
-            source = s;
-            target = t;
-        }
+    /// <summary>
+    /// Klasse für die Strategie
+    /// </summary>
+    /// <typeparam name="V"></typeparam>
+    /// <param name="s"></param>
+    /// <param name="t"></param>
+    internal class Move<V>(Positions<V> s, List<Positions<V>> t) where V : IComparable<V>, IEquatable<V>
+    {       
+        public Positions<V> source = s;
+        public List<Positions<V>> target = t;
 
         public Positions<V> GetSource() { return source; }
 

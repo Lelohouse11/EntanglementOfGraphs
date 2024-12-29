@@ -14,7 +14,7 @@ namespace EntaglementOfGraphs
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
         private readonly bool debug = false;
-        protected Microsoft.Msagl.Drawing.Graph msaglGraph;
+        protected Microsoft.Msagl.Drawing.Graph msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
         protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer;
 
         /// <summary>
@@ -47,9 +47,8 @@ namespace EntaglementOfGraphs
         /// Erstellt Graph den man Zeichnen kann
         /// </summary>
         /// <returns></returns>
-        public Microsoft.Msagl.Drawing.Graph CreateMsagl()
+        public void CreateMsagl()
         {
-            var msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
             foreach (var vertex in Vertices)
             {
                 msaglGraph.AddNode(vertex.ToString());
@@ -58,7 +57,6 @@ namespace EntaglementOfGraphs
             {
                 msaglGraph.AddEdge(edge.Source.ToString(),edge.Target.ToString());
             }
-            return msaglGraph;
         }     
         
         /// <summary>
@@ -67,7 +65,7 @@ namespace EntaglementOfGraphs
         /// <param name="pb"></param>
         public void CreateImage(PictureBox pb)
         {
-            msaglGraph = CreateMsagl();
+            CreateMsagl();
             renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
             
             renderer.CalculateLayout();
@@ -92,7 +90,6 @@ namespace EntaglementOfGraphs
         {
             msaglGraph.FindNode(vertex).Attr.FillColor = color;
         }
-
 
         /// <summary>
         /// gibt die ereichbaren Knoten von einem anderen Knoten zurück
@@ -157,7 +154,7 @@ namespace EntaglementOfGraphs
                         Console.WriteLine($"Endknoten hinzugefügt: {vertex}");
                     }
                 }
-                gameTree.BuildFixpointGameTree();
+                gameTree.BuildFixpointGameTree(false);
                 return gameTree;
             }
             return gameTree;
