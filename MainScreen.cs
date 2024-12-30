@@ -9,6 +9,9 @@ namespace EntanglementOfGraphs
         bool whichGraph = true;
         FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
         TorusGraph tGraph;
+        GameTree<int> gameTree;
+        GameTree<TorusVertex> gameTreeOfTorus;
+        Positions<int> currentPos;
 
         public MainScreen()
         {
@@ -159,31 +162,136 @@ namespace EntanglementOfGraphs
         private void playGraph_Click(object sender, EventArgs e)
         {
             TextOutput.Clear();
+            startPosInput.Clear();
+            graphCreate.Hide();
+            TorusCreate.Hide();
+            computeEnt.Hide();
+            playGraph.Hide();
+            GameSettings.Show();
+            editGraph.Show();
+        }
+
+        private void playThief_Click(object sender, EventArgs e)
+        {
+            detMovement.Show();
+            checkGameSettings();
+            detMovement.Show();
+        }
+
+        private void playDetective_Click(object sender, EventArgs e)
+        {
+            detMovement.Show();
+            checkGameSettings();
+            detMovement.Show();
+            TextOutput.Text = "Du bist am Zug! Wähle einen Detektiv oder tue nichts.";
+        }
+
+        private void checkGameSettings()
+        {
+            TextOutput.Clear();
             int startPos;
-            bool isNumber = int.TryParse(startPosInput.Text, out startPos);
-            if (isNumber)
+            int detectiveAmount;
+            bool isStartPosNumber = int.TryParse(startPosInput2.Text, out startPos);
+            bool isDetectiveAmountNumber = int.TryParse(detectiveAmountInput.Text, out detectiveAmount);
+
+            if (isStartPosNumber)
             {
-                if (startPos <= graph.VertexCount)
-                {                    
-                    startPosInput.Clear();
-                    graphCreate.Hide();
-                    TorusCreate.Hide();
-                    computeOrGame.Hide();
-                   
+                if (isDetectiveAmountNumber)
+                {
+                    if (graph.ContainsVertex(startPos))
+                    {
+                        if (graph.VertexCount >= detectiveAmount)
+                        {
+                            currentPos = new Positions<int>(detectiveAmount, startPos, true);
+                            gameTree = new GameTree<int>(graph, currentPos);
+                            gameTree.BuildFixpointGameTree(true);
+                            gameTree.CreateStrategies();
+                            graph.ColorVertex(startPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
+                            GraphPicture.Refresh();
+                            startPosInput2.Clear();
+                            detectiveAmountInput.Clear();
+                            GameSettings.Hide();
+                        }
+                        else
+                        {
+                            TextOutput.Text = $"Anzahl der Detektive darf höchstens die Knotenzahl sein, also {graph.VertexCount}";
+                            detectiveAmountInput.Clear();
+                        }
+                    }
+                    else
+                    {
+                        TextOutput.Text = "Bitte einen exsistierenden Ursprungsknoten eingeben.";
+                        startPosInput2.Clear();
+                    }
                 }
                 else
                 {
-                    TextOutput.Text = "Bitte einen exsistierenden Knoten eingeben.";
-                    startPosInput.Clear();
+                    TextOutput.Text = "Bitte eine Ganzzahl für die Anzahl an Detektiven eingeben.";
+                    detectiveAmountInput.Clear();
                 }
             }
             else
             {
-                TextOutput.Text = "Bitte eine Ganzzahl für die Startposition eingeben.";
-                startPosInput.Clear();
+                TextOutput.Text = "Bitte eine Ganzzahl für den Urspungsknoten eingeben.";
+                startPosInput2.Clear();
             }
+        }
 
+        private void editGraph_Click(object sender, EventArgs e)
+        {
+            TextOutput.Clear();
+            startPosInput2.Clear();
+            detectiveAmountInput.Clear();
+            graphCreate.Show();
+            TorusCreate.Show();
+            computeEnt.Show();
+            playGraph.Show();
+            GameSettings.Hide();
+            editGraph.Hide();
+            detMovement.Hide();
+        }
+
+        private void moveDetective_Click(object sender, EventArgs e)
+        {
+            TextOutput.Clear();
+            int movedDetective;
+            bool isMovedDetectiveNumber = int.TryParse(movedDet.Text, out movedDetective);
+            if (isMovedDetectiveNumber)
+            {
+                if (movedDetective <= gameTree.detectiveAmount)
+                {
+                    if(movedDetective >= 0)
+                    {
+                        graph.ShapeVertex(movedDetective.ToString(),Microsoft.Msagl.Drawing.Shape.Circle);
+                    }
+                    currentPos.MoveDetective(movedDetective);
+                    currentPos.ChangeTurn();
+                    graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                    moveThief();
+                }
+            }
+        }
+
+        private void doNothingDet_Click(object sender, EventArgs e)
+        {
+            currentPos.ChangeTurn();
+            moveThief();
+        }
+
+        private void moveThief()
+        {
+            int nextThiefMove = gameTree.BestThiefMove(currentPos);
+            graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White);
+            currentPos.MoveThief(nextThiefMove);
+            currentPos.ChangeTurn();
+            graph.ColorVertex(nextThiefMove.ToString(), Microsoft.Msagl.Drawing.Color.Red);
+            TextOutput.Text = "Du bist am Zug! Wähle einen Detektiv oder tue nichts.";
+        }
+
+        private void moveDetective()
+        {
 
         }
     }
 }
+

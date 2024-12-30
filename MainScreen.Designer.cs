@@ -53,28 +53,47 @@ namespace EntanglementOfGraphs
             createTorusGraph = new Button();
             playGraph = new Button();
             graphCreate = new Panel();
+            doNothingDet = new Button();
+            moveDetective = new Button();
+            movedDet = new TextBox();
+            detective = new Label();
+            chooseDetPlay = new Label();
             TorusCreate = new Panel();
-            computeOrGame = new Panel();
+            computeEnt = new Panel();
+            startPos2 = new Label();
+            GameSettings = new Panel();
+            playDetective = new Button();
+            playThief = new Button();
+            detectiveAmountInput = new TextBox();
+            detectiveAmount = new Label();
+            startPosInput2 = new TextBox();
+            editGraph = new Button();
+            detMovement = new Panel();
             ((System.ComponentModel.ISupportInitialize)GraphPicture).BeginInit();
             graphCreate.SuspendLayout();
             TorusCreate.SuspendLayout();
-            computeOrGame.SuspendLayout();
+            computeEnt.SuspendLayout();
+            GameSettings.SuspendLayout();
+            detMovement.SuspendLayout();
             SuspendLayout();
             // 
             // GraphPicture
             // 
-            GraphPicture.Location = new Point(12, 37);
+            GraphPicture.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GraphPicture.BorderStyle = BorderStyle.FixedSingle;
+            GraphPicture.Location = new Point(16, 37);
             GraphPicture.Name = "GraphPicture";
             GraphPicture.Size = new Size(634, 363);
+            GraphPicture.SizeMode = PictureBoxSizeMode.Zoom;
             GraphPicture.TabIndex = 0;
             GraphPicture.TabStop = false;
             GraphPicture.Paint += GraphPicture_Paint;
             // 
             // vertexInput
             // 
-            vertexInput.BackColor = SystemColors.Desktop;
+            vertexInput.BackColor = SystemColors.Window;
             vertexInput.Font = new Font("Segoe UI", 12F);
-            vertexInput.ForeColor = SystemColors.ControlLight;
+            vertexInput.ForeColor = SystemColors.WindowText;
             vertexInput.Location = new Point(87, 24);
             vertexInput.Name = "vertexInput";
             vertexInput.Size = new Size(245, 29);
@@ -84,7 +103,7 @@ namespace EntanglementOfGraphs
             // 
             headline.AutoSize = true;
             headline.Font = new Font("Segoe UI", 14F);
-            headline.ForeColor = SystemColors.ControlLight;
+            headline.ForeColor = SystemColors.WindowText;
             headline.Location = new Point(12, 9);
             headline.Name = "headline";
             headline.Size = new Size(460, 25);
@@ -95,7 +114,7 @@ namespace EntanglementOfGraphs
             // 
             input.AutoSize = true;
             input.Font = new Font("Segoe UI", 12F);
-            input.ForeColor = SystemColors.ControlLight;
+            input.ForeColor = SystemColors.WindowText;
             input.Location = new Point(0, 0);
             input.Name = "input";
             input.Size = new Size(119, 21);
@@ -104,9 +123,9 @@ namespace EntanglementOfGraphs
             // 
             // newVertex
             // 
-            newVertex.BackColor = SystemColors.Desktop;
+            newVertex.BackColor = SystemColors.ButtonHighlight;
             newVertex.Font = new Font("Segoe UI", 12F);
-            newVertex.ForeColor = SystemColors.ControlLight;
+            newVertex.ForeColor = SystemColors.ControlText;
             newVertex.Location = new Point(338, 24);
             newVertex.Name = "newVertex";
             newVertex.Size = new Size(103, 31);
@@ -117,9 +136,9 @@ namespace EntanglementOfGraphs
             // 
             // entanglement
             // 
-            entanglement.BackColor = SystemColors.Desktop;
+            entanglement.BackColor = SystemColors.ButtonHighlight;
             entanglement.Font = new Font("Segoe UI", 12F);
-            entanglement.ForeColor = SystemColors.ControlLight;
+            entanglement.ForeColor = SystemColors.ControlText;
             entanglement.Location = new Point(0, 84);
             entanglement.Name = "entanglement";
             entanglement.Size = new Size(231, 31);
@@ -130,9 +149,10 @@ namespace EntanglementOfGraphs
             // 
             // TextOutput
             // 
-            TextOutput.BackColor = SystemColors.Desktop;
+            TextOutput.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            TextOutput.BackColor = SystemColors.Window;
             TextOutput.Font = new Font("Segoe UI", 12F);
-            TextOutput.ForeColor = SystemColors.ControlLight;
+            TextOutput.ForeColor = SystemColors.WindowText;
             TextOutput.Location = new Point(652, 403);
             TextOutput.Multiline = true;
             TextOutput.Name = "TextOutput";
@@ -144,7 +164,7 @@ namespace EntanglementOfGraphs
             // 
             vertex.AutoSize = true;
             vertex.Font = new Font("Segoe UI", 12F);
-            vertex.ForeColor = SystemColors.ControlLight;
+            vertex.ForeColor = SystemColors.WindowText;
             vertex.Location = new Point(0, 26);
             vertex.Name = "vertex";
             vertex.Size = new Size(62, 21);
@@ -155,7 +175,7 @@ namespace EntanglementOfGraphs
             // 
             edgeFrom.AutoSize = true;
             edgeFrom.Font = new Font("Segoe UI", 12F);
-            edgeFrom.ForeColor = SystemColors.ControlLight;
+            edgeFrom.ForeColor = SystemColors.WindowText;
             edgeFrom.Location = new Point(0, 62);
             edgeFrom.Name = "edgeFrom";
             edgeFrom.Size = new Size(82, 21);
@@ -166,7 +186,7 @@ namespace EntanglementOfGraphs
             // 
             edgeTo.AutoSize = true;
             edgeTo.Font = new Font("Segoe UI", 12F);
-            edgeTo.ForeColor = SystemColors.ControlLight;
+            edgeTo.ForeColor = SystemColors.WindowText;
             edgeTo.Location = new Point(194, 62);
             edgeTo.Name = "edgeTo";
             edgeTo.Size = new Size(29, 21);
@@ -175,9 +195,9 @@ namespace EntanglementOfGraphs
             // 
             // edgeSource
             // 
-            edgeSource.BackColor = SystemColors.Desktop;
+            edgeSource.BackColor = SystemColors.Window;
             edgeSource.Font = new Font("Segoe UI", 12F);
-            edgeSource.ForeColor = SystemColors.ControlLight;
+            edgeSource.ForeColor = SystemColors.WindowText;
             edgeSource.Location = new Point(88, 59);
             edgeSource.Name = "edgeSource";
             edgeSource.Size = new Size(100, 29);
@@ -185,20 +205,20 @@ namespace EntanglementOfGraphs
             // 
             // edgeTarget
             // 
-            edgeTarget.BackColor = SystemColors.Desktop;
+            edgeTarget.BackColor = SystemColors.Window;
             edgeTarget.Font = new Font("Segoe UI", 12F);
-            edgeTarget.ForeColor = SystemColors.ControlLight;
-            edgeTarget.Location = new Point(229, 62);
+            edgeTarget.ForeColor = SystemColors.WindowText;
+            edgeTarget.Location = new Point(229, 59);
             edgeTarget.Name = "edgeTarget";
             edgeTarget.Size = new Size(103, 29);
             edgeTarget.TabIndex = 11;
             // 
             // addEdge
             // 
-            addEdge.BackColor = SystemColors.Desktop;
+            addEdge.BackColor = SystemColors.ButtonHighlight;
             addEdge.Font = new Font("Segoe UI", 12F);
-            addEdge.ForeColor = SystemColors.ControlLight;
-            addEdge.Location = new Point(338, 62);
+            addEdge.ForeColor = SystemColors.ControlText;
+            addEdge.Location = new Point(338, 57);
             addEdge.Name = "addEdge";
             addEdge.Size = new Size(103, 31);
             addEdge.TabIndex = 12;
@@ -208,12 +228,12 @@ namespace EntanglementOfGraphs
             // 
             // deleteGraph
             // 
-            deleteGraph.BackColor = SystemColors.Desktop;
+            deleteGraph.BackColor = SystemColors.ButtonHighlight;
             deleteGraph.Font = new Font("Segoe UI", 12F);
-            deleteGraph.ForeColor = SystemColors.GradientActiveCaption;
-            deleteGraph.Location = new Point(447, 26);
+            deleteGraph.ForeColor = SystemColors.ControlText;
+            deleteGraph.Location = new Point(447, 24);
             deleteGraph.Name = "deleteGraph";
-            deleteGraph.Size = new Size(103, 67);
+            deleteGraph.Size = new Size(103, 64);
             deleteGraph.TabIndex = 13;
             deleteGraph.Text = "Graph löschen";
             deleteGraph.UseVisualStyleBackColor = false;
@@ -222,7 +242,7 @@ namespace EntanglementOfGraphs
             // startPos
             // 
             startPos.Font = new Font("Segoe UI", 12F);
-            startPos.ForeColor = SystemColors.ControlLight;
+            startPos.ForeColor = SystemColors.WindowText;
             startPos.Location = new Point(0, 0);
             startPos.Name = "startPos";
             startPos.Size = new Size(231, 46);
@@ -231,9 +251,9 @@ namespace EntanglementOfGraphs
             // 
             // startPosInput
             // 
-            startPosInput.BackColor = SystemColors.Desktop;
+            startPosInput.BackColor = SystemColors.Window;
             startPosInput.Font = new Font("Segoe UI", 12F);
-            startPosInput.ForeColor = SystemColors.ControlLight;
+            startPosInput.ForeColor = SystemColors.WindowText;
             startPosInput.Location = new Point(0, 49);
             startPosInput.Name = "startPosInput";
             startPosInput.Size = new Size(231, 29);
@@ -241,9 +261,9 @@ namespace EntanglementOfGraphs
             // 
             // torusN
             // 
-            torusN.BackColor = SystemColors.Desktop;
+            torusN.BackColor = SystemColors.Window;
             torusN.Font = new Font("Segoe UI", 12F);
-            torusN.ForeColor = SystemColors.ControlLight;
+            torusN.ForeColor = SystemColors.WindowText;
             torusN.Location = new Point(4, 55);
             torusN.Name = "torusN";
             torusN.Size = new Size(100, 29);
@@ -251,9 +271,9 @@ namespace EntanglementOfGraphs
             // 
             // torusM
             // 
-            torusM.BackColor = SystemColors.Desktop;
+            torusM.BackColor = SystemColors.Window;
             torusM.Font = new Font("Segoe UI", 12F);
-            torusM.ForeColor = SystemColors.ControlLight;
+            torusM.ForeColor = SystemColors.WindowText;
             torusM.Location = new Point(131, 55);
             torusM.Name = "torusM";
             torusM.Size = new Size(100, 29);
@@ -263,7 +283,7 @@ namespace EntanglementOfGraphs
             // 
             x.AutoSize = true;
             x.Font = new Font("Segoe UI", 12F);
-            x.ForeColor = SystemColors.ControlLight;
+            x.ForeColor = SystemColors.WindowText;
             x.Location = new Point(110, 58);
             x.Name = "x";
             x.Size = new Size(17, 21);
@@ -273,7 +293,7 @@ namespace EntanglementOfGraphs
             // torusGraph
             // 
             torusGraph.Font = new Font("Segoe UI", 12F);
-            torusGraph.ForeColor = SystemColors.ControlLight;
+            torusGraph.ForeColor = SystemColors.WindowText;
             torusGraph.Location = new Point(0, 0);
             torusGraph.Name = "torusGraph";
             torusGraph.Size = new Size(231, 52);
@@ -282,9 +302,9 @@ namespace EntanglementOfGraphs
             // 
             // createTorusGraph
             // 
-            createTorusGraph.BackColor = SystemColors.Desktop;
+            createTorusGraph.BackColor = SystemColors.ButtonHighlight;
             createTorusGraph.Font = new Font("Segoe UI", 12F);
-            createTorusGraph.ForeColor = SystemColors.ControlLight;
+            createTorusGraph.ForeColor = SystemColors.ControlText;
             createTorusGraph.Location = new Point(4, 90);
             createTorusGraph.Name = "createTorusGraph";
             createTorusGraph.Size = new Size(227, 31);
@@ -295,10 +315,11 @@ namespace EntanglementOfGraphs
             // 
             // playGraph
             // 
-            playGraph.BackColor = SystemColors.Desktop;
+            playGraph.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            playGraph.BackColor = SystemColors.ButtonHighlight;
             playGraph.Font = new Font("Segoe UI", 12F);
-            playGraph.ForeColor = SystemColors.ControlLight;
-            playGraph.Location = new Point(0, 121);
+            playGraph.ForeColor = SystemColors.ControlText;
+            playGraph.Location = new Point(656, 3);
             playGraph.Name = "playGraph";
             playGraph.Size = new Size(231, 31);
             playGraph.TabIndex = 21;
@@ -308,6 +329,7 @@ namespace EntanglementOfGraphs
             // 
             // graphCreate
             // 
+            graphCreate.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             graphCreate.Controls.Add(input);
             graphCreate.Controls.Add(vertexInput);
             graphCreate.Controls.Add(newVertex);
@@ -320,11 +342,70 @@ namespace EntanglementOfGraphs
             graphCreate.Controls.Add(deleteGraph);
             graphCreate.Location = new Point(12, 406);
             graphCreate.Name = "graphCreate";
-            graphCreate.Size = new Size(556, 101);
+            graphCreate.Size = new Size(638, 101);
             graphCreate.TabIndex = 22;
+            // 
+            // doNothingDet
+            // 
+            doNothingDet.BackColor = SystemColors.ButtonHighlight;
+            doNothingDet.Font = new Font("Segoe UI", 12F);
+            doNothingDet.ForeColor = SystemColors.ControlText;
+            doNothingDet.Location = new Point(3, 59);
+            doNothingDet.Name = "doNothingDet";
+            doNothingDet.Size = new Size(340, 31);
+            doNothingDet.TabIndex = 14;
+            doNothingDet.Text = "Keinen Detektiv bewegen";
+            doNothingDet.UseVisualStyleBackColor = false;
+            doNothingDet.Click += doNothingDet_Click;
+            // 
+            // moveDetective
+            // 
+            moveDetective.BackColor = SystemColors.ButtonHighlight;
+            moveDetective.Font = new Font("Segoe UI", 12F);
+            moveDetective.ForeColor = SystemColors.ControlText;
+            moveDetective.Location = new Point(193, 22);
+            moveDetective.Name = "moveDetective";
+            moveDetective.Size = new Size(150, 31);
+            moveDetective.TabIndex = 14;
+            moveDetective.Text = "Auf Dieb bewegen";
+            moveDetective.UseVisualStyleBackColor = false;
+            moveDetective.Click += moveDetective_Click;
+            // 
+            // movedDet
+            // 
+            movedDet.BackColor = SystemColors.Window;
+            movedDet.Font = new Font("Segoe UI", 12F);
+            movedDet.ForeColor = SystemColors.WindowText;
+            movedDet.Location = new Point(87, 24);
+            movedDet.Name = "movedDet";
+            movedDet.Size = new Size(100, 29);
+            movedDet.TabIndex = 14;
+            // 
+            // detective
+            // 
+            detective.AutoSize = true;
+            detective.Font = new Font("Segoe UI", 12F);
+            detective.ForeColor = SystemColors.WindowText;
+            detective.Location = new Point(3, 27);
+            detective.Name = "detective";
+            detective.Size = new Size(78, 21);
+            detective.TabIndex = 14;
+            detective.Text = "Detektive:";
+            // 
+            // chooseDetPlay
+            // 
+            chooseDetPlay.AutoSize = true;
+            chooseDetPlay.Font = new Font("Segoe UI", 12F);
+            chooseDetPlay.ForeColor = SystemColors.WindowText;
+            chooseDetPlay.Location = new Point(0, 0);
+            chooseDetPlay.Name = "chooseDetPlay";
+            chooseDetPlay.Size = new Size(138, 21);
+            chooseDetPlay.TabIndex = 4;
+            chooseDetPlay.Text = "Wähle deinen Zug:";
             // 
             // TorusCreate
             // 
+            TorusCreate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             TorusCreate.Controls.Add(torusGraph);
             TorusCreate.Controls.Add(torusN);
             TorusCreate.Controls.Add(torusM);
@@ -335,29 +416,143 @@ namespace EntanglementOfGraphs
             TorusCreate.Size = new Size(237, 151);
             TorusCreate.TabIndex = 23;
             // 
-            // computeOrGame
+            // computeEnt
             // 
-            computeOrGame.Controls.Add(startPos);
-            computeOrGame.Controls.Add(entanglement);
-            computeOrGame.Controls.Add(startPosInput);
-            computeOrGame.Controls.Add(playGraph);
-            computeOrGame.Location = new Point(652, 37);
-            computeOrGame.Name = "computeOrGame";
-            computeOrGame.Size = new Size(231, 149);
-            computeOrGame.TabIndex = 24;
+            computeEnt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            computeEnt.Controls.Add(startPos);
+            computeEnt.Controls.Add(entanglement);
+            computeEnt.Controls.Add(startPosInput);
+            computeEnt.Location = new Point(652, 37);
+            computeEnt.Name = "computeEnt";
+            computeEnt.Size = new Size(237, 149);
+            computeEnt.TabIndex = 24;
+            // 
+            // startPos2
+            // 
+            startPos2.Font = new Font("Segoe UI", 12F);
+            startPos2.ForeColor = SystemColors.WindowText;
+            startPos2.Location = new Point(0, 0);
+            startPos2.Name = "startPos2";
+            startPos2.Size = new Size(231, 46);
+            startPos2.TabIndex = 15;
+            startPos2.Text = "Startposition des Diebes eingeben:";
+            // 
+            // GameSettings
+            // 
+            GameSettings.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            GameSettings.Controls.Add(playDetective);
+            GameSettings.Controls.Add(playThief);
+            GameSettings.Controls.Add(detectiveAmountInput);
+            GameSettings.Controls.Add(detectiveAmount);
+            GameSettings.Controls.Add(startPosInput2);
+            GameSettings.Controls.Add(startPos2);
+            GameSettings.Location = new Point(652, 37);
+            GameSettings.Name = "GameSettings";
+            GameSettings.Size = new Size(237, 326);
+            GameSettings.TabIndex = 25;
+            GameSettings.Visible = false;
+            // 
+            // playDetective
+            // 
+            playDetective.BackColor = SystemColors.ButtonHighlight;
+            playDetective.Font = new Font("Segoe UI", 12F);
+            playDetective.ForeColor = SystemColors.ControlText;
+            playDetective.Location = new Point(3, 185);
+            playDetective.Name = "playDetective";
+            playDetective.Size = new Size(231, 31);
+            playDetective.TabIndex = 20;
+            playDetective.Text = "Detektive spielen";
+            playDetective.UseVisualStyleBackColor = false;
+            playDetective.Click += playDetective_Click;
+            // 
+            // playThief
+            // 
+            playThief.BackColor = SystemColors.ButtonHighlight;
+            playThief.Font = new Font("Segoe UI", 12F);
+            playThief.ForeColor = SystemColors.ControlText;
+            playThief.Location = new Point(3, 148);
+            playThief.Name = "playThief";
+            playThief.Size = new Size(231, 31);
+            playThief.TabIndex = 19;
+            playThief.Text = "Dieb spielen";
+            playThief.UseVisualStyleBackColor = false;
+            playThief.Click += playThief_Click;
+            // 
+            // detectiveAmountInput
+            // 
+            detectiveAmountInput.BackColor = SystemColors.Window;
+            detectiveAmountInput.Font = new Font("Segoe UI", 12F);
+            detectiveAmountInput.ForeColor = SystemColors.WindowText;
+            detectiveAmountInput.Location = new Point(0, 114);
+            detectiveAmountInput.Name = "detectiveAmountInput";
+            detectiveAmountInput.Size = new Size(231, 29);
+            detectiveAmountInput.TabIndex = 18;
+            // 
+            // detectiveAmount
+            // 
+            detectiveAmount.Font = new Font("Segoe UI", 12F);
+            detectiveAmount.ForeColor = SystemColors.WindowText;
+            detectiveAmount.Location = new Point(3, 81);
+            detectiveAmount.Name = "detectiveAmount";
+            detectiveAmount.Size = new Size(231, 30);
+            detectiveAmount.TabIndex = 17;
+            detectiveAmount.Text = "Anzahl der Diebe eingeben:";
+            // 
+            // startPosInput2
+            // 
+            startPosInput2.BackColor = SystemColors.Window;
+            startPosInput2.Font = new Font("Segoe UI", 12F);
+            startPosInput2.ForeColor = SystemColors.WindowText;
+            startPosInput2.Location = new Point(3, 49);
+            startPosInput2.Name = "startPosInput2";
+            startPosInput2.Size = new Size(231, 29);
+            startPosInput2.TabIndex = 16;
+            // 
+            // editGraph
+            // 
+            editGraph.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            editGraph.BackColor = SystemColors.ButtonHighlight;
+            editGraph.Font = new Font("Segoe UI", 12F);
+            editGraph.ForeColor = SystemColors.ControlText;
+            editGraph.Location = new Point(658, 3);
+            editGraph.Name = "editGraph";
+            editGraph.Size = new Size(231, 31);
+            editGraph.TabIndex = 26;
+            editGraph.Text = "Graph bearbeiten";
+            editGraph.UseVisualStyleBackColor = false;
+            editGraph.Visible = false;
+            editGraph.Click += editGraph_Click;
+            // 
+            // detMovement
+            // 
+            detMovement.Controls.Add(doNothingDet);
+            detMovement.Controls.Add(chooseDetPlay);
+            detMovement.Controls.Add(moveDetective);
+            detMovement.Controls.Add(movedDet);
+            detMovement.Controls.Add(detective);
+            detMovement.Location = new Point(12, 406);
+            detMovement.Name = "detMovement";
+            detMovement.Size = new Size(638, 101);
+            detMovement.TabIndex = 28;
+            detMovement.Visible = false;
             // 
             // MainScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Desktop;
+            BackColor = SystemColors.Window;
             ClientSize = new Size(895, 528);
-            Controls.Add(computeOrGame);
+            Controls.Add(detMovement);
+            Controls.Add(editGraph);
+            Controls.Add(GameSettings);
+            Controls.Add(computeEnt);
             Controls.Add(TorusCreate);
             Controls.Add(graphCreate);
+            Controls.Add(playGraph);
             Controls.Add(TextOutput);
             Controls.Add(headline);
             Controls.Add(GraphPicture);
+            MinimumSize = new Size(911, 567);
             Name = "MainScreen";
             Text = "Entanglement ist ein Maß für die Komläxität eines Graphs";
             ((System.ComponentModel.ISupportInitialize)GraphPicture).EndInit();
@@ -365,8 +560,12 @@ namespace EntanglementOfGraphs
             graphCreate.PerformLayout();
             TorusCreate.ResumeLayout(false);
             TorusCreate.PerformLayout();
-            computeOrGame.ResumeLayout(false);
-            computeOrGame.PerformLayout();
+            computeEnt.ResumeLayout(false);
+            computeEnt.PerformLayout();
+            GameSettings.ResumeLayout(false);
+            GameSettings.PerformLayout();
+            detMovement.ResumeLayout(false);
+            detMovement.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -397,6 +596,20 @@ namespace EntanglementOfGraphs
         private Button playGraph;
         private Panel graphCreate;
         private Panel TorusCreate;
-        private Panel computeOrGame;
+        private Panel computeEnt;
+        private Label startPos2;
+        private Panel GameSettings;
+        private Label detectiveAmount;
+        private TextBox startPosInput2;
+        private Button playDetective;
+        private Button playThief;
+        private TextBox detectiveAmountInput;
+        private Button editGraph;
+        private Label chooseDetPlay;
+        private TextBox movedDet;
+        private Label detective;
+        private Button moveDetective;
+        private Button doNothingDet;
+        private Panel detMovement;
     }
 }

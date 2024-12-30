@@ -14,8 +14,8 @@ namespace EntaglementOfGraphs
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
         private readonly bool debug = false;
-        protected Microsoft.Msagl.Drawing.Graph msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
-        protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer renderer;
+        protected Microsoft.Msagl.Drawing.Graph? msaglGraph;
+        protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer? renderer;
 
         /// <summary>
         /// Konstruktor für Grapherstellung
@@ -49,6 +49,7 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public void CreateMsagl()
         {
+            msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
             foreach (var vertex in Vertices)
             {
                 msaglGraph.AddNode(vertex.ToString());
@@ -88,7 +89,18 @@ namespace EntaglementOfGraphs
         /// <param name="color"></param>
         public void ColorVertex (string vertex, Microsoft.Msagl.Drawing.Color color)
         {
+            CreateMsagl();
             msaglGraph.FindNode(vertex).Attr.FillColor = color;
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+            renderer.CalculateLayout();
+        }
+
+        public void ShapeVertex(string vertex, Microsoft.Msagl.Drawing.Shape shape)
+        {
+            CreateMsagl();
+            msaglGraph.FindNode(vertex).Attr.Shape = shape;
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+            renderer.CalculateLayout();
         }
 
         /// <summary>
@@ -120,17 +132,8 @@ namespace EntaglementOfGraphs
                 return gameTree.BuildIterativGameTree(startPos);
             }
             else if (gameTreeTyp == GameTreeTyp.Rekursiv) // wenn rekursiver Aufbau
-            {
-                var finalStates = gameTree.GetPossibleFinalStates();
-                foreach (var finalState in finalStates) //fügt alle möglichen Endzustände hinzu
-                {
-                    gameTree.AddVertex(finalState);
-                    if (debug)
-                    {
-                        Console.WriteLine($"Endknoten hinzugefügt: {finalState}");
-                    }
-                }
-                foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
+            {                
+                foreach (var finalState in gameTree.possibleFinalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
                 {
                     if (!gameTree.OutEdges(startPos).Any())
                     {
@@ -144,16 +147,7 @@ namespace EntaglementOfGraphs
                 return gameTree;
             }
             else if (gameTreeTyp == GameTreeTyp.Fixpoint)
-            {
-                foreach (var vertex in gameTree.GetPossibleFinalStates())
-                {
-                    vertex.flag = 0;
-                    gameTree.AddVertex(vertex);
-                    if (debug)
-                    {
-                        Console.WriteLine($"Endknoten hinzugefügt: {vertex}");
-                    }
-                }
+            {                
                 gameTree.BuildFixpointGameTree(false);
                 return gameTree;
             }

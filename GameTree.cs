@@ -18,6 +18,7 @@ namespace EntaglementOfGraphs
         public readonly int detectiveAmount;
         public readonly FiniteDirectedGraph<V> graph;
         public readonly Positions<V> startPosition;
+        public readonly List<Positions<V>> possibleFinalStates;
         public readonly List<Move<V>> detectiveStrategy = [];
         public readonly List<Move<V>> thiefStrategy = [];
 
@@ -32,6 +33,16 @@ namespace EntaglementOfGraphs
             startPosition = startPos;
             detectiveAmount = startPos.detectiveAmount;
             graph = _graph;
+            possibleFinalStates = GetPossibleFinalStates();
+            foreach (var state in possibleFinalStates)
+            {
+                state.flag = 0;
+                AddVertex(state);
+                if (debug)
+                {
+                    Console.WriteLine($"Endknoten hinzugefügt: {state}");
+                }
+            }
             if (debug)
             {
                 Console.WriteLine($"Startknoten hinzugefügt: {startPos}");
