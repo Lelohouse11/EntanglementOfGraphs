@@ -77,7 +77,7 @@ namespace EntaglementOfGraphs
             List<Positions<V>> result = [];
             var outgoingVertex = GetOutgoingVertex(currentPos);
             double bestWinningChance = 0;
-            double bestFlagOfTarget = 0;
+            double bestFlagOfTarget = VertexCount;
             foreach (var vertex in outgoingVertex) // findet die beste Gewinnwahrscheinlichkeit
             {
                 var vertexWinningChance = vertex.flag % 1;
@@ -93,7 +93,7 @@ namespace EntaglementOfGraphs
             foreach (var vertex in outgoingVertex) // findet zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
             {
                 var vertexFlag = vertex.flag;
-                if ((vertexFlag % 1 == bestFlagOfTarget) && (vertexFlag < bestFlagOfTarget))
+                if ((vertexFlag % 1 == bestWinningChance) && (vertexFlag < bestFlagOfTarget))
                 {
                     bestFlagOfTarget = vertexFlag;
                 }
@@ -167,25 +167,29 @@ namespace EntaglementOfGraphs
                     }
                 }
             }
-            detectiveStrategy.Add(new Move<V>(currentPos, result));
+            thiefStrategy.Add(new Move<V>(currentPos, result));
         }
 
 
         /// <summary>
-        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus
+        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus und gibt  
         /// </summary>
         /// <param name="currentPos"></param>
         /// <returns></returns>
-        public V BestDetectiveMove(Positions<V> currentPos)
+        public (V,bool) BestDetectiveMove(Positions<V> currentPos)
         {
             foreach (var move in detectiveStrategy) // geht jeden Zug der Strategie durch
             {
                 if(move.source.Equals(currentPos)) // findet den passenden zur currentPos
                 {
-                    return currentPos.getMovedDetective(move.target.First());
+                    if(currentPos.Equals(move.target.First()))
+                    {
+                        return (default,false);
+                    }
+                    return (currentPos.getMovedDetective(move.target.First()),true);
                 }
             }
-            return currentPos.detectives.First(); // wenn kein passender Gefunden, Gewinn nicht mehr möglch
+            return (currentPos.detectives.First(),true); // wenn kein passender Gefunden, Gewinn nicht mehr möglch
         }
 
         /// <summary>

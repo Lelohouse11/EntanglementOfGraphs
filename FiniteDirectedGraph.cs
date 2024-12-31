@@ -14,7 +14,7 @@ namespace EntaglementOfGraphs
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
         private readonly bool debug = false;
-        protected Microsoft.Msagl.Drawing.Graph? msaglGraph;
+        protected Microsoft.Msagl.Drawing.Graph? msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
         protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer? renderer;
 
         /// <summary>
@@ -27,11 +27,13 @@ namespace EntaglementOfGraphs
             foreach (var vertex in vertexes)
             {
                 AddVertex(vertex);
+                AddVertexToMsagl(vertex);
             }
 
             foreach (var edge in edges)
             {
                 AddEdge(new Edge<V>(edge.Item1,edge.Item2));
+                AddEdgeToMsagl(edge.Item1, edge.Item2);
             }
         }
 
@@ -58,7 +60,17 @@ namespace EntaglementOfGraphs
             {
                 msaglGraph.AddEdge(edge.Source.ToString(),edge.Target.ToString());
             }
-        }     
+        }
+        
+        public void AddVertexToMsagl(V vertex)
+        {
+            msaglGraph.AddNode(vertex.ToString());
+        }
+
+        public void AddEdgeToMsagl(V source, V target)
+        {
+            msaglGraph.AddEdge(source.ToString(), target.ToString());
+        }
         
         /// <summary>
         /// Erstellt ein mögöiches Layout des Graphen bereit gezeichnet zu werden.
@@ -66,7 +78,6 @@ namespace EntaglementOfGraphs
         /// <param name="pb"></param>
         public void CreateImage(PictureBox pb)
         {
-            CreateMsagl();
             renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
             
             renderer.CalculateLayout();
@@ -89,7 +100,6 @@ namespace EntaglementOfGraphs
         /// <param name="color"></param>
         public void ColorVertex (string vertex, Microsoft.Msagl.Drawing.Color color)
         {
-            CreateMsagl();
             msaglGraph.FindNode(vertex).Attr.FillColor = color;
             renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
             renderer.CalculateLayout();
@@ -97,7 +107,6 @@ namespace EntaglementOfGraphs
 
         public void ShapeVertex(string vertex, Microsoft.Msagl.Drawing.Shape shape)
         {
-            CreateMsagl();
             msaglGraph.FindNode(vertex).Attr.Shape = shape;
             renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
             renderer.CalculateLayout();
@@ -186,6 +195,17 @@ namespace EntaglementOfGraphs
                         result.Add(pos.Clone().MoveThief(possibleMoves[i]).ChangeTurn());
                     }
                 }
+            }
+            return result;
+        }
+
+        public String GetNextPossibleStepsForThief(Positions<V> pos)
+        {
+            string result = "";
+            foreach (var nextPos in GetNextPossibleSteps(pos)) 
+            {
+                result += nextPos.thief.ToString();
+                result += ", ";
             }
             return result;
         }

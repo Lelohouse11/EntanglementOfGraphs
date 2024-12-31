@@ -67,14 +67,23 @@ namespace EntanglementOfGraphs
             detectiveAmountInput = new TextBox();
             detectiveAmount = new Label();
             startPosInput2 = new TextBox();
+            restartGame = new Button();
             editGraph = new Button();
             detMovement = new Panel();
+            thiefMovement = new Panel();
+            label2 = new Label();
+            moveThiefToTarget = new Button();
+            targetThiefInput = new TextBox();
+            targetVertexofThief = new Label();
+            chooseThiefPlay = new Label();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)GraphPicture).BeginInit();
             graphCreate.SuspendLayout();
             TorusCreate.SuspendLayout();
             computeEnt.SuspendLayout();
             GameSettings.SuspendLayout();
             detMovement.SuspendLayout();
+            thiefMovement.SuspendLayout();
             SuspendLayout();
             // 
             // GraphPicture
@@ -508,6 +517,18 @@ namespace EntanglementOfGraphs
             startPosInput2.Size = new Size(231, 29);
             startPosInput2.TabIndex = 16;
             // 
+            // restartGame
+            // 
+            restartGame.Font = new Font("Segoe UI", 12F);
+            restartGame.Location = new Point(652, 366);
+            restartGame.Name = "restartGame";
+            restartGame.Size = new Size(231, 31);
+            restartGame.TabIndex = 29;
+            restartGame.Text = "Spiel neustarten";
+            restartGame.UseVisualStyleBackColor = true;
+            restartGame.Visible = false;
+            restartGame.Click += restartGame_Click_1;
+            // 
             // editGraph
             // 
             editGraph.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -525,6 +546,7 @@ namespace EntanglementOfGraphs
             // 
             // detMovement
             // 
+            detMovement.Controls.Add(label1);
             detMovement.Controls.Add(doNothingDet);
             detMovement.Controls.Add(chooseDetPlay);
             detMovement.Controls.Add(moveDetective);
@@ -536,12 +558,85 @@ namespace EntanglementOfGraphs
             detMovement.TabIndex = 28;
             detMovement.Visible = false;
             // 
+            // thiefMovement
+            // 
+            thiefMovement.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            thiefMovement.Controls.Add(label2);
+            thiefMovement.Controls.Add(moveThiefToTarget);
+            thiefMovement.Controls.Add(targetThiefInput);
+            thiefMovement.Controls.Add(targetVertexofThief);
+            thiefMovement.Controls.Add(chooseThiefPlay);
+            thiefMovement.Location = new Point(12, 403);
+            thiefMovement.Name = "thiefMovement";
+            thiefMovement.Size = new Size(635, 101);
+            thiefMovement.TabIndex = 30;
+            thiefMovement.Visible = false;
+            // 
+            // label2
+            // 
+            label2.Font = new Font("Segoe UI", 12F);
+            label2.Location = new Point(349, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(290, 101);
+            label2.TabIndex = 16;
+            label2.Text = "Roter Knoten = Position des Diebes\r\nDiamand Form = Position der Detektive\r\n";
+            // 
+            // moveThiefToTarget
+            // 
+            moveThiefToTarget.Font = new Font("Segoe UI", 12F);
+            moveThiefToTarget.Location = new Point(198, 22);
+            moveThiefToTarget.Name = "moveThiefToTarget";
+            moveThiefToTarget.Size = new Size(145, 31);
+            moveThiefToTarget.TabIndex = 3;
+            moveThiefToTarget.Text = "Dieb bewegen";
+            moveThiefToTarget.UseVisualStyleBackColor = true;
+            moveThiefToTarget.Click += moveThiefToTarget_Click;
+            // 
+            // targetThiefInput
+            // 
+            targetThiefInput.Font = new Font("Segoe UI", 12F);
+            targetThiefInput.Location = new Point(92, 24);
+            targetThiefInput.Name = "targetThiefInput";
+            targetThiefInput.Size = new Size(100, 29);
+            targetThiefInput.TabIndex = 2;
+            // 
+            // targetVertexofThief
+            // 
+            targetVertexofThief.AutoSize = true;
+            targetVertexofThief.Font = new Font("Segoe UI", 12F);
+            targetVertexofThief.Location = new Point(0, 27);
+            targetVertexofThief.Name = "targetVertexofThief";
+            targetVertexofThief.Size = new Size(86, 21);
+            targetVertexofThief.TabIndex = 1;
+            targetVertexofThief.Text = "Zielknoten:";
+            // 
+            // chooseThiefPlay
+            // 
+            chooseThiefPlay.AutoSize = true;
+            chooseThiefPlay.Font = new Font("Segoe UI", 12F);
+            chooseThiefPlay.Location = new Point(0, 0);
+            chooseThiefPlay.Name = "chooseThiefPlay";
+            chooseThiefPlay.Size = new Size(138, 21);
+            chooseThiefPlay.TabIndex = 0;
+            chooseThiefPlay.Text = "Wähle deinen Zug:";
+            // 
+            // label1
+            // 
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(349, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(290, 101);
+            label1.TabIndex = 15;
+            label1.Text = "Roter Knoten = Position des Diebes\r\nDiamand Form = Position der Detektive\r\n";
+            // 
             // MainScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(895, 528);
+            Controls.Add(thiefMovement);
+            Controls.Add(restartGame);
             Controls.Add(detMovement);
             Controls.Add(editGraph);
             Controls.Add(GameSettings);
@@ -566,6 +661,8 @@ namespace EntanglementOfGraphs
             GameSettings.PerformLayout();
             detMovement.ResumeLayout(false);
             detMovement.PerformLayout();
+            thiefMovement.ResumeLayout(false);
+            thiefMovement.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -611,5 +708,13 @@ namespace EntanglementOfGraphs
         private Button moveDetective;
         private Button doNothingDet;
         private Panel detMovement;
+        private Button restartGame;
+        private Label label1;
+        private Panel thiefMovement;
+        private Label targetVertexofThief;
+        private Label chooseThiefPlay;
+        private Label label2;
+        private Button moveThiefToTarget;
+        private TextBox targetThiefInput;
     }
 }

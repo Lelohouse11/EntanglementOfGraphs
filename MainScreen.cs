@@ -7,7 +7,7 @@ namespace EntanglementOfGraphs
     public partial class MainScreen
     {
         bool whichGraph = true;
-        FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
+        FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>([1, 2, 3], [(1, 2), (2, 3), (3, 1)]);
         TorusGraph tGraph;
         GameTree<int> gameTree;
         GameTree<TorusVertex> gameTreeOfTorus;
@@ -40,6 +40,7 @@ namespace EntanglementOfGraphs
             if (isNumber)
             {
                 graph.AddVertex(vertex);
+                graph.AddVertexToMsagl(vertex);
                 graph.CreateImage(GraphPicture);
                 GraphPicture.Refresh();
                 vertexInput.Clear();
@@ -94,6 +95,7 @@ namespace EntanglementOfGraphs
                         if (graph.ContainsVertex(target))
                         {
                             graph.AddEdge(new Edge<int>(source, target));
+                            graph.AddEdgeToMsagl(source, target);
                             edgeSource.Clear();
                             edgeTarget.Clear();
                             graph.CreateImage(GraphPicture);
@@ -173,20 +175,23 @@ namespace EntanglementOfGraphs
 
         private void playThief_Click(object sender, EventArgs e)
         {
-            detMovement.Show();
-            checkGameSettings();
-            detMovement.Show();
+            if (checkGameSettings())
+            {
+                thiefMovement.Show();
+                MoveDet();
+            }
         }
 
         private void playDetective_Click(object sender, EventArgs e)
         {
-            detMovement.Show();
-            checkGameSettings();
-            detMovement.Show();
-            TextOutput.Text = "Du bist am Zug! Wähle einen Detektiv oder tue nichts.";
+            if (checkGameSettings())
+            {
+                detMovement.Show();
+                TextOutput.Text = $"Du bist am Zug! Wähle einen Detektiv oder tue nichts. Noch nicht Plazierte Detektive: {gameTree.detectiveAmount}.";
+            }
         }
 
-        private void checkGameSettings()
+        private bool checkGameSettings()
         {
             TextOutput.Clear();
             int startPos;
@@ -211,6 +216,7 @@ namespace EntanglementOfGraphs
                             startPosInput2.Clear();
                             detectiveAmountInput.Clear();
                             GameSettings.Hide();
+                            return true;
                         }
                         else
                         {
@@ -235,6 +241,7 @@ namespace EntanglementOfGraphs
                 TextOutput.Text = "Bitte eine Ganzzahl für den Urspungsknoten eingeben.";
                 startPosInput2.Clear();
             }
+            return false;
         }
 
         private void editGraph_Click(object sender, EventArgs e)
@@ -249,6 +256,7 @@ namespace EntanglementOfGraphs
             GameSettings.Hide();
             editGraph.Hide();
             detMovement.Hide();
+            thiefMovement.Hide();
         }
 
         private void moveDetective_Click(object sender, EventArgs e)
@@ -258,39 +266,154 @@ namespace EntanglementOfGraphs
             bool isMovedDetectiveNumber = int.TryParse(movedDet.Text, out movedDetective);
             if (isMovedDetectiveNumber)
             {
-                if (movedDetective <= gameTree.detectiveAmount)
+                if ((0 < movedDetective) && (movedDetective <= gameTree.detectiveAmount))
                 {
-                    if(movedDetective >= 0)
+                    if (currentPos.detectives.Count >= movedDetective)
                     {
-                        graph.ShapeVertex(movedDetective.ToString(),Microsoft.Msagl.Drawing.Shape.Circle);
+                        var detPos = currentPos.detectives.ElementAt(movedDetective - 1);
+                        graph.ShapeVertex(detPos.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
+                        currentPos.MoveDetective(detPos);
+                        currentPos.ChangeTurn();
                     }
-                    currentPos.MoveDetective(movedDetective);
-                    currentPos.ChangeTurn();
+                    else
+                    {
+                        currentPos.MoveDetective(movedDetective);
+                        currentPos.ChangeTurn();
+                    }
                     graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
-                    moveThief();
+                    GraphPicture.Refresh();
+                    Thread.Sleep(1000);
+                    MoveThief();
+                    movedDet.Clear();
                 }
+                else
+                {
+                    TextOutput.Text = $"Bitte eine Ganzzahl zwischen 0 und {gameTree.detectiveAmount} für den zu bewegenden Detektiv eingeben.";
+                    movedDet.Clear();
+                }
+            }
+            else
+            {
+                TextOutput.Text = $"Bitte eine Ganzzahl zwischen 0 und {gameTree.detectiveAmount} für den zu bewegenden Detektiv eingeben.";
+                movedDet.Clear();
             }
         }
 
         private void doNothingDet_Click(object sender, EventArgs e)
         {
             currentPos.ChangeTurn();
-            moveThief();
+            MoveThief();
         }
 
-        private void moveThief()
+        private void MoveThief()
         {
-            int nextThiefMove = gameTree.BestThiefMove(currentPos);
+            TextOutput.Clear();
+            if (graph.GetNextPossibleSteps(currentPos).Count == 0)
+            {
+                detMovement.Hide();
+                restartGame.Show();
+                TextOutput.Text = "Du hast Gewonnen!";
+
+            }
+            else
+            {
+                int nextThiefMove = gameTree.BestThiefMove(currentPos);
+                graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White);
+                currentPos.MoveThief(nextThiefMove);
+                currentPos.ChangeTurn();
+                graph.ColorVertex(nextThiefMove.ToString(), Microsoft.Msagl.Drawing.Color.Red);
+                GraphPicture.Refresh();
+                TextOutput.Text = $"Du bist am Zug! Wähle einen Detektiv oder tue nichts. Noch nicht Plazierte Detektive: {gameTree.detectiveAmount - currentPos.detectives.Count}.";
+            }
+        }
+
+        private void MoveDet()
+        {
+            TextOutput.Clear();
+            if (gameTree.GetExistingPosition(currentPos) == null)
+            {
+                thiefMovement.Hide();
+                restartGame.Show();
+                TextOutput.Text = "Du hast Gewonnen!";
+            }
+            else
+            {
+                (int, bool) nextDetectiveMove = gameTree.BestDetectiveMove(currentPos);
+                if (nextDetectiveMove.Item2)
+                {
+                    if (nextDetectiveMove.Item1 != 0)
+                    {
+                        graph.ShapeVertex(nextDetectiveMove.Item1.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
+                    }
+                    currentPos.MoveDetective(nextDetectiveMove.Item1);
+                    graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                    GraphPicture.Refresh();
+                }
+                currentPos.ChangeTurn();
+                TextOutput.Text = $"Du bist am Zug! Wähle ein der folgenden Knoten aus: {graph.GetNextPossibleStepsForThief(currentPos)}.";
+
+            }
+        }
+
+        private void restartGame_Click_1(object sender, EventArgs e)
+        {
+            TextOutput.Clear();
+            startPosInput.Clear();
+            graphCreate.Hide();
+            TorusCreate.Hide();
+            computeEnt.Hide();
+            playGraph.Hide();
+            GameSettings.Show();
+            editGraph.Show();
+            restartGame.Hide();
             graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White);
-            currentPos.MoveThief(nextThiefMove);
-            currentPos.ChangeTurn();
-            graph.ColorVertex(nextThiefMove.ToString(), Microsoft.Msagl.Drawing.Color.Red);
-            TextOutput.Text = "Du bist am Zug! Wähle einen Detektiv oder tue nichts.";
+            foreach (var detective in currentPos.detectives)
+            {
+                graph.ShapeVertex(detective.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
+            }
+            GraphPicture.Refresh();
         }
 
-        private void moveDetective()
+        private void moveThiefToTarget_Click(object sender, EventArgs e)
         {
-
+            TextOutput.Clear();
+            int thiefTarget;
+            bool isThiefTargetNumber = int.TryParse(targetThiefInput.Text, out thiefTarget);
+            if (isThiefTargetNumber)
+            {
+                var possibleNextPos = currentPos.Clone() ;
+                possibleNextPos.MoveThief(thiefTarget);
+                possibleNextPos.ChangeTurn();
+                bool temp = false;
+                foreach (var possibleStep in graph.GetNextPossibleSteps(currentPos))
+                {
+                    if (possibleNextPos.Equals(possibleStep))
+                    {
+                        temp = true;
+                        break;
+                    }
+                }
+                if (temp)
+                {
+                    graph.ColorVertex(currentPos.thief.ToString(),Microsoft.Msagl.Drawing.Color.White);
+                    currentPos = possibleNextPos;
+                    graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.Red);                    
+                    GraphPicture.Refresh();
+                    Thread.Sleep(1000);
+                    MoveDet();
+                    targetThiefInput.Clear();
+                }
+                else
+                {
+                    TextOutput.Text = $"Bitte eine der folgenden Ganzzahlen eingeben: {graph.GetNextPossibleStepsForThief(currentPos)}.";
+                    targetThiefInput.Clear();
+                }
+            }
+            else
+            {
+                TextOutput.Text = $"Bitte eine der folgenden Ganzzahlen eingeben: {graph.GetNextPossibleStepsForThief(currentPos)}.";
+                targetThiefInput.Clear();
+            }        
         }
     }
 }
