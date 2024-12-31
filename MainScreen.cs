@@ -7,7 +7,7 @@ namespace EntanglementOfGraphs
     public partial class MainScreen
     {
         bool whichGraph = true;
-        FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>([1, 2, 3], [(1, 2), (2, 3), (3, 1)]);
+        FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
         TorusGraph tGraph;
         GameTree<int> gameTree;
         GameTree<TorusVertex> gameTreeOfTorus;
@@ -178,6 +178,7 @@ namespace EntanglementOfGraphs
             if (checkGameSettings())
             {
                 thiefMovement.Show();
+                restartGame.Show();
                 MoveDet();
             }
         }
@@ -187,6 +188,7 @@ namespace EntanglementOfGraphs
             if (checkGameSettings())
             {
                 detMovement.Show();
+                restartGame.Show();
                 TextOutput.Text = $"Du bist am Zug! Wähle einen Detektiv oder tue nichts. Noch nicht Plazierte Detektive: {gameTree.detectiveAmount}.";
             }
         }
@@ -250,13 +252,20 @@ namespace EntanglementOfGraphs
             startPosInput2.Clear();
             detectiveAmountInput.Clear();
             graphCreate.Show();
-            TorusCreate.Show();
+            //TorusCreate.Show();
             computeEnt.Show();
             playGraph.Show();
             GameSettings.Hide();
             editGraph.Hide();
             detMovement.Hide();
             thiefMovement.Hide();
+            restartGame.Hide();
+            graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White);
+            foreach (var detective in currentPos.detectives)
+            {
+                graph.ShapeVertex(detective.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
+            }
+            GraphPicture.Refresh();
         }
 
         private void moveDetective_Click(object sender, EventArgs e)
@@ -311,7 +320,6 @@ namespace EntanglementOfGraphs
             if (graph.GetNextPossibleSteps(currentPos).Count == 0)
             {
                 detMovement.Hide();
-                restartGame.Show();
                 TextOutput.Text = "Du hast Gewonnen!";
 
             }
@@ -333,25 +341,37 @@ namespace EntanglementOfGraphs
             if (gameTree.GetExistingPosition(currentPos) == null)
             {
                 thiefMovement.Hide();
-                restartGame.Show();
                 TextOutput.Text = "Du hast Gewonnen!";
             }
             else
-            {
+            {                
                 (int, bool) nextDetectiveMove = gameTree.BestDetectiveMove(currentPos);
                 if (nextDetectiveMove.Item2)
                 {
                     if (nextDetectiveMove.Item1 != 0)
                     {
                         graph.ShapeVertex(nextDetectiveMove.Item1.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
+                        currentPos.MoveDetective(nextDetectiveMove.Item1);
+                        graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                        GraphPicture.Refresh();
                     }
-                    currentPos.MoveDetective(nextDetectiveMove.Item1);
-                    graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
-                    GraphPicture.Refresh();
+                    else
+                    {
+                        currentPos.MoveDetective(nextDetectiveMove.Item1);
+                        graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                        GraphPicture.Refresh();
+                    }
                 }
                 currentPos.ChangeTurn();
-                TextOutput.Text = $"Du bist am Zug! Wähle ein der folgenden Knoten aus: {graph.GetNextPossibleStepsForThief(currentPos)}.";
-
+                if (graph.GetNextPossibleSteps(currentPos).Count == 0)
+                {
+                    thiefMovement.Hide();
+                    TextOutput.Text = "Du hast Verloren!!";
+                }
+                else
+                {
+                    TextOutput.Text = $"Du bist am Zug! Wähle ein der folgenden Knoten aus: {graph.GetNextPossibleStepsForThief(currentPos)}.";
+                }
             }
         }
 

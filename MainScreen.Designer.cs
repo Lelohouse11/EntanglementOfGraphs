@@ -70,13 +70,13 @@ namespace EntanglementOfGraphs
             restartGame = new Button();
             editGraph = new Button();
             detMovement = new Panel();
+            label1 = new Label();
             thiefMovement = new Panel();
             label2 = new Label();
             moveThiefToTarget = new Button();
             targetThiefInput = new TextBox();
             targetVertexofThief = new Label();
             chooseThiefPlay = new Label();
-            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)GraphPicture).BeginInit();
             graphCreate.SuspendLayout();
             TorusCreate.SuspendLayout();
@@ -424,6 +424,7 @@ namespace EntanglementOfGraphs
             TorusCreate.Name = "TorusCreate";
             TorusCreate.Size = new Size(237, 151);
             TorusCreate.TabIndex = 23;
+            TorusCreate.Visible = false;
             // 
             // computeEnt
             // 
@@ -558,6 +559,15 @@ namespace EntanglementOfGraphs
             detMovement.TabIndex = 28;
             detMovement.Visible = false;
             // 
+            // label1
+            // 
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(349, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(290, 101);
+            label1.TabIndex = 15;
+            label1.Text = "Roter Knoten = Position des Diebes\r\nDiamand Form = Position der Detektive\r\n";
+            // 
             // thiefMovement
             // 
             thiefMovement.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
@@ -619,15 +629,6 @@ namespace EntanglementOfGraphs
             chooseThiefPlay.Size = new Size(138, 21);
             chooseThiefPlay.TabIndex = 0;
             chooseThiefPlay.Text = "Wähle deinen Zug:";
-            // 
-            // label1
-            // 
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(349, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(290, 101);
-            label1.TabIndex = 15;
-            label1.Text = "Roter Knoten = Position des Diebes\r\nDiamand Form = Position der Detektive\r\n";
             // 
             // MainScreen
             // 

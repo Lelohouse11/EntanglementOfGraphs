@@ -178,11 +178,13 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public (V,bool) BestDetectiveMove(Positions<V> currentPos)
         {
+            var cloned = currentPos.Clone();
+            cloned.ChangeTurn();
             foreach (var move in detectiveStrategy) // geht jeden Zug der Strategie durch
             {
                 if(move.source.Equals(currentPos)) // findet den passenden zur currentPos
                 {
-                    if(currentPos.Equals(move.target.First()))
+                    if(cloned.Equals(move.target.First()))
                     {
                         return (default,false);
                     }
