@@ -7,7 +7,7 @@ namespace EntanglementOfGraphs
     public partial class MainScreen
     {
         bool whichGraph = true;
-        FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>([1,2,3], [(1,2),(2,3),(3,1),(1,3),(3,2),(2,1)]);
+        FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
         TorusGraph tGraph;
         GameTree<int> gameTree;
         GameTree<TorusVertex> gameTreeOfTorus;
@@ -38,7 +38,6 @@ namespace EntanglementOfGraphs
             }
         }
 
-
         /// <summary>
         /// fügt einen Knoten zum Graphen hinzu
         /// </summary>
@@ -65,7 +64,6 @@ namespace EntanglementOfGraphs
             }
             vertexInput.Focus();
         }
-
 
         /// <summary>
         /// berechnet das Entanglement vom aktuell angezeigten Graph Graph
@@ -98,7 +96,6 @@ namespace EntanglementOfGraphs
                 startPosInput.Focus();
             }
         }
-
 
         /// <summary>
         /// fügt eine Kante zum Graphen hinzu
@@ -159,7 +156,6 @@ namespace EntanglementOfGraphs
             }
         }
 
-
         /// <summary>
         /// löscht den eingegebenen Graph
         /// </summary>
@@ -169,11 +165,10 @@ namespace EntanglementOfGraphs
         {
             whichGraph = true;
             TextOutput.Clear();
-            graph.Clear();
+            graph = new FiniteDirectedGraph<int>();
             graph.CreateImage(GraphPicture);
             GraphPicture.Refresh();
         }
-
 
         /// <summary>
         /// erstellt einen Torusgraph
@@ -207,7 +202,6 @@ namespace EntanglementOfGraphs
             }
         }
 
-
         /// <summary>
         /// wechselt in den Spielemodus
         /// </summary>
@@ -217,8 +211,13 @@ namespace EntanglementOfGraphs
         {
             TextOutput.Clear();
             startPosInput.Clear();
-            graphCreate.Hide();
+
+            //graphCreate.Hide();
+            chooseGraphTyp.Hide();
             TorusCreate.Hide();
+            createUnCircleGraph.Hide();
+
+            //generateGraph.Hide();
             computeEnt.Hide();
             playGraph.Hide();
             GameSettings.Show();
@@ -237,7 +236,12 @@ namespace EntanglementOfGraphs
             startPosInput2.Clear();
             detectiveAmountInput.Clear();
             graphCreate.Show();
-            //TorusCreate.Show();
+
+            //generateGraph.Show();
+            chooseGraphTyp.Show();
+            TorusCreate.Hide();
+            createUnCircleGraph.Hide();
+
             computeEnt.Show();
             playGraph.Show();
             GameSettings.Hide();
@@ -255,7 +259,6 @@ namespace EntanglementOfGraphs
                 GraphPicture.Refresh();
             }
         }
-
 
         /// <summary>
         /// startet das Spiel als Dieb
@@ -348,7 +351,7 @@ namespace EntanglementOfGraphs
                 startPosInput2.Focus();
             }
             return false;
-        }        
+        }
 
         /// <summary>
         /// bewegt den Detektiv, wenn man Detektiv spielt
@@ -512,7 +515,7 @@ namespace EntanglementOfGraphs
                 TextOutput.Text = "Du hast Gewonnen!";
             }
             else
-            {                
+            {
                 (int, bool) nextDetectiveMove = gameTree.BestDetectiveMove(currentPos); // bester Zug
                 if (nextDetectiveMove.Item2)
                 {
@@ -543,7 +546,6 @@ namespace EntanglementOfGraphs
             }
         }
 
-
         /// <summary>
         /// setzt Spiel zurück und startet es neu
         /// </summary>
@@ -568,7 +570,82 @@ namespace EntanglementOfGraphs
             GraphPicture.Refresh();
         }
 
-        
+        private void chooseGraphTyp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedGraph = (string)chooseGraphTyp.SelectedItem;
+            if (selectedGraph.Equals("Torusgraph"))
+            {
+                createUnCircleGraph.Hide();
+                createDiCircleGraph.Hide();
+                TorusCreate.Show();
+            }
+            else if (selectedGraph.Equals("Ungerichteter Kreisgraph"))
+            {
+                TorusCreate.Hide();
+                createDiCircleGraph.Hide();
+                createUnCircleGraph.Show();
+            }
+            else if (selectedGraph.Equals("Gerichteter Kreisgraph"))
+            {
+                TorusCreate.Hide();
+                createUnCircleGraph.Hide();
+                createDiCircleGraph.Show();
+            }
+            else if (selectedGraph.Equals("Graph von unärer Funktion"))
+            {
+                TorusCreate.Hide();
+                createUnCircleGraph.Hide();
+                createUnCircleGraph.Hide();
+            }
+            else if (selectedGraph.Equals("Komplett verbundener Graph"))
+            {
+                TorusCreate.Hide();
+                createUnCircleGraph.Hide();
+                createUnCircleGraph.Hide();
+            }
+        }
+
+        private void createUndirectedCircleGraph_Click(object sender, EventArgs e)
+        {
+            whichGraph = true; // Graphen vom Typen int
+            TextOutput.Clear();
+            int size;
+            bool isNumber = int.TryParse(unCircleSizeInput.Text, out size);
+            if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
+            {
+                graph = new UndirectedCircleGraph(size);
+                graph.CreateImage(GraphPicture);
+                GraphPicture.Refresh();
+                unCircleSizeInput.Clear();
+            }
+            else // Eingabe unpassend
+            {
+                TextOutput.Text = "Bitte eine Ganzzahl für die Größe eingeben.";
+                unCircleSizeInput.Clear();
+            }
+            unCircleSizeInput.Focus();
+        }
+
+        private void createDirectedCircleGraph_Click(object sender, EventArgs e)
+        {
+            whichGraph = true; // Graphen vom Typen int
+            TextOutput.Clear();
+            int size;
+            bool isNumber = int.TryParse(diCircleSizeInput.Text, out size);
+            if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
+            {
+                graph = new DirectedCircleGraph(size+1);
+                graph.CreateImage(GraphPicture);
+                GraphPicture.Refresh();
+                diCircleSizeInput.Clear();
+            }
+            else // Eingabe unpassend
+            {
+                TextOutput.Text = "Bitte eine Ganzzahl für die Größe eingeben.";
+                diCircleSizeInput.Clear();
+            }
+            diCircleSizeInput.Focus();
+        }
     }
 }
 

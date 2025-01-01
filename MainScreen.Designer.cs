@@ -46,11 +46,6 @@ namespace EntanglementOfGraphs
             deleteGraph = new Button();
             startPos = new Label();
             startPosInput = new TextBox();
-            torusN = new TextBox();
-            torusM = new TextBox();
-            x = new Label();
-            torusGraph = new Label();
-            createTorusGraph = new Button();
             playGraph = new Button();
             graphCreate = new Panel();
             doNothingDet = new Button();
@@ -58,7 +53,6 @@ namespace EntanglementOfGraphs
             movedDet = new TextBox();
             detective = new Label();
             chooseDetPlay = new Label();
-            TorusCreate = new Panel();
             computeEnt = new Panel();
             startPos2 = new Label();
             GameSettings = new Panel();
@@ -77,20 +71,36 @@ namespace EntanglementOfGraphs
             targetThiefInput = new TextBox();
             targetVertexofThief = new Label();
             chooseThiefPlay = new Label();
+            TorusCreate = new Panel();
+            torusGraph = new Label();
+            torusN = new TextBox();
+            torusM = new TextBox();
+            createTorusGraph = new Button();
+            x = new Label();
+            chooseGraphTyp = new ComboBox();
+            createUnCircleGraph = new Panel();
+            createDiCircleGraph = new Panel();
+            createDirectedCircleGraph = new Button();
+            diCircleSizeInput = new TextBox();
+            unCircleSize = new Label();
+            createUndirectedCircleGraph = new Button();
+            unCircleSizeInput = new TextBox();
             ((System.ComponentModel.ISupportInitialize)GraphPicture).BeginInit();
             graphCreate.SuspendLayout();
-            TorusCreate.SuspendLayout();
             computeEnt.SuspendLayout();
             GameSettings.SuspendLayout();
             detMovement.SuspendLayout();
             thiefMovement.SuspendLayout();
+            TorusCreate.SuspendLayout();
+            createUnCircleGraph.SuspendLayout();
+            createDiCircleGraph.SuspendLayout();
             SuspendLayout();
             // 
             // GraphPicture
             // 
             GraphPicture.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             GraphPicture.BorderStyle = BorderStyle.FixedSingle;
-            GraphPicture.Location = new Point(16, 37);
+            GraphPicture.Location = new Point(12, 40);
             GraphPicture.Name = "GraphPicture";
             GraphPicture.Size = new Size(634, 363);
             GraphPicture.SizeMode = PictureBoxSizeMode.Zoom;
@@ -268,60 +278,6 @@ namespace EntanglementOfGraphs
             startPosInput.Size = new Size(231, 29);
             startPosInput.TabIndex = 15;
             // 
-            // torusN
-            // 
-            torusN.BackColor = SystemColors.Window;
-            torusN.Font = new Font("Segoe UI", 12F);
-            torusN.ForeColor = SystemColors.WindowText;
-            torusN.Location = new Point(4, 55);
-            torusN.Name = "torusN";
-            torusN.Size = new Size(100, 29);
-            torusN.TabIndex = 16;
-            // 
-            // torusM
-            // 
-            torusM.BackColor = SystemColors.Window;
-            torusM.Font = new Font("Segoe UI", 12F);
-            torusM.ForeColor = SystemColors.WindowText;
-            torusM.Location = new Point(131, 55);
-            torusM.Name = "torusM";
-            torusM.Size = new Size(100, 29);
-            torusM.TabIndex = 17;
-            // 
-            // x
-            // 
-            x.AutoSize = true;
-            x.Font = new Font("Segoe UI", 12F);
-            x.ForeColor = SystemColors.WindowText;
-            x.Location = new Point(110, 58);
-            x.Name = "x";
-            x.Size = new Size(17, 21);
-            x.TabIndex = 18;
-            x.Text = "x";
-            // 
-            // torusGraph
-            // 
-            torusGraph.Font = new Font("Segoe UI", 12F);
-            torusGraph.ForeColor = SystemColors.WindowText;
-            torusGraph.Location = new Point(0, 0);
-            torusGraph.Name = "torusGraph";
-            torusGraph.Size = new Size(231, 52);
-            torusGraph.TabIndex = 19;
-            torusGraph.Text = "Bitte Größe des Torusgraphen eingeben:";
-            // 
-            // createTorusGraph
-            // 
-            createTorusGraph.BackColor = SystemColors.ButtonHighlight;
-            createTorusGraph.Font = new Font("Segoe UI", 12F);
-            createTorusGraph.ForeColor = SystemColors.ControlText;
-            createTorusGraph.Location = new Point(4, 90);
-            createTorusGraph.Name = "createTorusGraph";
-            createTorusGraph.Size = new Size(227, 31);
-            createTorusGraph.TabIndex = 20;
-            createTorusGraph.Text = "Torusgraph erstellen";
-            createTorusGraph.UseVisualStyleBackColor = false;
-            createTorusGraph.Click += createTorusGraph_Click;
-            // 
             // playGraph
             // 
             playGraph.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -412,20 +368,6 @@ namespace EntanglementOfGraphs
             chooseDetPlay.TabIndex = 4;
             chooseDetPlay.Text = "Wähle deinen Zug:";
             // 
-            // TorusCreate
-            // 
-            TorusCreate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            TorusCreate.Controls.Add(torusGraph);
-            TorusCreate.Controls.Add(torusN);
-            TorusCreate.Controls.Add(torusM);
-            TorusCreate.Controls.Add(createTorusGraph);
-            TorusCreate.Controls.Add(x);
-            TorusCreate.Location = new Point(652, 195);
-            TorusCreate.Name = "TorusCreate";
-            TorusCreate.Size = new Size(237, 151);
-            TorusCreate.TabIndex = 23;
-            TorusCreate.Visible = false;
-            // 
             // computeEnt
             // 
             computeEnt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -434,7 +376,7 @@ namespace EntanglementOfGraphs
             computeEnt.Controls.Add(startPosInput);
             computeEnt.Location = new Point(652, 37);
             computeEnt.Name = "computeEnt";
-            computeEnt.Size = new Size(237, 149);
+            computeEnt.Size = new Size(237, 118);
             computeEnt.TabIndex = 24;
             // 
             // startPos2
@@ -456,7 +398,7 @@ namespace EntanglementOfGraphs
             GameSettings.Controls.Add(detectiveAmount);
             GameSettings.Controls.Add(startPosInput2);
             GameSettings.Controls.Add(startPos2);
-            GameSettings.Location = new Point(652, 37);
+            GameSettings.Location = new Point(409, 9);
             GameSettings.Name = "GameSettings";
             GameSettings.Size = new Size(237, 326);
             GameSettings.TabIndex = 25;
@@ -630,32 +572,183 @@ namespace EntanglementOfGraphs
             chooseThiefPlay.TabIndex = 0;
             chooseThiefPlay.Text = "Wähle deinen Zug:";
             // 
+            // TorusCreate
+            // 
+            TorusCreate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            TorusCreate.Controls.Add(torusGraph);
+            TorusCreate.Controls.Add(torusN);
+            TorusCreate.Controls.Add(torusM);
+            TorusCreate.Controls.Add(createTorusGraph);
+            TorusCreate.Controls.Add(x);
+            TorusCreate.Location = new Point(652, 196);
+            TorusCreate.Name = "TorusCreate";
+            TorusCreate.Size = new Size(231, 164);
+            TorusCreate.TabIndex = 23;
+            TorusCreate.Visible = false;
+            // 
+            // torusGraph
+            // 
+            torusGraph.Font = new Font("Segoe UI", 12F);
+            torusGraph.ForeColor = SystemColors.WindowText;
+            torusGraph.Location = new Point(0, 0);
+            torusGraph.Name = "torusGraph";
+            torusGraph.Size = new Size(231, 45);
+            torusGraph.TabIndex = 19;
+            torusGraph.Text = "Größe des Torusgraphen eingeben:";
+            // 
+            // torusN
+            // 
+            torusN.BackColor = SystemColors.Window;
+            torusN.Font = new Font("Segoe UI", 12F);
+            torusN.ForeColor = SystemColors.WindowText;
+            torusN.Location = new Point(0, 48);
+            torusN.Name = "torusN";
+            torusN.Size = new Size(100, 29);
+            torusN.TabIndex = 16;
+            // 
+            // torusM
+            // 
+            torusM.BackColor = SystemColors.Window;
+            torusM.Font = new Font("Segoe UI", 12F);
+            torusM.ForeColor = SystemColors.WindowText;
+            torusM.Location = new Point(131, 48);
+            torusM.Name = "torusM";
+            torusM.Size = new Size(100, 29);
+            torusM.TabIndex = 17;
+            // 
+            // createTorusGraph
+            // 
+            createTorusGraph.BackColor = SystemColors.ButtonHighlight;
+            createTorusGraph.Font = new Font("Segoe UI", 12F);
+            createTorusGraph.ForeColor = SystemColors.ControlText;
+            createTorusGraph.Location = new Point(0, 83);
+            createTorusGraph.Name = "createTorusGraph";
+            createTorusGraph.Size = new Size(231, 31);
+            createTorusGraph.TabIndex = 20;
+            createTorusGraph.Text = "Torusgraph erstellen";
+            createTorusGraph.UseVisualStyleBackColor = false;
+            createTorusGraph.Click += createTorusGraph_Click;
+            // 
+            // x
+            // 
+            x.AutoSize = true;
+            x.Font = new Font("Segoe UI", 12F);
+            x.ForeColor = SystemColors.WindowText;
+            x.Location = new Point(107, 51);
+            x.Name = "x";
+            x.Size = new Size(17, 21);
+            x.TabIndex = 18;
+            x.Text = "x";
+            // 
+            // chooseGraphTyp
+            // 
+            chooseGraphTyp.DropDownStyle = ComboBoxStyle.DropDownList;
+            chooseGraphTyp.Font = new Font("Segoe UI", 12F);
+            chooseGraphTyp.FormattingEnabled = true;
+            chooseGraphTyp.Items.AddRange(new object[] { "Torusgraph", "Ungerichteter Kreisgraph", "Gerichteter Kreisgraph", "Graph von unärer Funktion", "Komplett verbundener Graph" });
+            chooseGraphTyp.Location = new Point(652, 161);
+            chooseGraphTyp.Name = "chooseGraphTyp";
+            chooseGraphTyp.RightToLeft = RightToLeft.No;
+            chooseGraphTyp.Size = new Size(231, 29);
+            chooseGraphTyp.TabIndex = 0;
+            chooseGraphTyp.SelectedIndexChanged += chooseGraphTyp_SelectedIndexChanged;
+            // 
+            // createUnCircleGraph
+            // 
+            createUnCircleGraph.Controls.Add(createDiCircleGraph);
+            createUnCircleGraph.Controls.Add(unCircleSize);
+            createUnCircleGraph.Controls.Add(createUndirectedCircleGraph);
+            createUnCircleGraph.Controls.Add(unCircleSizeInput);
+            createUnCircleGraph.Location = new Point(652, 196);
+            createUnCircleGraph.Name = "createUnCircleGraph";
+            createUnCircleGraph.Size = new Size(231, 164);
+            createUnCircleGraph.TabIndex = 31;
+            createUnCircleGraph.Visible = false;
+            // 
+            // createDiCircleGraph
+            // 
+            createDiCircleGraph.Controls.Add(createDirectedCircleGraph);
+            createDiCircleGraph.Controls.Add(diCircleSizeInput);
+            createDiCircleGraph.Location = new Point(0, -2);
+            createDiCircleGraph.Name = "createDiCircleGraph";
+            createDiCircleGraph.Size = new Size(231, 166);
+            createDiCircleGraph.TabIndex = 32;
+            createDiCircleGraph.Visible = false;
+            // 
+            // createDirectedCircleGraph
+            // 
+            createDirectedCircleGraph.Font = new Font("Segoe UI", 12F);
+            createDirectedCircleGraph.Location = new Point(0, 59);
+            createDirectedCircleGraph.Name = "createDirectedCircleGraph";
+            createDirectedCircleGraph.Size = new Size(231, 31);
+            createDirectedCircleGraph.TabIndex = 2;
+            createDirectedCircleGraph.Text = "Graph erstellen";
+            createDirectedCircleGraph.UseVisualStyleBackColor = true;
+            createDirectedCircleGraph.Click += createDirectedCircleGraph_Click;
+            // 
+            // diCircleSizeInput
+            // 
+            diCircleSizeInput.Font = new Font("Segoe UI", 12F);
+            diCircleSizeInput.Location = new Point(0, 24);
+            diCircleSizeInput.Name = "diCircleSizeInput";
+            diCircleSizeInput.Size = new Size(231, 29);
+            diCircleSizeInput.TabIndex = 1;
+            // 
+            // unCircleSize
+            // 
+            unCircleSize.AutoSize = true;
+            unCircleSize.Font = new Font("Segoe UI", 12F);
+            unCircleSize.Location = new Point(0, 0);
+            unCircleSize.Name = "unCircleSize";
+            unCircleSize.Size = new Size(124, 21);
+            unCircleSize.TabIndex = 2;
+            unCircleSize.Text = "Größe eingeben:";
+            // 
+            // createUndirectedCircleGraph
+            // 
+            createUndirectedCircleGraph.Font = new Font("Segoe UI", 12F);
+            createUndirectedCircleGraph.Location = new Point(0, 59);
+            createUndirectedCircleGraph.Name = "createUndirectedCircleGraph";
+            createUndirectedCircleGraph.Size = new Size(231, 31);
+            createUndirectedCircleGraph.TabIndex = 1;
+            createUndirectedCircleGraph.Text = "Graph erstellen";
+            createUndirectedCircleGraph.UseVisualStyleBackColor = true;
+            createUndirectedCircleGraph.Click += createUndirectedCircleGraph_Click;
+            // 
+            // unCircleSizeInput
+            // 
+            unCircleSizeInput.Font = new Font("Segoe UI", 12F);
+            unCircleSizeInput.Location = new Point(0, 24);
+            unCircleSizeInput.Name = "unCircleSizeInput";
+            unCircleSizeInput.Size = new Size(231, 29);
+            unCircleSizeInput.TabIndex = 0;
+            // 
             // MainScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(895, 528);
+            Controls.Add(createUnCircleGraph);
             Controls.Add(thiefMovement);
             Controls.Add(restartGame);
             Controls.Add(detMovement);
             Controls.Add(editGraph);
-            Controls.Add(GameSettings);
             Controls.Add(computeEnt);
-            Controls.Add(TorusCreate);
             Controls.Add(graphCreate);
             Controls.Add(playGraph);
             Controls.Add(TextOutput);
             Controls.Add(headline);
             Controls.Add(GraphPicture);
+            Controls.Add(GameSettings);
+            Controls.Add(chooseGraphTyp);
+            Controls.Add(TorusCreate);
             MinimumSize = new Size(911, 567);
             Name = "MainScreen";
             Text = "Entanglement ist ein Maß für die Komläxität eines Graphs";
             ((System.ComponentModel.ISupportInitialize)GraphPicture).EndInit();
             graphCreate.ResumeLayout(false);
             graphCreate.PerformLayout();
-            TorusCreate.ResumeLayout(false);
-            TorusCreate.PerformLayout();
             computeEnt.ResumeLayout(false);
             computeEnt.PerformLayout();
             GameSettings.ResumeLayout(false);
@@ -664,6 +757,12 @@ namespace EntanglementOfGraphs
             detMovement.PerformLayout();
             thiefMovement.ResumeLayout(false);
             thiefMovement.PerformLayout();
+            TorusCreate.ResumeLayout(false);
+            TorusCreate.PerformLayout();
+            createUnCircleGraph.ResumeLayout(false);
+            createUnCircleGraph.PerformLayout();
+            createDiCircleGraph.ResumeLayout(false);
+            createDiCircleGraph.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -686,14 +785,8 @@ namespace EntanglementOfGraphs
         private Button deleteGraph;
         private Label startPos;
         private TextBox startPosInput;
-        private TextBox torusN;
-        private TextBox torusM;
-        private Label x;
-        private Label torusGraph;
-        private Button createTorusGraph;
         private Button playGraph;
         private Panel graphCreate;
-        private Panel TorusCreate;
         private Panel computeEnt;
         private Label startPos2;
         private Panel GameSettings;
@@ -717,5 +810,19 @@ namespace EntanglementOfGraphs
         private Label label2;
         private Button moveThiefToTarget;
         private TextBox targetThiefInput;
+        private Panel TorusCreate;
+        private Label torusGraph;
+        private TextBox torusN;
+        private TextBox torusM;
+        private Button createTorusGraph;
+        private Label x;
+        private ComboBox chooseGraphTyp;
+        private Panel createUnCircleGraph;
+        private Button createUndirectedCircleGraph;
+        private TextBox unCircleSizeInput;
+        private Label unCircleSize;
+        private Panel createDiCircleGraph;
+        private Button createDirectedCircleGraph;
+        private TextBox diCircleSizeInput;
     }
 }
