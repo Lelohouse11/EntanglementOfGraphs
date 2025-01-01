@@ -15,11 +15,7 @@ namespace EntanglementOfGraphs
     /// <param name="t"></param>
     internal class Move<V>(Positions<V> s, List<Positions<V>> t) where V : IComparable<V>, IEquatable<V>
     {       
-        public Positions<V> source = s;
-        public List<Positions<V>> target = t;
-
-        public Positions<V> GetSource() { return source; }
-
-        public List<Positions<V>> GetTarget() {  return target; }
+        public Positions<V> source = s; // aktueller Status des Spiels
+        public List<Positions<V>> target = t; // mögliche Züge
     }
 }

@@ -17,21 +17,21 @@ namespace EntaglementOfGraphs
 
         public readonly int detectiveAmount;
         public readonly FiniteDirectedGraph<V> graph;
-        public readonly Positions<V> startPosition;
         public readonly List<Positions<V>> possibleFinalStates;
         public readonly List<Move<V>> detectiveStrategy = [];
         public readonly List<Move<V>> thiefStrategy = [];
+        private readonly Positions<V> startPos;
 
         /// <summary>
         /// erstellt GameTree mit Startwerten
         /// </summary>
         /// <param name="_graph"></param>
-        /// <param name="startPos"></param>
-        public GameTree(FiniteDirectedGraph<V> _graph, Positions<V> startPos)
+        /// <param name="startPosition"></param>
+        public GameTree(FiniteDirectedGraph<V> _graph, Positions<V> startPosition)
         {
-            AddVertex(startPos);
-            startPosition = startPos;
-            detectiveAmount = startPos.detectiveAmount;
+            AddVertex(startPosition);
+            startPos = startPosition;
+            detectiveAmount = startPosition.detectiveAmount;
             graph = _graph;
             possibleFinalStates = GetPossibleFinalStates();
             foreach (var state in possibleFinalStates)
@@ -45,171 +45,11 @@ namespace EntaglementOfGraphs
             }
             if (debug)
             {
-                Console.WriteLine($"Startknoten hinzugefügt: {startPos}");
+                Console.WriteLine($"Startknoten hinzugefügt: {startPosition}");
             }
         }
         
-        /// <summary>
-        /// erstellt Stategien für beide Spieler
-        /// </summary>
-        public void CreateStrategies ()
-        {
-            var allVertices = Vertices.ToList();
-            foreach (var vertex in allVertices)
-            {
-                if (vertex.detectivesTurn)
-                {
-                    nextDetectiveMove(vertex);
-                }
-                else
-                {
-                    nextThiefMove(vertex);
-                }
-            }
-        }
-
-        /// <summary>
-        /// erstellt eine Liste an besten Zügen zu den jeweiligem Status des Spiels
-        /// </summary>
-        /// <param name="currentPos"></param>
-        private void nextDetectiveMove(Positions<V> currentPos)
-        {
-            List<Positions<V>> result = [];
-            var outgoingVertex = GetOutgoingVertex(currentPos);
-            double bestWinningChance = 0;
-            double bestFlagOfTarget = VertexCount;
-            foreach (var vertex in outgoingVertex) // findet die beste Gewinnwahrscheinlichkeit
-            {
-                var vertexWinningChance = vertex.flag % 1;
-                if (vertexWinningChance == 0) 
-                {
-                    break;
-                }
-                if (vertexWinningChance > bestWinningChance)
-                {
-                    bestWinningChance = vertexWinningChance;
-                }
-            }
-            foreach (var vertex in outgoingVertex) // findet zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
-            {
-                var vertexFlag = vertex.flag;
-                if ((vertexFlag % 1 == bestWinningChance) && (vertexFlag < bestFlagOfTarget))
-                {
-                    bestFlagOfTarget = vertexFlag;
-                }
-            }
-            foreach (var vertex in outgoingVertex) // fügt beste und kürzeste Züge hinzu
-            {
-                if (vertex.flag == bestFlagOfTarget)
-                {
-                    result.Add(vertex);
-                }
-            }
-            detectiveStrategy.Add(new Move<V>(currentPos,result));
-        }
-
-
-        /// <summary>
-        /// erstellt eine Liste an besten Zügen zu den jeweiligem Status des Spiels
-        /// </summary>
-        /// <param name="currentPos"></param>
-        private void nextThiefMove(Positions<V> currentPos)
-        {
-            List<Positions<V>> result = [];
-            var outgoingVertex = GetOutgoingVertex(currentPos);
-            var nextPossibleSteps = graph.GetNextPossibleSteps(currentPos);
-            double worstWinningChance = 1;
-            double worstFlagOfTarget = 0;
-            bool saveWinFound = false;
-            foreach (var possibleVertex in nextPossibleSteps) //prüft ob Dieb sicher gewinnen kann
-            {
-                bool saveVertex = true;
-                foreach (var vertex in outgoingVertex)
-                {
-                    if (possibleVertex.Equals(vertex)) // ist im GameTree
-                    {
-                        saveVertex = false; // soll nicht jinzugefügt werden, da kein sicherer Gewinn
-                        break;
-                    }                    
-                    
-
-                }
-                if (!saveVertex) // sicherer Spielzug gefunden und hinzufügen
-                {
-                    result.Add(possibleVertex);
-                    saveWinFound = true;
-                }
-            }
-            if (!saveWinFound) //sichere Spielzug nicht gefunden, finde den Sichersten
-            {
-                foreach (var vertex in outgoingVertex) // finde die beste Gewinnwahrscheinlichkeit
-                {
-                    var vertexWinningChance = vertex.flag % 1;
-                    if ((vertexWinningChance < worstWinningChance))
-                    {
-                        worstWinningChance = vertexWinningChance;
-                    }
-                }
-                foreach (var vertex in outgoingVertex) // finde zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
-                {
-                    var vertexFlag = vertex.flag;
-                    if ((vertexFlag % 1 == worstWinningChance) && (vertexFlag > worstFlagOfTarget))
-                    {
-                        worstFlagOfTarget = vertexFlag;
-                    }
-                }
-
-                foreach (var vertex in outgoingVertex) // füge alle kürzesten und besten Möglichkeiten hinzu
-                {
-                    if (vertex.flag == worstFlagOfTarget)
-                    {
-                        result.Add(vertex);
-                    }
-                }
-            }
-            thiefStrategy.Add(new Move<V>(currentPos, result));
-        }
-
-
-        /// <summary>
-        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus und gibt  
-        /// </summary>
-        /// <param name="currentPos"></param>
-        /// <returns></returns>
-        public (V,bool) BestDetectiveMove(Positions<V> currentPos)
-        {
-            var cloned = currentPos.Clone();
-            cloned.ChangeTurn();
-            foreach (var move in detectiveStrategy) // geht jeden Zug der Strategie durch
-            {
-                if(move.source.Equals(currentPos)) // findet den passenden zur currentPos
-                {
-                    if(cloned.Equals(move.target.First()))
-                    {
-                        return (default,false);
-                    }
-                    return (currentPos.getMovedDetective(move.target.First()),true);
-                }
-            }
-            return (currentPos.detectives.First(),true); // wenn kein passender Gefunden, Gewinn nicht mehr möglch
-        }
-
-        /// <summary>
-        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus
-        /// </summary>
-        /// <param name="currentPos"></param>
-        /// <returns></returns>
-        public V BestThiefMove(Positions<V> currentPos)
-        {
-            foreach (var move in thiefStrategy) // geht jeden Zug der Strategie durch
-            {
-                if (move.source.Equals(currentPos)) // findet den passenden zur currentPos
-                {
-                    return move.target.First().thief;
-                }
-            }
-            return graph.GetNextPossibleSteps(currentPos).First().thief; // wenn kein passender Gefunden, Gewinn sicher
-        }
+        
 
         /// <summary>
         /// verbindet alle gefundenen Iterationen des Gametrees zu GameTree
@@ -286,7 +126,7 @@ namespace EntaglementOfGraphs
             do
             {
                 continueFixpoint = false;
-                var allVertices = Vertices.ToList();
+                var allVertices = Vertices.ToList().Except([startPos]);
                 foreach (var currentPos in allVertices) // geht alle Knoten in bisheriger Menge durch
                 {
                     if (!currentPos.detectivesTurn) //wenn detektiv vorher dran war wird alles hinzugefügt
@@ -457,7 +297,7 @@ namespace EntaglementOfGraphs
                     Console.WriteLine($"Knoten hinzugefügt: {previousPos}");
                 }
             }
-            else if (isNewVertex.Equals(startPosition)) // prüft ob Startknoten gefunden
+            else if (isNewVertex.Equals(startPos)) // prüft ob Startknoten gefunden
             {
                 startPosReached = true;
                 if (debug)
@@ -472,6 +312,169 @@ namespace EntaglementOfGraphs
                 Console.WriteLine($"Kante von {sourcePos} zu {currentPos} hinzugefügt.");
             }
             return (goOn,startPosReached);
+        }
+
+        /// <summary>
+        /// erstellt Stategien für beide Spieler
+        /// </summary>
+        public void CreateStrategies()
+        {
+            var allVertices = Vertices.ToList();
+            foreach (var vertex in allVertices) // geht alle Knoten im Spielbaum durch
+            {
+                if (vertex.detectivesTurn)
+                {
+                    nextDetectiveMove(vertex); // berechnet besten Zug wenn Detektiv an der reihe ist
+                }
+                else
+                {
+                    nextThiefMove(vertex); // brechnet besten Zug wenn Dieb an der Reihe ist
+                }
+            }
+        }
+
+        /// <summary>
+        /// erstellt eine Liste an besten Zügen zu den jeweiligem Status des Spiels
+        /// </summary>
+        /// <param name="currentPos"></param>
+        private void nextDetectiveMove(Positions<V> currentPos)
+        {
+            List<Positions<V>> result = [];
+            var outgoingVertex = GetOutgoingVertex(currentPos);
+            double bestWinningChance = 0;
+            double bestFlagOfTarget = VertexCount;
+            foreach (var vertex in outgoingVertex) // findet die beste Gewinnwahrscheinlichkeit
+            {
+                var vertexWinningChance = vertex.flag % 1;
+                if (vertexWinningChance == 0)
+                {
+                    break;
+                }
+                if (vertexWinningChance > bestWinningChance)
+                {
+                    bestWinningChance = vertexWinningChance;
+                }
+            }
+            foreach (var vertex in outgoingVertex) // findet zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
+            {
+                var vertexFlag = vertex.flag;
+                if ((vertexFlag % 1 == bestWinningChance) && (vertexFlag < bestFlagOfTarget))
+                {
+                    bestFlagOfTarget = vertexFlag;
+                }
+            }
+            foreach (var vertex in outgoingVertex) // fügt beste und kürzeste Züge hinzu
+            {
+                if (vertex.flag == bestFlagOfTarget)
+                {
+                    result.Add(vertex);
+                }
+            }
+            if (!(result.Count == 0)) // es wurden keine guten Züge gefunden
+            {
+                detectiveStrategy.Add(new Move<V>(currentPos, result));
+            }
+        }
+
+        /// <summary>
+        /// erstellt eine Liste an besten Zügen zu den jeweiligem Status des Spiels
+        /// </summary>
+        /// <param name="currentPos"></param>
+        private void nextThiefMove(Positions<V> currentPos)
+        {
+            List<Positions<V>> result = [];
+            var outgoingVertex = GetOutgoingVertex(currentPos);
+            var nextPossibleSteps = graph.GetNextPossibleSteps(currentPos);
+            double worstWinningChance = 1;
+            double worstFlagOfTarget = 0;
+            bool saveWinFound = false;
+            foreach (var possibleVertex in nextPossibleSteps) //prüft ob Dieb sicher gewinnen kann
+            {
+                bool saveVertex = true;
+                foreach (var vertex in outgoingVertex)
+                {
+                    if (possibleVertex.Equals(vertex)) // ist im GameTree
+                    {
+                        saveVertex = false; // soll nicht jinzugefügt werden, da kein sicherer Gewinn
+                        break;
+                    }
+
+
+                }
+                if (!saveVertex) // sicherer Spielzug gefunden und hinzufügen
+                {
+                    result.Add(possibleVertex);
+                    saveWinFound = true;
+                }
+            }
+            if (!saveWinFound) //sichere Spielzug nicht gefunden, finde den Sichersten
+            {
+                foreach (var vertex in outgoingVertex) // finde die beste Gewinnwahrscheinlichkeit
+                {
+                    var vertexWinningChance = vertex.flag % 1;
+                    if ((vertexWinningChance < worstWinningChance))
+                    {
+                        worstWinningChance = vertexWinningChance;
+                    }
+                }
+                foreach (var vertex in outgoingVertex) // finde zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
+                {
+                    var vertexFlag = vertex.flag;
+                    if ((vertexFlag % 1 == worstWinningChance) && (vertexFlag > worstFlagOfTarget))
+                    {
+                        worstFlagOfTarget = vertexFlag;
+                    }
+                }
+
+                foreach (var vertex in outgoingVertex) // füge alle kürzesten und besten Möglichkeiten hinzu
+                {
+                    if (vertex.flag == worstFlagOfTarget)
+                    {
+                        result.Add(vertex);
+                    }
+                }
+            }
+            thiefStrategy.Add(new Move<V>(currentPos, result));
+        }
+
+        /// <summary>
+        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus und gibt in zurück mit der Angabe ob sich Detektiv bewegt hat 
+        /// </summary>
+        /// <param name="currentPos"></param>
+        /// <returns></returns>
+        public (V, bool) BestDetectiveMove(Positions<V> currentPos)
+        {
+            var cloned = currentPos.Clone();
+            cloned.ChangeTurn();
+            foreach (var move in detectiveStrategy) // geht jeden Zug der Strategie durch
+            {
+                if (move.source.Equals(currentPos)) // findet den passenden zur currentPos
+                {
+                    if (cloned.Equals(move.target.First())) // der Detektiv bewegt sich nicht
+                    {
+                        return (default, false);
+                    }
+                    return (currentPos.getMovedDetective(move.target.First()), true);
+                }
+            }
+            return (default, false); // wenn kein passender Gefunden, Gewinn nicht mehr möglch
+        }
+
+        /// <summary>
+        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus
+        /// </summary>
+        /// <param name="currentPos"></param>
+        /// <returns></returns>
+        public V BestThiefMove(Positions<V> currentPos)
+        {
+            foreach (var move in thiefStrategy) // geht jeden Zug der Strategie durch
+            {
+                if (move.source.Equals(currentPos)) // findet den passenden zur currentPos
+                {
+                    return move.target.First().thief;
+                }
+            }
+            return graph.GetNextPossibleSteps(currentPos).First().thief; // wenn kein passender Gefunden, Gewinn sicher
         }
 
         /// <summary>

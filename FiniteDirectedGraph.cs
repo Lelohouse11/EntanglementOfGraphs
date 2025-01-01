@@ -43,88 +43,6 @@ namespace EntaglementOfGraphs
         public FiniteDirectedGraph()
         {
 
-        } 
-        
-        /// <summary>
-        /// Erstellt Graph den man Zeichnen kann
-        /// </summary>
-        /// <returns></returns>
-        public void CreateMsagl()
-        {
-            msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
-            foreach (var vertex in Vertices)
-            {
-                msaglGraph.AddNode(vertex.ToString());
-            }
-            foreach (var edge in Edges)
-            {
-                msaglGraph.AddEdge(edge.Source.ToString(),edge.Target.ToString());
-            }
-        }
-        
-        public void AddVertexToMsagl(V vertex)
-        {
-            msaglGraph.AddNode(vertex.ToString());
-        }
-
-        public void AddEdgeToMsagl(V source, V target)
-        {
-            msaglGraph.AddEdge(source.ToString(), target.ToString());
-        }
-        
-        /// <summary>
-        /// Erstellt ein mögöiches Layout des Graphen bereit gezeichnet zu werden.
-        /// </summary>
-        /// <param name="pb"></param>
-        public void CreateImage(PictureBox pb)
-        {
-            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
-            
-            renderer.CalculateLayout();
-        }
-
-        /// <summary>
-        /// Zeichnet den Graphen
-        /// </summary>
-        /// <param name="g"></param>
-        /// <param name="pb"></param>
-        public void DrawImage(Graphics g,PictureBox pb)
-        {
-              renderer.Render(g, pb.ClientRectangle);
-        }
-
-        /// <summary>
-        /// Färbt gegebenen Knoten ind gegebener Farbe ein
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <param name="color"></param>
-        public void ColorVertex (string vertex, Microsoft.Msagl.Drawing.Color color)
-        {
-            msaglGraph.FindNode(vertex).Attr.FillColor = color;
-            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
-            renderer.CalculateLayout();
-        }
-
-        public void ShapeVertex(string vertex, Microsoft.Msagl.Drawing.Shape shape)
-        {
-            msaglGraph.FindNode(vertex).Attr.Shape = shape;
-            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
-            renderer.CalculateLayout();
-        }
-
-        /// <summary>
-        /// gibt die ereichbaren Knoten von einem anderen Knoten zurück
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
-        public List<V> GetOutgoingVertex(V vertex)
-        {
-            List<V> result = [];
-            foreach (var edge in this.OutEdges(vertex))
-            {
-                result.Add(edge.Target);
-            }
-            return result;
         }
 
         /// <summary>
@@ -283,6 +201,85 @@ namespace EntaglementOfGraphs
                 }
             }
             return null; // Fehler wenn kein Entanglement gefunden wurde
+        }
+
+        /// <summary>
+        /// fügt Knoten zur Zeichnung hinzu
+        /// </summary>
+        /// <param name="vertex"></param>
+        public void AddVertexToMsagl(V vertex)
+        {
+            msaglGraph.AddNode(vertex.ToString());
+        }
+
+        /// <summary>
+        /// fügt Kante zur Zeichnung hinzu
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        public void AddEdgeToMsagl(V source, V target)
+        {
+            msaglGraph.AddEdge(source.ToString(), target.ToString());
+        }
+
+        /// <summary>
+        /// Erstellt ein mögöiches Layout des Graphen bereit gezeichnet zu werden.
+        /// </summary>
+        /// <param name="pb"></param>
+        public void CreateImage(PictureBox pb)
+        {
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+
+            renderer.CalculateLayout();
+        }
+
+        /// <summary>
+        /// Zeichnet den Graphen
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="pb"></param>
+        public void DrawImage(Graphics g, PictureBox pb)
+        {
+            renderer.Render(g, pb.ClientRectangle);
+        }
+
+        /// <summary>
+        /// Färbt gegebenen Knoten ind gegebener Farbe ein
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <param name="color"></param>
+        public void ColorVertex(string vertex, Microsoft.Msagl.Drawing.Color color)
+        {
+            msaglGraph.FindNode(vertex).Attr.FillColor = color;
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+            renderer.CalculateLayout();
+        }
+
+        /// <summary>
+        /// formt den Knoten in gegebene Form um
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <param name="shape"></param>
+        public void ShapeVertex(string vertex, Microsoft.Msagl.Drawing.Shape shape)
+        {
+            msaglGraph.FindNode(vertex).Attr.Shape = shape;
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
+            renderer.CalculateLayout();
+        }
+
+        /// <summary>
+        /// gibt die ereichbaren Knoten von einem anderen Knoten zurück
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
+        public List<V> GetOutgoingVertex(V vertex)
+        {
+            List<V> result = [];
+            foreach (var edge in this.OutEdges(vertex))
+            {
+                result.Add(edge.Target);
+            }
+            return result;
         }
     }
 }
