@@ -18,7 +18,7 @@ namespace EntanglementOfGraphs
         /// <param name="function"></param>
         /// <param name="startDomain"></param>
         /// <param name="endDomain"></param>
-        public UnaryFunctionGraph(UnaryFunction function, int startDomain, int endDomain) 
+        public UnaryFunctionGraph(Func<int,int> function, int startDomain, int endDomain) 
         {
             AddVertex(function(startDomain));
             for (int i = startDomain+1; i <= endDomain; i++)

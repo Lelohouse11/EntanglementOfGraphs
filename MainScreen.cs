@@ -1,16 +1,14 @@
 using EntaglementOfGraphs;
 using QuikGraph;
-//using Microsoft.Msagl.GraphmapsWithMesh;
+using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
 
 namespace EntanglementOfGraphs
 {
     public partial class MainScreen
     {
-        bool whichGraph = true;
         FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
-        TorusGraph tGraph;
         GameTree<int> gameTree;
-        GameTree<TorusVertex> gameTreeOfTorus;
         Positions<int> currentPos;
         bool gamestarted;
 
@@ -27,15 +25,8 @@ namespace EntanglementOfGraphs
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GraphPicture_Paint(object sender, PaintEventArgs e)
-        {
-            if (whichGraph) // entscheidet welcher Graphtyp (int oder Torusvertex)
-            {
-                graph.DrawImage(e.Graphics, GraphPicture);
-            }
-            else
-            {
-                tGraph.DrawImage(e.Graphics, GraphPicture);
-            }
+        {            
+            graph.DrawImage(e.Graphics, GraphPicture);            
         }
 
         /// <summary>
@@ -45,7 +36,6 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void newVertex_Click(object sender, EventArgs e)
         {
-            whichGraph = true; // Graphen vom Txpen int
             TextOutput.Clear();
             int vertex;
             bool isNumber = int.TryParse(vertexInput.Text, out vertex);
@@ -104,7 +94,6 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void addEdge_Click(object sender, EventArgs e)
         {
-            whichGraph = true;
             TextOutput.Clear();
             int source;
             int target;
@@ -163,44 +152,11 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void deleteGraph_Click(object sender, EventArgs e)
         {
-            whichGraph = true;
             TextOutput.Clear();
             graph = new FiniteDirectedGraph<int>();
             graph.CreateImage(GraphPicture);
             GraphPicture.Refresh();
-        }
-
-        /// <summary>
-        /// erstellt einen Torusgraph
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void createTorusGraph_Click(Object sender, EventArgs e)
-        {
-            whichGraph = false;
-            TextOutput.Clear();
-            int nTorus;
-            int mTorus;
-            bool isNTorusNumber = int.TryParse(torusN.Text, out nTorus);
-            bool isMTorusNumber = int.TryParse(torusM.Text, out mTorus);
-
-            if (isNTorusNumber && isMTorusNumber) // prüft ob Eingaben gültige Zahl und erstellt dann Graphen
-            {
-                tGraph = new TorusGraph(nTorus, mTorus);
-                tGraph.CreateImage(GraphPicture);
-                GraphPicture.Refresh();
-                TextOutput.Text = tGraph.MinEntanglement(new TorusVertex(0, 0)).ToString();
-                torusN.Clear();
-                torusM.Clear();
-            }
-            else // kein Gültige Zahl eingegeben
-            {
-                TextOutput.Text = "Bitte Ganzzahlen für den Torusgraphen eingeben.";
-                torusN.Clear();
-                torusM.Clear();
-                torusN.Focus();
-            }
-        }
+        }        
 
         /// <summary>
         /// wechselt in den Spielemodus
@@ -211,13 +167,13 @@ namespace EntanglementOfGraphs
         {
             TextOutput.Clear();
             startPosInput.Clear();
-
-            //graphCreate.Hide();
+            graphCreate.Hide();
             chooseGraphTyp.Hide();
             TorusCreate.Hide();
+            createDiCircleGraph.Hide();
             createUnCircleGraph.Hide();
-
-            //generateGraph.Hide();
+            createFullyConGraphPanel.Hide();
+            createUnaryFunc.Hide();
             computeEnt.Hide();
             playGraph.Hide();
             GameSettings.Show();
@@ -236,12 +192,12 @@ namespace EntanglementOfGraphs
             startPosInput2.Clear();
             detectiveAmountInput.Clear();
             graphCreate.Show();
-
-            //generateGraph.Show();
             chooseGraphTyp.Show();
             TorusCreate.Hide();
+            createDiCircleGraph.Hide();
             createUnCircleGraph.Hide();
-
+            createFullyConGraphPanel.Hide();
+            createUnaryFunc.Hide();
             computeEnt.Show();
             playGraph.Show();
             GameSettings.Hide();
@@ -573,41 +529,46 @@ namespace EntanglementOfGraphs
         private void chooseGraphTyp_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedGraph = (string)chooseGraphTyp.SelectedItem;
-            if (selectedGraph.Equals("Torusgraph"))
+            TorusCreate.Visible = selectedGraph.Equals("Torusgraph");
+            createDiCircleGraph.Visible = selectedGraph.Equals("Gerichteter Kreisgraph");
+            createUnCircleGraph.Visible = selectedGraph.Equals("Ungerichteter Kreisgraph");
+            createFullyConGraphPanel.Visible = selectedGraph.Equals("Komplett verbundener Graph");
+            createUnaryFunc.Visible = selectedGraph.Equals("Graph von unärer Funktion");
+
+        }
+
+        /// <summary>
+        /// erstellt einen Torusgraph
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void createTorusGraph_Click(Object sender, EventArgs e)
+        {
+            TextOutput.Clear();
+            int nTorus;
+            int mTorus;
+            bool isNTorusNumber = int.TryParse(torusN.Text, out nTorus);
+            bool isMTorusNumber = int.TryParse(torusM.Text, out mTorus);
+
+            if (isNTorusNumber && isMTorusNumber) // prüft ob Eingaben gültige Zahl und erstellt dann Graphen
             {
-                createUnCircleGraph.Hide();
-                createDiCircleGraph.Hide();
-                TorusCreate.Show();
+                graph = new TorusGraph(nTorus, mTorus).TranslateToInt();
+                graph.CreateImage(GraphPicture);
+                GraphPicture.Refresh();
+                torusN.Clear();
+                torusM.Clear();
             }
-            else if (selectedGraph.Equals("Ungerichteter Kreisgraph"))
+            else // kein Gültige Zahl eingegeben
             {
-                TorusCreate.Hide();
-                createDiCircleGraph.Hide();
-                createUnCircleGraph.Show();
-            }
-            else if (selectedGraph.Equals("Gerichteter Kreisgraph"))
-            {
-                TorusCreate.Hide();
-                createUnCircleGraph.Hide();
-                createDiCircleGraph.Show();
-            }
-            else if (selectedGraph.Equals("Graph von unärer Funktion"))
-            {
-                TorusCreate.Hide();
-                createUnCircleGraph.Hide();
-                createUnCircleGraph.Hide();
-            }
-            else if (selectedGraph.Equals("Komplett verbundener Graph"))
-            {
-                TorusCreate.Hide();
-                createUnCircleGraph.Hide();
-                createUnCircleGraph.Hide();
+                TextOutput.Text = "Bitte Ganzzahlen für den Torusgraphen eingeben.";
+                torusN.Clear();
+                torusM.Clear();
+                torusN.Focus();
             }
         }
 
         private void createUndirectedCircleGraph_Click(object sender, EventArgs e)
         {
-            whichGraph = true; // Graphen vom Typen int
             TextOutput.Clear();
             int size;
             bool isNumber = int.TryParse(unCircleSizeInput.Text, out size);
@@ -628,13 +589,12 @@ namespace EntanglementOfGraphs
 
         private void createDirectedCircleGraph_Click(object sender, EventArgs e)
         {
-            whichGraph = true; // Graphen vom Typen int
             TextOutput.Clear();
             int size;
             bool isNumber = int.TryParse(diCircleSizeInput.Text, out size);
             if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
             {
-                graph = new DirectedCircleGraph(size+1);
+                graph = new DirectedCircleGraph(size + 1);
                 graph.CreateImage(GraphPicture);
                 GraphPicture.Refresh();
                 diCircleSizeInput.Clear();
@@ -645,6 +605,77 @@ namespace EntanglementOfGraphs
                 diCircleSizeInput.Clear();
             }
             diCircleSizeInput.Focus();
+        }
+
+        private void fullyConCreate_Click(object sender, EventArgs e)
+        {
+            TextOutput.Clear();
+            int size;
+            bool isNumber = int.TryParse(fullyConSizeInput.Text, out size);
+            if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
+            {
+                graph = new FullyConnectedGraph(size);
+                graph.CreateImage(GraphPicture);
+                GraphPicture.Refresh();
+                fullyConSizeInput.Clear();
+            }
+            else // Eingabe unpassend
+            {
+                TextOutput.Text = "Bitte eine Ganzzahl für die Größe eingeben.";
+                fullyConSizeInput.Clear();
+            }
+            fullyConSizeInput.Focus();
+        }
+
+        private void unaryFuncCreate_Click(object sender, EventArgs e)
+        {
+            TextOutput.Clear();
+            int startDomain;
+            int endDomain;
+            bool isStartDomainNumber = int.TryParse(unaryFuncStartDomImput.Text, out startDomain);
+            bool istEndDomainNumber = int.TryParse(unaryFuncEndDomImput.Text, out endDomain);
+            if (isStartDomainNumber && istEndDomainNumber)
+            {
+                Func<int, int>? func = CreateFunction(unaryFuncInput.Text);
+                if (func != null)
+                {
+
+                    graph = new UnaryFunctionGraph(func, startDomain, endDomain);
+                    graph.CreateImage(GraphPicture);
+                    GraphPicture.Refresh();
+                    unaryFuncInput.Clear();
+                    unaryFuncStartDomImput.Clear();
+                    unaryFuncEndDomImput.Clear();
+                }
+                else
+                {
+                    TextOutput.Text = "Ungültige Funktion eingegeben. Bitte nur x als Variable benutzen und nur gültige mathematische Operationen.";
+                    unaryFuncInput.Clear();
+                }
+                unaryFuncInput.Focus();
+            }
+            else
+            {
+                TextOutput.Text = "Bitte eine Ganzzahl für den Definitionsbereich eingeben.";
+                unaryFuncStartDomImput.Clear();
+                unaryFuncEndDomImput.Clear();
+                unaryFuncStartDomImput.Focus();
+            }
+        }
+
+        private Func<int, int>? CreateFunction(string funktionString)
+        {
+            var parameter = Expression.Parameter(typeof(int), "x");
+            try
+            {
+                var lambda = System.Linq.Dynamic.Core.DynamicExpressionParser.ParseLambda(new[] { parameter }, typeof(int), "x => " + funktionString);
+                return (Func<int, int>)lambda.Compile();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
     }
 }

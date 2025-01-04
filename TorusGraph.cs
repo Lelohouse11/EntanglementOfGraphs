@@ -64,5 +64,41 @@ namespace EntaglementOfGraphs
 
             }
         }
+
+        public FiniteDirectedGraph<int> TranslateToInt()
+        {
+            var result = new FiniteDirectedGraph<int>();
+            var allVertices = Vertices.ToList();
+            var allEdges = Edges.ToList();
+            List<(TorusVertex, int)> vertices = [];
+            int vertexCounter = 1;
+
+            foreach (var vertex in allVertices)
+            {
+                vertices.Add((vertex,vertexCounter));
+                result.AddVertex(vertexCounter);
+                result.AddVertexToMsagl(vertexCounter);
+                vertexCounter++;                
+            }
+            foreach (var sourceVertex in vertices)
+            {
+                foreach (var edge in allEdges)
+                {
+                    if (edge.Source.Equals(sourceVertex.Item1))
+                    {
+                        foreach (var targetVertex in vertices)
+                        {
+                            if (edge.Target.Equals(targetVertex.Item1))
+                            {
+                                result.AddEdge(new Edge<int>(sourceVertex.Item2,targetVertex.Item2));
+                                result.AddEdgeToMsagl(sourceVertex.Item2, targetVertex.Item2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

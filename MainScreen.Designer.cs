@@ -79,12 +79,26 @@ namespace EntanglementOfGraphs
             x = new Label();
             chooseGraphTyp = new ComboBox();
             createUnCircleGraph = new Panel();
-            createDiCircleGraph = new Panel();
-            createDirectedCircleGraph = new Button();
-            diCircleSizeInput = new TextBox();
             unCircleSize = new Label();
             createUndirectedCircleGraph = new Button();
             unCircleSizeInput = new TextBox();
+            createDiCircleGraph = new Panel();
+            diCircleLabel = new Label();
+            createDirectedCircleGraph = new Button();
+            diCircleSizeInput = new TextBox();
+            openFileDialog1 = new OpenFileDialog();
+            createFullyConGraphPanel = new Panel();
+            fullyConCreate = new Button();
+            fullyConSizeInput = new TextBox();
+            fullyConSize = new Label();
+            createUnaryFunc = new Panel();
+            lunaryFuncToLabel = new Label();
+            unaryFuncStartDomImput = new TextBox();
+            unaryFuncEndDomImput = new TextBox();
+            unaryFuncCreate = new Button();
+            unaryFuncInput = new TextBox();
+            unaryFuncLabel = new Label();
+            unaryFuncDomainLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)GraphPicture).BeginInit();
             graphCreate.SuspendLayout();
             computeEnt.SuspendLayout();
@@ -94,15 +108,17 @@ namespace EntanglementOfGraphs
             TorusCreate.SuspendLayout();
             createUnCircleGraph.SuspendLayout();
             createDiCircleGraph.SuspendLayout();
+            createFullyConGraphPanel.SuspendLayout();
+            createUnaryFunc.SuspendLayout();
             SuspendLayout();
             // 
             // GraphPicture
             // 
             GraphPicture.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             GraphPicture.BorderStyle = BorderStyle.FixedSingle;
-            GraphPicture.Location = new Point(12, 40);
+            GraphPicture.Location = new Point(12, 37);
             GraphPicture.Name = "GraphPicture";
-            GraphPicture.Size = new Size(634, 363);
+            GraphPicture.Size = new Size(634, 379);
             GraphPicture.SizeMode = PictureBoxSizeMode.Zoom;
             GraphPicture.TabIndex = 0;
             GraphPicture.TabStop = false;
@@ -172,7 +188,7 @@ namespace EntanglementOfGraphs
             TextOutput.BackColor = SystemColors.Window;
             TextOutput.Font = new Font("Segoe UI", 12F);
             TextOutput.ForeColor = SystemColors.WindowText;
-            TextOutput.Location = new Point(652, 403);
+            TextOutput.Location = new Point(652, 419);
             TextOutput.Multiline = true;
             TextOutput.Name = "TextOutput";
             TextOutput.ReadOnly = true;
@@ -305,7 +321,7 @@ namespace EntanglementOfGraphs
             graphCreate.Controls.Add(edgeTarget);
             graphCreate.Controls.Add(addEdge);
             graphCreate.Controls.Add(deleteGraph);
-            graphCreate.Location = new Point(12, 406);
+            graphCreate.Location = new Point(12, 422);
             graphCreate.Name = "graphCreate";
             graphCreate.Size = new Size(638, 101);
             graphCreate.TabIndex = 22;
@@ -398,7 +414,7 @@ namespace EntanglementOfGraphs
             GameSettings.Controls.Add(detectiveAmount);
             GameSettings.Controls.Add(startPosInput2);
             GameSettings.Controls.Add(startPos2);
-            GameSettings.Location = new Point(409, 9);
+            GameSettings.Location = new Point(652, 37);
             GameSettings.Name = "GameSettings";
             GameSettings.Size = new Size(237, 326);
             GameSettings.TabIndex = 25;
@@ -462,6 +478,7 @@ namespace EntanglementOfGraphs
             // 
             // restartGame
             // 
+            restartGame.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             restartGame.Font = new Font("Segoe UI", 12F);
             restartGame.Location = new Point(652, 366);
             restartGame.Name = "restartGame";
@@ -489,13 +506,14 @@ namespace EntanglementOfGraphs
             // 
             // detMovement
             // 
+            detMovement.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             detMovement.Controls.Add(label1);
             detMovement.Controls.Add(doNothingDet);
             detMovement.Controls.Add(chooseDetPlay);
             detMovement.Controls.Add(moveDetective);
             detMovement.Controls.Add(movedDet);
             detMovement.Controls.Add(detective);
-            detMovement.Location = new Point(12, 406);
+            detMovement.Location = new Point(12, 422);
             detMovement.Name = "detMovement";
             detMovement.Size = new Size(638, 101);
             detMovement.TabIndex = 28;
@@ -518,7 +536,7 @@ namespace EntanglementOfGraphs
             thiefMovement.Controls.Add(targetThiefInput);
             thiefMovement.Controls.Add(targetVertexofThief);
             thiefMovement.Controls.Add(chooseThiefPlay);
-            thiefMovement.Location = new Point(12, 403);
+            thiefMovement.Location = new Point(12, 419);
             thiefMovement.Name = "thiefMovement";
             thiefMovement.Size = new Size(635, 101);
             thiefMovement.TabIndex = 30;
@@ -642,6 +660,7 @@ namespace EntanglementOfGraphs
             // 
             // chooseGraphTyp
             // 
+            chooseGraphTyp.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             chooseGraphTyp.DropDownStyle = ComboBoxStyle.DropDownList;
             chooseGraphTyp.Font = new Font("Segoe UI", 12F);
             chooseGraphTyp.FormattingEnabled = true;
@@ -655,7 +674,7 @@ namespace EntanglementOfGraphs
             // 
             // createUnCircleGraph
             // 
-            createUnCircleGraph.Controls.Add(createDiCircleGraph);
+            createUnCircleGraph.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             createUnCircleGraph.Controls.Add(unCircleSize);
             createUnCircleGraph.Controls.Add(createUndirectedCircleGraph);
             createUnCircleGraph.Controls.Add(unCircleSizeInput);
@@ -664,35 +683,6 @@ namespace EntanglementOfGraphs
             createUnCircleGraph.Size = new Size(231, 164);
             createUnCircleGraph.TabIndex = 31;
             createUnCircleGraph.Visible = false;
-            // 
-            // createDiCircleGraph
-            // 
-            createDiCircleGraph.Controls.Add(createDirectedCircleGraph);
-            createDiCircleGraph.Controls.Add(diCircleSizeInput);
-            createDiCircleGraph.Location = new Point(0, -2);
-            createDiCircleGraph.Name = "createDiCircleGraph";
-            createDiCircleGraph.Size = new Size(231, 166);
-            createDiCircleGraph.TabIndex = 32;
-            createDiCircleGraph.Visible = false;
-            // 
-            // createDirectedCircleGraph
-            // 
-            createDirectedCircleGraph.Font = new Font("Segoe UI", 12F);
-            createDirectedCircleGraph.Location = new Point(0, 59);
-            createDirectedCircleGraph.Name = "createDirectedCircleGraph";
-            createDirectedCircleGraph.Size = new Size(231, 31);
-            createDirectedCircleGraph.TabIndex = 2;
-            createDirectedCircleGraph.Text = "Graph erstellen";
-            createDirectedCircleGraph.UseVisualStyleBackColor = true;
-            createDirectedCircleGraph.Click += createDirectedCircleGraph_Click;
-            // 
-            // diCircleSizeInput
-            // 
-            diCircleSizeInput.Font = new Font("Segoe UI", 12F);
-            diCircleSizeInput.Location = new Point(0, 24);
-            diCircleSizeInput.Name = "diCircleSizeInput";
-            diCircleSizeInput.Size = new Size(231, 29);
-            diCircleSizeInput.TabIndex = 1;
             // 
             // unCircleSize
             // 
@@ -723,26 +713,194 @@ namespace EntanglementOfGraphs
             unCircleSizeInput.Size = new Size(231, 29);
             unCircleSizeInput.TabIndex = 0;
             // 
+            // createDiCircleGraph
+            // 
+            createDiCircleGraph.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            createDiCircleGraph.Controls.Add(diCircleLabel);
+            createDiCircleGraph.Controls.Add(createDirectedCircleGraph);
+            createDiCircleGraph.Controls.Add(diCircleSizeInput);
+            createDiCircleGraph.Location = new Point(652, 196);
+            createDiCircleGraph.Name = "createDiCircleGraph";
+            createDiCircleGraph.Size = new Size(231, 166);
+            createDiCircleGraph.TabIndex = 32;
+            createDiCircleGraph.Visible = false;
+            // 
+            // diCircleLabel
+            // 
+            diCircleLabel.AutoSize = true;
+            diCircleLabel.Font = new Font("Segoe UI", 12F);
+            diCircleLabel.Location = new Point(3, 3);
+            diCircleLabel.Name = "diCircleLabel";
+            diCircleLabel.Size = new Size(124, 21);
+            diCircleLabel.TabIndex = 3;
+            diCircleLabel.Text = "Größe eingeben:";
+            // 
+            // createDirectedCircleGraph
+            // 
+            createDirectedCircleGraph.Font = new Font("Segoe UI", 12F);
+            createDirectedCircleGraph.Location = new Point(0, 59);
+            createDirectedCircleGraph.Name = "createDirectedCircleGraph";
+            createDirectedCircleGraph.Size = new Size(231, 31);
+            createDirectedCircleGraph.TabIndex = 2;
+            createDirectedCircleGraph.Text = "Graph erstellen";
+            createDirectedCircleGraph.UseVisualStyleBackColor = true;
+            createDirectedCircleGraph.Click += createDirectedCircleGraph_Click;
+            // 
+            // diCircleSizeInput
+            // 
+            diCircleSizeInput.Font = new Font("Segoe UI", 12F);
+            diCircleSizeInput.Location = new Point(0, 24);
+            diCircleSizeInput.Name = "diCircleSizeInput";
+            diCircleSizeInput.Size = new Size(231, 29);
+            diCircleSizeInput.TabIndex = 1;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // createFullyConGraphPanel
+            // 
+            createFullyConGraphPanel.Controls.Add(fullyConCreate);
+            createFullyConGraphPanel.Controls.Add(fullyConSizeInput);
+            createFullyConGraphPanel.Controls.Add(fullyConSize);
+            createFullyConGraphPanel.Location = new Point(652, 196);
+            createFullyConGraphPanel.Name = "createFullyConGraphPanel";
+            createFullyConGraphPanel.Size = new Size(231, 164);
+            createFullyConGraphPanel.TabIndex = 33;
+            createFullyConGraphPanel.Visible = false;
+            // 
+            // fullyConCreate
+            // 
+            fullyConCreate.Font = new Font("Segoe UI", 12F);
+            fullyConCreate.Location = new Point(0, 62);
+            fullyConCreate.Name = "fullyConCreate";
+            fullyConCreate.Size = new Size(231, 31);
+            fullyConCreate.TabIndex = 5;
+            fullyConCreate.Text = "Graph erstellen";
+            fullyConCreate.UseVisualStyleBackColor = true;
+            fullyConCreate.Click += fullyConCreate_Click;
+            // 
+            // fullyConSizeInput
+            // 
+            fullyConSizeInput.Font = new Font("Segoe UI", 12F);
+            fullyConSizeInput.Location = new Point(0, 27);
+            fullyConSizeInput.Name = "fullyConSizeInput";
+            fullyConSizeInput.Size = new Size(231, 29);
+            fullyConSizeInput.TabIndex = 4;
+            // 
+            // fullyConSize
+            // 
+            fullyConSize.AutoSize = true;
+            fullyConSize.Font = new Font("Segoe UI", 12F);
+            fullyConSize.Location = new Point(3, 3);
+            fullyConSize.Name = "fullyConSize";
+            fullyConSize.Size = new Size(124, 21);
+            fullyConSize.TabIndex = 3;
+            fullyConSize.Text = "Größe eingeben:";
+            // 
+            // createUnaryFunc
+            // 
+            createUnaryFunc.Controls.Add(unaryFuncDomainLabel);
+            createUnaryFunc.Controls.Add(lunaryFuncToLabel);
+            createUnaryFunc.Controls.Add(unaryFuncStartDomImput);
+            createUnaryFunc.Controls.Add(unaryFuncEndDomImput);
+            createUnaryFunc.Controls.Add(unaryFuncCreate);
+            createUnaryFunc.Controls.Add(unaryFuncInput);
+            createUnaryFunc.Controls.Add(unaryFuncLabel);
+            createUnaryFunc.Location = new Point(652, 196);
+            createUnaryFunc.Name = "createUnaryFunc";
+            createUnaryFunc.Size = new Size(231, 164);
+            createUnaryFunc.TabIndex = 34;
+            createUnaryFunc.Visible = false;
+            // 
+            // lunaryFuncToLabel
+            // 
+            lunaryFuncToLabel.AutoSize = true;
+            lunaryFuncToLabel.Font = new Font("Segoe UI", 12F);
+            lunaryFuncToLabel.Location = new Point(102, 86);
+            lunaryFuncToLabel.Name = "lunaryFuncToLabel";
+            lunaryFuncToLabel.Size = new Size(30, 21);
+            lunaryFuncToLabel.TabIndex = 9;
+            lunaryFuncToLabel.Text = "bis";
+            // 
+            // unaryFuncStartDomImput
+            // 
+            unaryFuncStartDomImput.Font = new Font("Segoe UI", 12F);
+            unaryFuncStartDomImput.Location = new Point(1, 83);
+            unaryFuncStartDomImput.Name = "unaryFuncStartDomImput";
+            unaryFuncStartDomImput.Size = new Size(95, 29);
+            unaryFuncStartDomImput.TabIndex = 8;
+            // 
+            // unaryFuncEndDomImput
+            // 
+            unaryFuncEndDomImput.Font = new Font("Segoe UI", 12F);
+            unaryFuncEndDomImput.Location = new Point(136, 83);
+            unaryFuncEndDomImput.Name = "unaryFuncEndDomImput";
+            unaryFuncEndDomImput.Size = new Size(95, 29);
+            unaryFuncEndDomImput.TabIndex = 7;
+            // 
+            // unaryFuncCreate
+            // 
+            unaryFuncCreate.Font = new Font("Segoe UI", 12F);
+            unaryFuncCreate.Location = new Point(0, 118);
+            unaryFuncCreate.Name = "unaryFuncCreate";
+            unaryFuncCreate.Size = new Size(231, 31);
+            unaryFuncCreate.TabIndex = 6;
+            unaryFuncCreate.Text = "Graph erstellen";
+            unaryFuncCreate.UseVisualStyleBackColor = true;
+            unaryFuncCreate.Click += unaryFuncCreate_Click;
+            // 
+            // unaryFuncInput
+            // 
+            unaryFuncInput.Font = new Font("Segoe UI", 12F);
+            unaryFuncInput.Location = new Point(0, 27);
+            unaryFuncInput.Name = "unaryFuncInput";
+            unaryFuncInput.Size = new Size(231, 29);
+            unaryFuncInput.TabIndex = 5;
+            // 
+            // unaryFuncLabel
+            // 
+            unaryFuncLabel.AutoSize = true;
+            unaryFuncLabel.Font = new Font("Segoe UI", 12F);
+            unaryFuncLabel.Location = new Point(3, 3);
+            unaryFuncLabel.Name = "unaryFuncLabel";
+            unaryFuncLabel.Size = new Size(186, 21);
+            unaryFuncLabel.TabIndex = 4;
+            unaryFuncLabel.Text = "unäre Funktion eingeben:";
+            // 
+            // unaryFuncDomainLabel
+            // 
+            unaryFuncDomainLabel.AutoSize = true;
+            unaryFuncDomainLabel.Font = new Font("Segoe UI", 12F);
+            unaryFuncDomainLabel.Location = new Point(5, 59);
+            unaryFuncDomainLabel.Name = "unaryFuncDomainLabel";
+            unaryFuncDomainLabel.Size = new Size(207, 21);
+            unaryFuncDomainLabel.TabIndex = 10;
+            unaryFuncDomainLabel.Text = "Definitionsbereich eingeben:";
+            // 
             // MainScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            ClientSize = new Size(895, 528);
+            ClientSize = new Size(895, 544);
+            Controls.Add(createUnaryFunc);
+            Controls.Add(createFullyConGraphPanel);
             Controls.Add(createUnCircleGraph);
-            Controls.Add(thiefMovement);
+            Controls.Add(createDiCircleGraph);
             Controls.Add(restartGame);
             Controls.Add(detMovement);
+            Controls.Add(GraphPicture);
             Controls.Add(editGraph);
             Controls.Add(computeEnt);
             Controls.Add(graphCreate);
             Controls.Add(playGraph);
             Controls.Add(TextOutput);
             Controls.Add(headline);
-            Controls.Add(GraphPicture);
             Controls.Add(GameSettings);
             Controls.Add(chooseGraphTyp);
             Controls.Add(TorusCreate);
+            Controls.Add(thiefMovement);
             MinimumSize = new Size(911, 567);
             Name = "MainScreen";
             Text = "Entanglement ist ein Maß für die Komläxität eines Graphs";
@@ -763,6 +921,10 @@ namespace EntanglementOfGraphs
             createUnCircleGraph.PerformLayout();
             createDiCircleGraph.ResumeLayout(false);
             createDiCircleGraph.PerformLayout();
+            createFullyConGraphPanel.ResumeLayout(false);
+            createFullyConGraphPanel.PerformLayout();
+            createUnaryFunc.ResumeLayout(false);
+            createUnaryFunc.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -824,5 +986,19 @@ namespace EntanglementOfGraphs
         private Panel createDiCircleGraph;
         private Button createDirectedCircleGraph;
         private TextBox diCircleSizeInput;
+        private Label diCircleLabel;
+        private OpenFileDialog openFileDialog1;
+        private Panel createFullyConGraphPanel;
+        private Button fullyConCreate;
+        private TextBox fullyConSizeInput;
+        private Label fullyConSize;
+        private Panel createUnaryFunc;
+        private Button unaryFuncCreate;
+        private TextBox unaryFuncInput;
+        private Label unaryFuncLabel;
+        private TextBox unaryFuncEndDomImput;
+        private TextBox unaryFuncStartDomImput;
+        private Label lunaryFuncToLabel;
+        private Label unaryFuncDomainLabel;
     }
 }
