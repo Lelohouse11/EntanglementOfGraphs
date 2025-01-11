@@ -92,13 +92,13 @@ namespace EntanglementOfGraphs
             fullyConSizeInput = new TextBox();
             fullyConSize = new Label();
             createUnaryFunc = new Panel();
+            unaryFuncDomainLabel = new Label();
             lunaryFuncToLabel = new Label();
             unaryFuncStartDomImput = new TextBox();
             unaryFuncEndDomImput = new TextBox();
             unaryFuncCreate = new Button();
             unaryFuncInput = new TextBox();
             unaryFuncLabel = new Label();
-            unaryFuncDomainLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)GraphPicture).BeginInit();
             graphCreate.SuspendLayout();
             computeEnt.SuspendLayout();
@@ -760,6 +760,7 @@ namespace EntanglementOfGraphs
             // 
             // createFullyConGraphPanel
             // 
+            createFullyConGraphPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             createFullyConGraphPanel.Controls.Add(fullyConCreate);
             createFullyConGraphPanel.Controls.Add(fullyConSizeInput);
             createFullyConGraphPanel.Controls.Add(fullyConSize);
@@ -800,6 +801,7 @@ namespace EntanglementOfGraphs
             // 
             // createUnaryFunc
             // 
+            createUnaryFunc.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             createUnaryFunc.Controls.Add(unaryFuncDomainLabel);
             createUnaryFunc.Controls.Add(lunaryFuncToLabel);
             createUnaryFunc.Controls.Add(unaryFuncStartDomImput);
@@ -812,6 +814,16 @@ namespace EntanglementOfGraphs
             createUnaryFunc.Size = new Size(231, 164);
             createUnaryFunc.TabIndex = 34;
             createUnaryFunc.Visible = false;
+            // 
+            // unaryFuncDomainLabel
+            // 
+            unaryFuncDomainLabel.AutoSize = true;
+            unaryFuncDomainLabel.Font = new Font("Segoe UI", 12F);
+            unaryFuncDomainLabel.Location = new Point(5, 59);
+            unaryFuncDomainLabel.Name = "unaryFuncDomainLabel";
+            unaryFuncDomainLabel.Size = new Size(207, 21);
+            unaryFuncDomainLabel.TabIndex = 10;
+            unaryFuncDomainLabel.Text = "Definitionsbereich eingeben:";
             // 
             // lunaryFuncToLabel
             // 
@@ -867,16 +879,6 @@ namespace EntanglementOfGraphs
             unaryFuncLabel.Size = new Size(186, 21);
             unaryFuncLabel.TabIndex = 4;
             unaryFuncLabel.Text = "unäre Funktion eingeben:";
-            // 
-            // unaryFuncDomainLabel
-            // 
-            unaryFuncDomainLabel.AutoSize = true;
-            unaryFuncDomainLabel.Font = new Font("Segoe UI", 12F);
-            unaryFuncDomainLabel.Location = new Point(5, 59);
-            unaryFuncDomainLabel.Name = "unaryFuncDomainLabel";
-            unaryFuncDomainLabel.Size = new Size(207, 21);
-            unaryFuncDomainLabel.TabIndex = 10;
-            unaryFuncDomainLabel.Text = "Definitionsbereich eingeben:";
             // 
             // MainScreen
             // 

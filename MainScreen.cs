@@ -69,7 +69,7 @@ namespace EntanglementOfGraphs
             {
                 if (startPos <= graph.VertexCount) // muss gültiger Knoten sein
                 {
-                    TextOutput.Text = graph.MinEntanglement(startPos).ToString();
+                    TextOutput.Text = $"Das Entanglement ist{graph.MinEntanglement(startPos).ToString()}.";
                     startPosInput.Clear();
                 }
                 else // es war kein gültiger Knoten
@@ -594,7 +594,7 @@ namespace EntanglementOfGraphs
             bool isNumber = int.TryParse(diCircleSizeInput.Text, out size);
             if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
             {
-                graph = new DirectedCircleGraph(size + 1);
+                graph = new DirectedCircleGraph(size);
                 graph.CreateImage(GraphPicture);
                 GraphPicture.Refresh();
                 diCircleSizeInput.Clear();
