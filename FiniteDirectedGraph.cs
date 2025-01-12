@@ -84,37 +84,38 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// gibt alle möglichen Zustände durch nächsten Move zurück
         /// </summary>
-        /// <param name="pos"></param>
+        /// <param name="currentPos"></param>
         /// <returns></returns>
-        public List<Positions<V>> GetNextPossibleSteps(Positions<V> pos)
+        public List<Positions<V>> GetNextPossibleSteps(Positions<V> currentPos)
         {
-            List<Positions<V>> result = [];
+            List<Positions<V>> nextPossibleSteps = [];
+            // Was ist mit garnicht bewegen?
 
-            if (pos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
+            if (currentPos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
             {
-                result.Add(pos.ChangeTurn());
-                if (pos.detectiveAmount > pos.detectives.Count)
+                nextPossibleSteps.Add(currentPos.ChangeTurn());
+                if (currentPos.detectiveAmount > currentPos.detectives.Count)
                 {
-                    result.Add(pos.Clone().MoveDetective(default).ChangeTurn());
+                    nextPossibleSteps.Add(currentPos.Clone().MoveDetective(default).ChangeTurn());
                 }
-                foreach (var detective in pos.detectives) // gehe jeden möglichen Move der Detectives durch
+                foreach (var detective in currentPos.detectives) // gehe jeden möglichen Move der Detectives durch
                 {
-                    result.Add(pos.Clone().MoveDetective(detective).ChangeTurn());
+                    nextPossibleSteps.Add(currentPos.Clone().MoveDetective(detective).ChangeTurn());
                 }
             }
             else
             {
-                List<V> possibleMoves = GetOutgoingVertex(pos.thief).Except(pos.detectives.ToList()).ToList(); // mögliche Züge des Diebes
+                List<V> possibleMoves = GetOutgoingVertex(currentPos.thief).Except(currentPos.detectives.ToList()).ToList(); // mögliche Züge des Diebes
 
                 if (possibleMoves.Count != 0) //prüft ob Züge möglich sind
                 {
                     for (int i = 0; i < possibleMoves.Count; i++) // geht jeden möglichen Zug
                     {
-                        result.Add(pos.Clone().MoveThief(possibleMoves[i]).ChangeTurn());
+                        nextPossibleSteps.Add(currentPos.Clone().MoveThief(possibleMoves[i]).ChangeTurn());
                     }
                 }
             }
-            return result;
+            return nextPossibleSteps;
         }
 
         public String GetNextPossibleStepsForThief(Positions<V> pos)
@@ -137,7 +138,7 @@ namespace EntaglementOfGraphs
         {
             List <Positions<V>> result = [];
 
-            if (pos.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran (pos enthält den Zug des Dieb)
+            if (pos.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran (currentPos enthält den Zug des Dieb)
             {
                 foreach (var edge in Edges)
                 {

@@ -47,9 +47,7 @@ namespace EntaglementOfGraphs
             {
                 Console.WriteLine($"Startknoten hinzugefügt: {startPosition}");
             }
-        }
-        
-        
+        }      
 
         /// <summary>
         /// verbindet alle gefundenen Iterationen des Gametrees zu GameTree
