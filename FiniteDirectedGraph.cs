@@ -194,7 +194,16 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public int? MinEntanglement(V startPosOfThief)
         {
-            for (int i = 0; i <= VertexCount; i++) // geht von 0 bis Anzahl an Knoten
+            int possibleMinEnt = VertexCount;
+            foreach (var vertex in Vertices)
+            {
+                var temp = GetOutgoingVertexCount(vertex);
+                if (temp < possibleMinEnt)
+                {
+                    possibleMinEnt = temp;
+                }
+            }
+            for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
             {
                 if (IsEntanglement(new Positions<V>(i, startPosOfThief, true))) //prüft Entanglment
                 {
@@ -279,6 +288,21 @@ namespace EntaglementOfGraphs
             foreach (var edge in this.OutEdges(vertex))
             {
                 result.Add(edge.Target);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// gibt die Anzahl an erreichbaren Knoten zurück
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
+        public int GetOutgoingVertexCount(V vertex)
+        {
+            int result = 0;
+            foreach (var edge in this.OutEdges(vertex))
+            {
+                result++;
             }
             return result;
         }

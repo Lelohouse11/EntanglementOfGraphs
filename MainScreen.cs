@@ -69,7 +69,7 @@ namespace EntanglementOfGraphs
             {
                 if (startPos <= graph.VertexCount) // muss gültiger Knoten sein
                 {
-                    TextOutput.Text = $"Das Entanglement ist{graph.MinEntanglement(startPos).ToString()}.";
+                    TextOutput.Text = $"Das Entanglement ist {graph.MinEntanglement(startPos).ToString()}.";
                     startPosInput.Clear();
                 }
                 else // es war kein gültiger Knoten
