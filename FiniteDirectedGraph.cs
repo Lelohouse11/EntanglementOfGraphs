@@ -46,84 +46,84 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// erstellt einen GameTree (Spielverlauf) auf verschiedene Art und Weisen
+        /// erstellt einen GameStateGraph (Spielverlauf) auf verschiedene Art und Weisen
         /// </summary>
-        /// <param name="startPos"></param>
-        /// <param name="gameTreeTyp"></param>
+        /// <param name="startState"></param>
+        /// <param name="gameStateGraphTyp"></param>
         /// <returns></returns>
-        public GameTree<V> GetGameTree(Positions<V> startPos, GameTreeTyp gameTreeTyp)
+        public GameStateGraph<V> GetGameStateGraph(GameState<V> startState, GameStateGraphTyp gameStateGraphTyp)
         {
-            var gameTree = new GameTree<V>(this, startPos);
-            if (gameTreeTyp == GameTreeTyp.Iterativ) //wenn ierativer Aufbau
+            var gameStateGraph = new GameStateGraph<V>(this, startState);
+            if (gameStateGraphTyp == GameStateGraphTyp.Forward) //wenn ierativer Aufbau
             {
-                return gameTree.BuildIterativGameTree(startPos);
+                return gameStateGraph.BuildGameStateGraphForwards(startState);
             }
-            else if (gameTreeTyp == GameTreeTyp.Rekursiv) // wenn rekursiver Aufbau
+            else if (gameStateGraphTyp == GameStateGraphTyp.Backward) // wenn rekursiver Aufbau
             {                
-                foreach (var finalState in gameTree.possibleFinalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
+                foreach (var finalState in gameStateGraph.possibleFinalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
                 {
-                    if (!gameTree.OutEdges(startPos).Any())
+                    if (!gameStateGraph.OutEdges(startState).Any())
                     {
-                        gameTree.BuildRecursiveGameTree(finalState);
+                        gameStateGraph.BuildGameStateGraphBackwards(finalState, false);
                         if (debug)
                         {
-                            Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameTree.OutEdges(startPos).Count()}");
+                            Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameStateGraph.OutEdges(startState).Count()}");
                         }
                     }
                 }
-                return gameTree;
+                return gameStateGraph;
             }
-            else if (gameTreeTyp == GameTreeTyp.Fixpoint)
+            else if (gameStateGraphTyp == GameStateGraphTyp.Fixpoint)
             {                
-                gameTree.BuildFixpointGameTree(false);
-                return gameTree;
+                gameStateGraph.BuildGameStateGraphFixpoint(false);
+                return gameStateGraph;
             }
-            return gameTree;
+            return gameStateGraph;
         }
 
         /// <summary>
         /// gibt alle möglichen Zustände durch nächsten Move zurück
         /// </summary>
-        /// <param name="currentPos"></param>
+        /// <param name="currentState"></param>
         /// <returns></returns>
-        public List<Positions<V>> GetNextPossibleSteps(Positions<V> currentPos)
+        public List<GameState<V>> GetNextPossibleStates(GameState<V> currentState)
         {
-            List<Positions<V>> nextPossibleSteps = [];
+            List<GameState<V>> nextPossibleStates = [];
             // Was ist mit garnicht bewegen?
 
-            if (currentPos.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
+            if (currentState.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
             {
-                nextPossibleSteps.Add(currentPos.ChangeTurn());
-                if (currentPos.detectiveAmount > currentPos.detectives.Count)
+                nextPossibleStates.Add(currentState.ChangeTurn());
+                if (currentState.detectiveAmount > currentState.detectives.Count)
                 {
-                    nextPossibleSteps.Add(currentPos.Clone().MoveDetective(default).ChangeTurn());
+                    nextPossibleStates.Add(currentState.Clone().MoveDetective(default).ChangeTurn());
                 }
-                foreach (var detective in currentPos.detectives) // gehe jeden möglichen Move der Detectives durch
+                foreach (var detective in currentState.detectives) // gehe jeden möglichen Move der Detectives durch
                 {
-                    nextPossibleSteps.Add(currentPos.Clone().MoveDetective(detective).ChangeTurn());
+                    nextPossibleStates.Add(currentState.Clone().MoveDetective(detective).ChangeTurn());
                 }
             }
             else
             {
-                List<V> possibleMoves = GetOutgoingVertex(currentPos.thief).Except(currentPos.detectives.ToList()).ToList(); // mögliche Züge des Diebes
+                List<V> possiblenextStates = GetOutgoingVertex(currentState.thiefPos).Except(currentState.detectives.ToList()).ToList(); // mögliche Züge des Diebes
 
-                if (possibleMoves.Count != 0) //prüft ob Züge möglich sind
+                if (possiblenextStates.Count != 0) //prüft ob Züge möglich sind
                 {
-                    for (int i = 0; i < possibleMoves.Count; i++) // geht jeden möglichen Zug
+                    for (int i = 0; i < possiblenextStates.Count; i++) // geht jeden möglichen Zug
                     {
-                        nextPossibleSteps.Add(currentPos.Clone().MoveThief(possibleMoves[i]).ChangeTurn());
+                        nextPossibleStates.Add(currentState.Clone().MoveThief(possiblenextStates[i]).ChangeTurn());
                     }
                 }
             }
-            return nextPossibleSteps;
+            return nextPossibleStates;
         }
 
-        public String GetNextPossibleStepsForThief(Positions<V> pos)
+        public String GetNextPossibleStatesForThief(GameState<V> currentState)
         {
             string result = "";
-            foreach (var nextPos in GetNextPossibleSteps(pos)) 
+            foreach (var nextState in GetNextPossibleStates(currentState)) 
             {
-                result += nextPos.thief.ToString();
+                result += nextState.thiefPos.ToString();
                 result += ", ";
             }
             return result;
@@ -132,35 +132,35 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// gibt mögliche vorige Schritte zurück
         /// </summary>
-        /// <param name="pos"></param>
+        /// <param name="currentState"></param>
         /// <returns></returns>
-        public List<Positions<V>> GetPreviousPossibleSteps(Positions<V> pos) 
+        public List<GameState<V>> GetPreviousPossibleStates(GameState<V> currentState) 
         {
-            List <Positions<V>> result = [];
+            List <GameState<V>> result = [];
 
-            if (pos.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran (currentPos enthält den Zug des Dieb)
+            if (currentState.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran (currentState enthält den Zug des Dieb)
             {
                 foreach (var edge in Edges)
                 {
-                    if (edge.Target.Equals(pos.thief)) // alle möglichen Knoten von den der Dieb kommen kann
+                    if (edge.Target.Equals(currentState.thiefPos)) // alle möglichen Knoten von den der Dieb kommen kann
                     {
-                        var previousPos = pos.Clone().ChangeTurn();
-                        previousPos.thief = edge.Source;
-                        result.Add(previousPos); // werden zum Result hinzugefügt
+                        var previousState = currentState.Clone().ChangeTurn();
+                        previousState.thiefPos = edge.Source;
+                        result.Add(previousState); // werden zum Result hinzugefügt
                     }
                 }
             }
             else // wenn Dieb dran ist waren davor die Detektive dran (Detektive dran)
             {
-                if (pos.detectives.Contains(pos.thief)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
+                if (currentState.detectives.Contains(currentState.thiefPos)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
                 {
-                    var previousPos = pos.Clone().ChangeTurn();
-                    previousPos.detectives.Remove(pos.thief);                    
+                    var previousPos = currentState.Clone().ChangeTurn();
+                    previousPos.detectives.Remove(currentState.thiefPos);                    
                     result.Add(previousPos);
-                    foreach (var vertex in Vertices.Except(pos.detectives.ToList())) //bewegt den Dieb zu jedem möglichen Knoten
+                    foreach (var vertex in Vertices.Except(currentState.detectives.ToList())) //bewegt den Dieb zu jedem möglichen Knoten
                     {
-                        previousPos = pos.Clone().ChangeTurn();
-                        previousPos.detectives.Remove(pos.thief);
+                        previousPos = currentState.Clone().ChangeTurn();
+                        previousPos.detectives.Remove(currentState.thiefPos);
                         previousPos.detectives.Add(vertex);
                         result.Add(previousPos);
                     }
@@ -168,7 +168,7 @@ namespace EntaglementOfGraphs
                 }
                 else // Diebe haben sich nicht bewegt
                 {
-                    result.Add(pos.Clone().ChangeTurn()); // gleiche Position wird hinzugefügt, nur mit der Info das Dieb dran war
+                    result.Add(currentState.Clone().ChangeTurn()); // gleiche Position wird hinzugefügt, nur mit der Info das Dieb dran war
                 }
             }
             return result;
@@ -177,22 +177,22 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// nutzt den rekursiven Gamtree um Entanglement zu überprüfen
         /// </summary>
-        /// <param name="startPos"></param>
+        /// <param name="startState"></param>
         /// <returns></returns>
-        public bool IsEntanglement(Positions<V> startPos)
+        public bool IsEntanglement(GameState<V> startState)
         {
-            var gameTree = GetGameTree(startPos, GameTreeTyp.Rekursiv);
-            //Console.WriteLine(gameTree.OutEdges(startPos).Count());
-            return gameTree.OutEdges(startPos).Any();
+            var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Backward);
+            //Console.WriteLine(gameStateGraph.OutEdges(startState).Count());
+            return gameStateGraph.OutEdges(startState).Any();
 
         }
 
         /// <summary>
         /// berechnet minimalstest Entanglement
         /// </summary>
-        /// <param name="startPosOfThief"></param>
+        /// <param name="thiefPos"></param>
         /// <returns></returns>
-        public int? MinEntanglement(V startPosOfThief)
+        public int? MinEntanglement(V thiefPos)
         {
             int possibleMinEnt = VertexCount;
             foreach (var vertex in Vertices)
@@ -205,7 +205,7 @@ namespace EntaglementOfGraphs
             }
             for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
             {
-                if (IsEntanglement(new Positions<V>(i, startPosOfThief, true))) //prüft Entanglment
+                if (IsEntanglement(new GameState<V>(i, thiefPos, true))) //prüft Entanglment
                 {
                     return i; //minimalstes Entanglement
                 }

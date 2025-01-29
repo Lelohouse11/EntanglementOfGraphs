@@ -13,9 +13,9 @@ namespace EntanglementOfGraphs
     /// <typeparam name="V"></typeparam>
     /// <param name="s"></param>
     /// <param name="t"></param>
-    internal class Move<V>(Positions<V> s, List<Positions<V>> t) where V : IComparable<V>, IEquatable<V>
+    internal class Move<V>(GameState<V> s, List<GameState<V>> t) where V : IComparable<V>, IEquatable<V>
     {       
-        public Positions<V> source = s; // aktueller Status des Spiels
-        public List<Positions<V>> target = t; // mögliche Züge
+        public GameState<V> source = s; // aktueller Status des Spiels
+        public List<GameState<V>> target = t; // mögliche Züge
     }
 }

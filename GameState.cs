@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace EntaglementOfGraphs
 {
     /// <summary>
-    /// erstellt Position im GameTree
+    /// erstellt Position im GameStateGraph
     /// </summary>
     /// <param name="detectiveAmount"></param>
     /// <param name="initalThief"></param>
     /// <param name="initialTurn"></param>
-    public class Positions <V>(int detectiveAmount, V initalThief, bool initialTurn) where V : IComparable<V>, IEquatable<V>
+    public class GameState <V>(int detectiveAmount, V initalThief, bool initialTurn) where V : IComparable<V>, IEquatable<V>
     {
-        public V thief = initalThief;
+        public V thiefPos = initalThief;
         public SortedSet<V> detectives = [];
         public bool detectivesTurn = initialTurn;
         public int detectiveAmount = detectiveAmount;
@@ -26,9 +26,9 @@ namespace EntaglementOfGraphs
         /// clont Instanz zur weitere Verarbeitung
         /// </summary>
         /// <returns></returns>
-        public Positions<V> Clone()
+        public GameState<V> Clone()
         {
-            var cloned = new Positions<V>(detectiveAmount,thief, detectivesTurn);
+            var cloned = new GameState<V>(detectiveAmount,thiefPos, detectivesTurn);
             cloned.flag = flag;
             foreach (var i in detectives)
             {
@@ -42,13 +42,13 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="detective"></param>
         /// <returns></returns>
-        public Positions<V> MoveDetective(V? detective)
+        public GameState<V> MoveDetective(V? detective)
         {
             if (detective != null)
             {
                 detectives.Remove(detective);
             }
-            detectives.Add(thief);
+            detectives.Add(thiefPos);
             return this;
         }
 
@@ -57,9 +57,9 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="newPos"></param>
         /// <returns></returns>
-        public Positions<V> MoveThief(V newPos)
+        public GameState<V> MoveThief(V newPos)
         {
-            thief= newPos;
+            thiefPos= newPos;
             return this;
         }
 
@@ -67,7 +67,7 @@ namespace EntaglementOfGraphs
         /// ändert wer am Zug ist
         /// </summary>
         /// <returns></returns>
-        public Positions<V> ChangeTurn()
+        public GameState<V> ChangeTurn()
         {
             detectivesTurn = !detectivesTurn;
             return this;
@@ -78,9 +78,9 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(Positions<V> other)
+        public bool Equals(GameState<V> other)
         {
-            if (!other.thief.Equals(thief)) return false;
+            if (!other.thiefPos.Equals(thiefPos)) return false;
             if (other.detectivesTurn != detectivesTurn) return false;
             if (other.detectives.Count != detectives.Count) return false;
             for (int i = 0; i < detectives.Count; i++)
@@ -93,13 +93,13 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// gibt den Detektive zurück der Position geändert hat
         /// </summary>
-        /// <param name="nextPos"></param>
+        /// <param name="nextState"></param>
         /// <returns></returns>
-        public V getMovedDetective (Positions<V> nextPos)
+        public V getMovedDetective (GameState<V> nextState)
         {
             for (int i = 0; i < detectives.Count; i++)
             {
-                if (!nextPos.detectives.ElementAt(i).Equals(detectives.ElementAt(i))) return detectives.ElementAt(i);
+                if (!nextState.detectives.ElementAt(i).Equals(detectives.ElementAt(i))) return detectives.ElementAt(i);
             }
             return default;
         }
@@ -112,7 +112,7 @@ namespace EntaglementOfGraphs
         public override String ToString()
         {
 
-            return $"({thief}, ({string.Join(",",detectives.ToArray())}), {detectivesTurn})";
+            return $"({thiefPos}, ({string.Join(",",detectives.ToArray())}), {detectivesTurn})";
         }
     }
 }

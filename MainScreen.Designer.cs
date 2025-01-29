@@ -274,7 +274,7 @@ namespace EntanglementOfGraphs
             deleteGraph.UseVisualStyleBackColor = false;
             deleteGraph.Click += deleteGraph_Click;
             // 
-            // startPos
+            // startState
             // 
             startPos.Font = new Font("Segoe UI", 12F);
             startPos.ForeColor = SystemColors.WindowText;

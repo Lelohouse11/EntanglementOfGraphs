@@ -8,8 +8,8 @@ namespace EntanglementOfGraphs
     public partial class MainScreen
     {
         FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
-        GameTree<int> gameTree;
-        Positions<int> currentPos;
+        GameStateGraph<int> gameTree;
+        GameState<int> currentPos;
         bool gamestarted;
 
         public MainScreen()
@@ -207,7 +207,7 @@ namespace EntanglementOfGraphs
             restartGame.Hide();
             if (gamestarted) // löscht die Einfärbung des Graphen
             {
-                graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White);
+                graph.ColorVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White);
                 foreach (var detective in currentPos.detectives)
                 {
                     graph.ShapeVertex(detective.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
@@ -268,9 +268,9 @@ namespace EntanglementOfGraphs
                     {
                         if (graph.VertexCount >= detectiveAmount) // gültige Anzahl an Detektiven und dann erstellung des Spiels
                         {
-                            currentPos = new Positions<int>(detectiveAmount, startPos, true);
-                            gameTree = new GameTree<int>(graph, currentPos);
-                            gameTree.BuildFixpointGameTree(true);
+                            currentPos = new GameState<int>(detectiveAmount, startPos, true);
+                            gameTree = new GameStateGraph<int>(graph, currentPos);
+                            gameTree.BuildGameStateGraphFixpoint(true);
                             gameTree.CreateStrategies();
                             graph.ColorVertex(startPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
                             GraphPicture.Refresh();
@@ -335,7 +335,7 @@ namespace EntanglementOfGraphs
                         currentPos.MoveDetective(movedDetective);
                         currentPos.ChangeTurn();
                     }
-                    graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                    graph.ShapeVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
                     GraphPicture.Refresh();
                     Thread.Sleep(1000);
                     MoveThief(); // simuliert zug des Diebes
@@ -384,7 +384,7 @@ namespace EntanglementOfGraphs
                 possibleNextPos.MoveThief(thiefTarget);
                 possibleNextPos.ChangeTurn();
                 bool moveAllowed = false;
-                foreach (var possibleStep in graph.GetNextPossibleSteps(currentPos)) // prüft ob eingegebener Zug gültig ist
+                foreach (var possibleStep in graph.GetNextPossibleStates(currentPos)) // prüft ob eingegebener Zug gültig ist
                 {
                     if (possibleNextPos.Equals(possibleStep))
                     {
@@ -394,9 +394,9 @@ namespace EntanglementOfGraphs
                 }
                 if (moveAllowed) // wenn gültig, wird Zug durchgeführt
                 {
-                    graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White);
+                    graph.ColorVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White);
                     currentPos = possibleNextPos;
-                    graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.Red);
+                    graph.ColorVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
                     GraphPicture.Refresh();
                     Thread.Sleep(1000);
                     MoveDet(); // simuliert zu des Detektiv
@@ -404,14 +404,14 @@ namespace EntanglementOfGraphs
                 }
                 else // ungültige Zugeingabe
                 {
-                    TextOutput.Text = $"Bitte eine der folgenden Ganzzahlen eingeben: {graph.GetNextPossibleStepsForThief(currentPos)}.";
+                    TextOutput.Text = $"Bitte eine der folgenden Ganzzahlen eingeben: {graph.GetNextPossibleStatesForThief(currentPos)}.";
                     targetThiefInput.Clear();
                     targetThiefInput.Focus();
                 }
             }
             else // ungültige Zugeingabe
             {
-                TextOutput.Text = $"Bitte eine der folgenden Ganzzahlen eingeben: {graph.GetNextPossibleStepsForThief(currentPos)}.";
+                TextOutput.Text = $"Bitte eine der folgenden Ganzzahlen eingeben: {graph.GetNextPossibleStatesForThief(currentPos)}.";
                 targetThiefInput.Clear();
                 targetThiefInput.Focus();
             }
@@ -440,7 +440,7 @@ namespace EntanglementOfGraphs
             }
             else
             {
-                if (graph.GetNextPossibleSteps(currentPos).Count == 0) // Der Detektiv kann dann nicht mehr gewinnen
+                if (graph.GetNextPossibleStates(currentPos).Count == 0) // Der Detektiv kann dann nicht mehr gewinnen
                 {
                     detMovement.Hide();
                     TextOutput.Text = "Du hast Gewonnen!";
@@ -449,7 +449,7 @@ namespace EntanglementOfGraphs
                 else // führt den Zug des Diebes durch
                 {
                     int nextThiefMove = gameTree.BestThiefMove(currentPos); // bester Zug
-                    graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White);
+                    graph.ColorVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White);
                     currentPos.MoveThief(nextThiefMove);
                     currentPos.ChangeTurn();
                     graph.ColorVertex(nextThiefMove.ToString(), Microsoft.Msagl.Drawing.Color.Red);
@@ -465,7 +465,7 @@ namespace EntanglementOfGraphs
         private void MoveDet()
         {
             TextOutput.Clear();
-            if (gameTree.GetExistingPosition(currentPos) == null) // Detektiv hat auf jeden Fall verloren
+            if (gameTree.GetExistingState(currentPos) == null) // Detektiv hat auf jeden Fall verloren
             {
                 thiefMovement.Hide();
                 TextOutput.Text = "Du hast Gewonnen!";
@@ -479,25 +479,25 @@ namespace EntanglementOfGraphs
                     {
                         graph.ShapeVertex(nextDetectiveMove.Item1.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
                         currentPos.MoveDetective(nextDetectiveMove.Item1);
-                        graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                        graph.ShapeVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
                         GraphPicture.Refresh();
                     }
                     else // Detektiv ist noch nicht auf dem Graph
                     {
                         currentPos.MoveDetective(nextDetectiveMove.Item1);
-                        graph.ShapeVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                        graph.ShapeVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
                         GraphPicture.Refresh();
                     }
                 }
                 currentPos.ChangeTurn();
-                if (graph.GetNextPossibleSteps(currentPos).Count == 0) // Dieb hat auf jeden Fall verloren
+                if (graph.GetNextPossibleStates(currentPos).Count == 0) // Dieb hat auf jeden Fall verloren
                 {
                     thiefMovement.Hide();
                     TextOutput.Text = "Du hast Verloren!!";
                 }
                 else
                 {
-                    TextOutput.Text = $"Du bist am Zug! Wähle ein der folgenden Knoten aus: {graph.GetNextPossibleStepsForThief(currentPos)}.";
+                    TextOutput.Text = $"Du bist am Zug! Wähle ein der folgenden Knoten aus: {graph.GetNextPossibleStatesForThief(currentPos)}.";
                 }
             }
         }
@@ -518,7 +518,7 @@ namespace EntanglementOfGraphs
             GameSettings.Show();
             editGraph.Show();
             restartGame.Hide();
-            graph.ColorVertex(currentPos.thief.ToString(), Microsoft.Msagl.Drawing.Color.White); // entfärbt Graph
+            graph.ColorVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White); // entfärbt Graph
             foreach (var detective in currentPos.detectives)
             {
                 graph.ShapeVertex(detective.ToString(), Microsoft.Msagl.Drawing.Shape.Box);

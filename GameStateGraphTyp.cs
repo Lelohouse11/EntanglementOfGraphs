@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
-    internal enum GameTreeTyp
+    internal enum GameStateGraphTyp
     {
-        Iterativ,
-        Rekursiv,
+        Forward,
+        Backward,
         Fixpoint
     }
 }
