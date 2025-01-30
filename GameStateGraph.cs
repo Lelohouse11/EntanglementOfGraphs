@@ -275,18 +275,20 @@ namespace EntaglementOfGraphs
                     isNewPState.distanceToWin = previousState.distanceToWin + 1;
                     isNewPState.winningChance = previousState.winningChance;
                     changeAllPreviousWC(isNewPState, previousState, diffOfWC);
-                    this.ClearOutEdges(isNewPState);
+                    //this.ClearOutEdges(isNewPState);
                 }
             }
 
             foreach (var targetState in exsistingNextPossibleStates) // alle Kanten vom Knoten werden hinzugefügt
             {
-            //noch zu prüfen
-                if (debug)
+                //noch zu prüfen
+                
+                if (!isExistingEdge(isNewPState, GetExistingState(targetState)))
                 {
-                    Console.WriteLine($"Kante von {isNewPState} zu {targetState} hinzugefügt.");
+                    AddEdge(new Edge<GameState<V>>(isNewPState, GetExistingState(targetState)));
                 }
-                AddEdge(new Edge<GameState<V>>(isNewPState, GetExistingState(targetState)));
+
+                //AddEdge(new Edge<GameState<V>>(isNewPState, GetExistingState(targetState)));
             }         
             return goOn;
         }
@@ -301,9 +303,9 @@ namespace EntaglementOfGraphs
             
             foreach (var previousState in GetIncomingStates(state))
             {
-                if (previousState.distanceToWin > state.distanceToWin)
+                if (previousState.distanceToWin > state.distanceToWin + 1)
                 {
-                    previousState.distanceToWin = state.distanceToWin;
+                    previousState.distanceToWin = state.distanceToWin + 1;
                 }
                 double newDiffOfWC = diffOfWC / OutDegree(previousState);
                 previousState.winningChance += newDiffOfWC;
@@ -540,7 +542,16 @@ namespace EntaglementOfGraphs
             }
             return null;            
         }
-        
+
+        public bool isExistingEdge(GameState<V> sourceState, GameState<V> targetState)
+        {
+            foreach (var e in Edges)
+            {
+                if (e.Source.Equals(sourceState) && e.Target.Equals(targetState)) return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Gibt die möglichen Endzustände des Gametrees zurück
         /// </summary>
@@ -606,9 +617,12 @@ namespace EntaglementOfGraphs
         public List<GameState<V>> GetOutgoingStates(GameState<V> state)
         {
             List<GameState<V>> result = [];
-            foreach (var edge in this.OutEdges(state))
+            foreach (var edge in Edges)
             {
-                result.Add(edge.Target);
+                if (edge.Source == state)
+                {
+                    result.Add(edge.Target);
+                }
             }
             return result;
         }
