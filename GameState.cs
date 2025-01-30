@@ -20,7 +20,9 @@ namespace EntaglementOfGraphs
         public SortedSet<V> detectives = [];
         public bool detectivesTurn = initialTurn;
         public int detectiveAmount = detectiveAmount;
-        public double wcANDdist; // GewinnWahrscheinlichkeit für Detektiv bei Zufälliger Zugwahl von Dieb + Anzahl an Zügen bis Sieg
+        public int distanceToWin;
+        public double winningChance;
+        //public double wcANDdist; // GewinnWahrscheinlichkeit für Detektiv bei Zufälliger Zugwahl von Dieb + Anzahl an Zügen bis Sieg
 
         /// <summary>
         /// clont Instanz zur weitere Verarbeitung
@@ -29,7 +31,8 @@ namespace EntaglementOfGraphs
         public GameState<V> Clone()
         {
             var cloned = new GameState<V>(detectiveAmount,thiefPos, detectivesTurn);
-            cloned.wcANDdist = wcANDdist;
+            cloned.winningChance = winningChance;
+            cloned.distanceToWin = distanceToWin;
             foreach (var i in detectives)
             {
                 cloned.detectives.Add(i);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.AxHost;
 
 namespace EntaglementOfGraphs
 {
@@ -36,7 +37,8 @@ namespace EntaglementOfGraphs
             possibleFinalStates = GetPossibleFinalStates();
             foreach (var state in possibleFinalStates)
             {
-                state.wcANDdist = 0;
+                state.winningChance = 1;
+                state.distanceToWin = 0;
                 AddVertex(state);
                 if (debug)
                 {
@@ -217,52 +219,45 @@ namespace EntaglementOfGraphs
         private bool AddFlaggedThiefGameState(GameState<V> previousState)
         {
             bool goOn = false;
-            /*
-            var isNewPState = GetExistingState(previousState); //checken ob schon vorhandener Knoten, was wenn aber neuer State eine bessere Gewinnwahrscheinlichkeit hätte?
-            if (isNewPState == null)
-            {
-                isNewPState = previousState;
-            }
-            */
             bool detWin = true;
             var nextPossibleStates = graph.GetNextPossibleStates(previousState);
             List<GameState<V>> exsistingNextPossibleStates = [];
-            double minDistanceToWin = VertexCount;
-            double winningChanceSum = nextPossibleStates.Count;
+            int minDistanceToWin = VertexCount;
+            double winningChanceSum = 0;
             foreach (var targetState in nextPossibleStates) // checkt, ob alle ausgehenden Kanten wieder in den sicheren GameStateGraph führen
             {
                 var isNewState = GetExistingState(targetState);
                 if (isNewState != null)
                 {
-                    double isNewPosWinningChance = isNewState.wcANDdist % 1;
-                    if (isNewPosWinningChance != 0) //wenn nicht alle Kanten in den Baum führen gewinnt der Detektiv nicht sicher
+                    if (isNewState.winningChance != 1) //wenn nicht alle Kanten in den Baum führen gewinnt der Detektiv nicht sicher
                     {
                         detWin = false;
-                        winningChanceSum = winningChanceSum - isNewPosWinningChance; // summiert die Gewinnchancen des Detektivs
                     }
-                    else
+
+                    winningChanceSum += isNewState.winningChance; // summiert die Gewinnchancen des Detektivs
+                    if (targetState.distanceToWin < minDistanceToWin) // sucht kürzesten Weg zum Gewinn
                     {
-                        if (targetState.wcANDdist < minDistanceToWin) // sucht kürzesten Weg zum Gewinn
-                        {
-                            minDistanceToWin = targetState.wcANDdist;
-                        }
+                        minDistanceToWin = targetState.distanceToWin;
                     }
+                    
                     exsistingNextPossibleStates.Add(isNewState); // Knoten zu dennen Kanten gehen bei nicht sicheren Zuständen
                 }
                 else
                 {
                     detWin = false;
-                    winningChanceSum--; // neu gefundene Position bedeutet sicher Verloren für detektiv, wenn richtigen Weg gefählt (aber kann sein das Dieb flaschen Weg wählt)
                 }
             }
             if (detWin) // Detektiv gewinnt sicher bei Knoten
             {
-                previousState.wcANDdist = minDistanceToWin + 1.00;
+                previousState.winningChance = 1;
+                previousState.distanceToWin = minDistanceToWin + 1;
                 exsistingNextPossibleStates = nextPossibleStates; // wenn sicherer Gewinn dann waren alle nextSteps im GameStateGraph
             }
             else // Detektiv gewinnt mit einer Chance von winningChanceSum / nextPossibleStates.Count
             {
-                previousState.wcANDdist = Math.Floor(minDistanceToWin) + 1.00 + winningChanceSum / nextPossibleStates.Count; // Wahrscheinlichkeit des Gewinns bei Zufälliger Zugwahl
+                previousState.winningChance = winningChanceSum / nextPossibleStates.Count;
+                previousState.distanceToWin += minDistanceToWin + 1;
+                // Wahrscheinlichkeit des Gewinns bei Zufälliger Zugwahl
             }
 
             var isNewPState = GetExistingState(previousState); //checken ob schon vorhandener Knoten, was wenn aber neuer State eine bessere Gewinnwahrscheinlichkeit hätte?
@@ -274,9 +269,12 @@ namespace EntaglementOfGraphs
             }
             else
             {
-                if((previousState.wcANDdist % 1) < (isNewPState.wcANDdist % 1))
+                if((previousState.winningChance) < (isNewPState.winningChance))
                 {
-                    changeAllPreviousWC(isNewPState, previousState.wcANDdist);
+                    double diffOfWC = isNewPState.winningChance - previousState.winningChance;
+                    isNewPState.distanceToWin = previousState.distanceToWin + 1;
+                    isNewPState.winningChance = previousState.winningChance;
+                    changeAllPreviousWC(isNewPState, previousState, diffOfWC);
                     this.ClearOutEdges(isNewPState);
                 }
             }
@@ -298,15 +296,18 @@ namespace EntaglementOfGraphs
             /// </summary>
             /// <param name="state"></param>
             /// <param name="newWC"></param>
-        private void changeAllPreviousWC(GameState<V> state, double newWC)
+        private void changeAllPreviousWC(GameState<V> state, GameState<V> betterState, double diffOfWC)
         {
-            double diffOfWC = (state.wcANDdist % 1) - (newWC % 1);
-            state.wcANDdist = newWC + 1;
+            
             foreach (var previousState in GetIncomingStates(state))
             {
-                
-                previousState.wcANDdist += diffOfWC / OutDegree(previousState) + Math.Floor(state.wcANDdist)- Math.Floor(previousState.wcANDdist) + 1;
-                changeAllPreviousWC(previousState, previousState.wcANDdist);
+                if (previousState.distanceToWin > state.distanceToWin)
+                {
+                    previousState.distanceToWin = state.distanceToWin;
+                }
+                double newDiffOfWC = diffOfWC / OutDegree(previousState);
+                previousState.winningChance += newDiffOfWC;
+                changeAllPreviousWC(previousState, state, newDiffOfWC);
             }
         }
 
@@ -326,7 +327,8 @@ namespace EntaglementOfGraphs
             {
                 if (flagged) // fügt sichere Wahrscheinlichkeit hinzu
                 {
-                    previousState.wcANDdist = currentState.wcANDdist + 1.00;
+                    previousState.distanceToWin = currentState.distanceToWin + 1;
+                    previousState.winningChance = currentState.winningChance;
                 }
                 AddVertex(previousState); // Hinzufügen, wenn neu
                 goOn = true;                
@@ -380,30 +382,28 @@ namespace EntaglementOfGraphs
             List<GameState<V>> result = [];
             var outgoingStates = GetOutgoingStates(currentState);
             double bestWinningChance = 0;
-            double bestDistanceToWin = VertexCount;
+            int bestDistanceToWin = VertexCount;
             foreach (var state in outgoingStates) // findet die beste Gewinnwahrscheinlichkeit
             {
-                var vertexWinningChance = state.wcANDdist % 1;
-                if (vertexWinningChance == 0)
+                if (state.winningChance == 1)
                 {
                     break;
                 }
-                if (vertexWinningChance > bestWinningChance)
+                if (state.winningChance > bestWinningChance)
                 {
-                    bestWinningChance = vertexWinningChance;
+                    bestWinningChance = state.winningChance;
                 }
             }
             foreach (var state in outgoingStates) // findet zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
-            {
-                var vertexFlag = state.wcANDdist;
-                if ((vertexFlag % 1 == bestWinningChance) && (vertexFlag < bestDistanceToWin))
+            {  
+                if ((state.winningChance == bestWinningChance) && (state.distanceToWin < bestDistanceToWin))
                 {
-                    bestDistanceToWin = vertexFlag;
+                    bestDistanceToWin = state.distanceToWin;
                 }
             }
             foreach (var state in outgoingStates) // fügt beste und kürzeste Züge hinzu
             {
-                if (state.wcANDdist == bestDistanceToWin)
+                if ((state.winningChance == bestWinningChance) && (state.distanceToWin == bestDistanceToWin))
                 {
                     result.Add(state);
                 }
@@ -424,7 +424,7 @@ namespace EntaglementOfGraphs
             var outgoingVertex = GetOutgoingStates(currentState);
             var nextPossibleStates = graph.GetNextPossibleStates(currentState);
             double worstWinningChance = 1;
-            double worstDistanceToWin = 0;
+            int worstDistanceToWin = 0;
             bool saveWinFound = false;
             foreach (var possibleState in nextPossibleStates) //prüft ob Dieb sicher gewinnen kann
             {
@@ -447,26 +447,24 @@ namespace EntaglementOfGraphs
             }
             if (!saveWinFound) //sichere Spielzug nicht gefunden, finde den Sichersten
             {
-                foreach (var state in outgoingVertex) // finde die beste Gewinnwahrscheinlichkeit
+                foreach (var state in outgoingVertex) // finde die schlechteste Gewinnwahrscheinlichkeit
                 {
-                    var vertexWinningChance = state.wcANDdist % 1;
-                    if ((vertexWinningChance < worstWinningChance))
+                    if ((state.winningChance < worstWinningChance))
                     {
-                        worstWinningChance = vertexWinningChance;
+                        worstWinningChance = state.winningChance;
                     }
                 }
-                foreach (var state in outgoingVertex) // finde zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
+                foreach (var state in outgoingVertex) // finde zur schlechtesten Gewinnwahrscheinlichkeit den längsten Weg
                 {
-                    var vertexFlag = state.wcANDdist;
-                    if ((vertexFlag % 1 == worstWinningChance) && (vertexFlag > worstDistanceToWin))
+                    if ((state.winningChance == worstWinningChance) && (state.distanceToWin > worstDistanceToWin))
                     {
-                        worstDistanceToWin = vertexFlag;
+                        worstDistanceToWin = state.distanceToWin;
                     }
                 }
 
-                foreach (var state in outgoingVertex) // füge alle kürzesten und besten Möglichkeiten hinzu
+                foreach (var state in outgoingVertex) // füge alle längsten und schlechtesten Möglichkeiten hinzu
                 {
-                    if (state.wcANDdist == worstDistanceToWin)
+                    if ((state.winningChance == worstWinningChance) && (state.distanceToWin == worstDistanceToWin))
                     {
                         result.Add(state);
                     }
@@ -560,7 +558,8 @@ namespace EntaglementOfGraphs
                     for (var i = 0; i < outgoingStateCount; i++)
                     {
                         tempState.detectives.Add(outgoingStates[i]);// setzt Detektive auf die Fluchtmöglichkeit
-                        tempState.wcANDdist = 0.00;
+                        tempState.winningChance = 1;
+                        tempState.distanceToWin = 0;
                     }
                                        
                     if (detectiveAmount == outgoingStateCount)
