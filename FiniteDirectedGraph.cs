@@ -13,7 +13,6 @@ namespace EntaglementOfGraphs
 {
     internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
     {
-        private readonly bool debug = false;
         protected Microsoft.Msagl.Drawing.Graph? msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
         protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer? renderer;
 
@@ -65,10 +64,6 @@ namespace EntaglementOfGraphs
                     if (!gameStateGraph.OutEdges(startState).Any())
                     {
                         gameStateGraph.BuildGameStateGraphBackwards(finalState, false);
-                        if (debug)
-                        {
-                            Console.WriteLine($"Gefundene wege von einem FinalState zur StartPos: {gameStateGraph.OutEdges(startState).Count()}");
-                        }
                     }
                 }
                 return gameStateGraph;
@@ -182,7 +177,6 @@ namespace EntaglementOfGraphs
         public bool IsEntanglement(GameState<V> startState)
         {
             var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Backward);
-            //Console.WriteLine(gameStateGraph.OutEdges(startState).Count());
             return gameStateGraph.OutEdges(startState).Any();
 
         }

@@ -9,8 +9,6 @@ namespace EntaglementOfGraphs
 {
     internal class TorusGraph : FiniteDirectedGraph<TorusVertex>
     {
-        private readonly bool debug = false;
-
         public TorusGraph() { }
 
         /// <summary>
@@ -26,10 +24,6 @@ namespace EntaglementOfGraphs
                 for (int j = 0; j < nTorus; j++) // n Knoten
                 {
                     AddVertex(new TorusVertex(i, j));
-                    if (debug)
-                    {
-                        Console.WriteLine($"Knoten hinzugefügt: ({i},{j})");
-                    }
                 }
             }
             
@@ -42,22 +36,12 @@ namespace EntaglementOfGraphs
                     {
                         // Folgender Knoten im Kreis
                         AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
-
-                        if (debug)
-                        {
-                            Console.WriteLine($"Kante von {vertex} zu {nextVertex} hinzugefügt.");
-                        }
                     }                    
                     else if (((vertex.ZweiterWert == nextVertex.ZweiterWert) && vertex.ErsterWert == (mTorus-1) && (nextVertex.ErsterWert == 0)) || //Endpunkt mit Anfangspunkt verbinden
                        ((vertex.ErsterWert == nextVertex.ErsterWert) && vertex.ZweiterWert == (nTorus - 1) && (nextVertex.ZweiterWert == 0)))
                     {
                         // Endender Knoten wird mit Anfangsknoten verbunden
                         AddEdge(new Edge<TorusVertex>(vertex, nextVertex));
-
-                        if (debug)
-                        {
-                            Console.WriteLine($"Kante von {vertex} zu {nextVertex} hinzugefügt.");
-                        }
                     }
                     
                 }
