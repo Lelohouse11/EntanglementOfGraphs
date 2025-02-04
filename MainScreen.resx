@@ -117,7 +117,1987 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GraphPicture.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="GraphPicture.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 37</value>
+  </data>
+  <data name="GraphPicture.Size" type="System.Drawing.Size, System.Drawing">
+    <value>634, 379</value>
+  </data>
+  <data name="GraphPicture.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GraphPicture.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;GraphPicture.Name" xml:space="preserve">
+    <value>GraphPicture</value>
+  </data>
+  <data name="&gt;&gt;GraphPicture.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GraphPicture.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GraphPicture.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="vertexInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="vertexInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 24</value>
+  </data>
+  <data name="vertexInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 29</value>
+  </data>
+  <data name="vertexInput.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;vertexInput.Name" xml:space="preserve">
+    <value>vertexInput</value>
+  </data>
+  <data name="&gt;&gt;vertexInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;vertexInput.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;vertexInput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="headline.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="headline.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt</value>
+  </data>
+  <data name="headline.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 9</value>
+  </data>
+  <data name="headline.Size" type="System.Drawing.Size, System.Drawing">
+    <value>460, 25</value>
+  </data>
+  <data name="headline.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="headline.Text" xml:space="preserve">
+    <value>Tool zum Berechnen vom Entanglement von Graphen</value>
+  </data>
+  <data name="&gt;&gt;headline.Name" xml:space="preserve">
+    <value>headline</value>
+  </data>
+  <data name="&gt;&gt;headline.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;headline.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;headline.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="input.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="input.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="input.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="input.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 21</value>
+  </data>
+  <data name="input.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="input.Text" xml:space="preserve">
+    <value>Graph erstellen:</value>
+  </data>
+  <data name="&gt;&gt;input.Name" xml:space="preserve">
+    <value>input</value>
+  </data>
+  <data name="&gt;&gt;input.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;input.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;input.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="newVertex.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="newVertex.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 24</value>
+  </data>
+  <data name="newVertex.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 31</value>
+  </data>
+  <data name="newVertex.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="newVertex.Text" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="&gt;&gt;newVertex.Name" xml:space="preserve">
+    <value>newVertex</value>
+  </data>
+  <data name="&gt;&gt;newVertex.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;newVertex.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;newVertex.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="entanglement.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="entanglement.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 84</value>
+  </data>
+  <data name="entanglement.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="entanglement.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="entanglement.Text" xml:space="preserve">
+    <value>Entanglement berechnen</value>
+  </data>
+  <data name="&gt;&gt;entanglement.Name" xml:space="preserve">
+    <value>entanglement</value>
+  </data>
+  <data name="&gt;&gt;entanglement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;entanglement.Parent" xml:space="preserve">
+    <value>computeEnt</value>
+  </data>
+  <data name="&gt;&gt;entanglement.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TextOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="TextOutput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="TextOutput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 419</value>
+  </data>
+  <data name="TextOutput.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="TextOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 113</value>
+  </data>
+  <data name="TextOutput.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;TextOutput.Name" xml:space="preserve">
+    <value>TextOutput</value>
+  </data>
+  <data name="&gt;&gt;TextOutput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextOutput.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TextOutput.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="vertex.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="vertex.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="vertex.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 26</value>
+  </data>
+  <data name="vertex.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 21</value>
+  </data>
+  <data name="vertex.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="vertex.Text" xml:space="preserve">
+    <value>Knoten:</value>
+  </data>
+  <data name="&gt;&gt;vertex.Name" xml:space="preserve">
+    <value>vertex</value>
+  </data>
+  <data name="&gt;&gt;vertex.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;vertex.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;vertex.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="edgeFrom.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="edgeFrom.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 62</value>
+  </data>
+  <data name="edgeFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 21</value>
+  </data>
+  <data name="edgeFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="edgeFrom.Text" xml:space="preserve">
+    <value>Kante von:</value>
+  </data>
+  <data name="&gt;&gt;edgeFrom.Name" xml:space="preserve">
+    <value>edgeFrom</value>
+  </data>
+  <data name="&gt;&gt;edgeFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;edgeFrom.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;edgeFrom.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="edgeTo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="edgeTo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeTo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>194, 62</value>
+  </data>
+  <data name="edgeTo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 21</value>
+  </data>
+  <data name="edgeTo.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="edgeTo.Text" xml:space="preserve">
+    <value>zu:</value>
+  </data>
+  <data name="&gt;&gt;edgeTo.Name" xml:space="preserve">
+    <value>edgeTo</value>
+  </data>
+  <data name="&gt;&gt;edgeTo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;edgeTo.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;edgeTo.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="edgeSource.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 59</value>
+  </data>
+  <data name="edgeSource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 29</value>
+  </data>
+  <data name="edgeSource.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;edgeSource.Name" xml:space="preserve">
+    <value>edgeSource</value>
+  </data>
+  <data name="&gt;&gt;edgeSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;edgeSource.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;edgeSource.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="edgeTarget.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>229, 59</value>
+  </data>
+  <data name="edgeTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 29</value>
+  </data>
+  <data name="edgeTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;edgeTarget.Name" xml:space="preserve">
+    <value>edgeTarget</value>
+  </data>
+  <data name="&gt;&gt;edgeTarget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;edgeTarget.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;edgeTarget.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="addEdge.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="addEdge.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 57</value>
+  </data>
+  <data name="addEdge.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 31</value>
+  </data>
+  <data name="addEdge.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="addEdge.Text" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="&gt;&gt;addEdge.Name" xml:space="preserve">
+    <value>addEdge</value>
+  </data>
+  <data name="&gt;&gt;addEdge.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addEdge.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;addEdge.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="deleteGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="deleteGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>447, 24</value>
+  </data>
+  <data name="deleteGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 64</value>
+  </data>
+  <data name="deleteGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="deleteGraph.Text" xml:space="preserve">
+    <value>Graph löschen</value>
+  </data>
+  <data name="&gt;&gt;deleteGraph.Name" xml:space="preserve">
+    <value>deleteGraph</value>
+  </data>
+  <data name="&gt;&gt;deleteGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;deleteGraph.Parent" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;deleteGraph.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="startPos.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="startPos.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="startPos.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 46</value>
+  </data>
+  <data name="startPos.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="startPos.Text" xml:space="preserve">
+    <value>Startposition des Diebes eingeben:</value>
+  </data>
+  <data name="&gt;&gt;startPos.Name" xml:space="preserve">
+    <value>startPos</value>
+  </data>
+  <data name="&gt;&gt;startPos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startPos.Parent" xml:space="preserve">
+    <value>computeEnt</value>
+  </data>
+  <data name="&gt;&gt;startPos.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="startPosInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="startPosInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 49</value>
+  </data>
+  <data name="startPosInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="startPosInput.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;startPosInput.Name" xml:space="preserve">
+    <value>startPosInput</value>
+  </data>
+  <data name="&gt;&gt;startPosInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startPosInput.Parent" xml:space="preserve">
+    <value>computeEnt</value>
+  </data>
+  <data name="&gt;&gt;startPosInput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="playGraph.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="playGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="playGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>656, 3</value>
+  </data>
+  <data name="playGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="playGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="playGraph.Text" xml:space="preserve">
+    <value>Auf Graph spielen</value>
+  </data>
+  <data name="&gt;&gt;playGraph.Name" xml:space="preserve">
+    <value>playGraph</value>
+  </data>
+  <data name="&gt;&gt;playGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;playGraph.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;playGraph.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="graphCreate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="graphCreate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 422</value>
+  </data>
+  <data name="graphCreate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>638, 101</value>
+  </data>
+  <data name="graphCreate.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;graphCreate.Name" xml:space="preserve">
+    <value>graphCreate</value>
+  </data>
+  <data name="&gt;&gt;graphCreate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;graphCreate.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;graphCreate.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="doNothingDet.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="doNothingDet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 59</value>
+  </data>
+  <data name="doNothingDet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>340, 31</value>
+  </data>
+  <data name="doNothingDet.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="doNothingDet.Text" xml:space="preserve">
+    <value>Keinen Detektiv bewegen</value>
+  </data>
+  <data name="&gt;&gt;doNothingDet.Name" xml:space="preserve">
+    <value>doNothingDet</value>
+  </data>
+  <data name="&gt;&gt;doNothingDet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;doNothingDet.Parent" xml:space="preserve">
+    <value>detMovement</value>
+  </data>
+  <data name="&gt;&gt;doNothingDet.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="moveDetective.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="moveDetective.Location" type="System.Drawing.Point, System.Drawing">
+    <value>193, 22</value>
+  </data>
+  <data name="moveDetective.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 31</value>
+  </data>
+  <data name="moveDetective.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="moveDetective.Text" xml:space="preserve">
+    <value>Auf Dieb bewegen</value>
+  </data>
+  <data name="&gt;&gt;moveDetective.Name" xml:space="preserve">
+    <value>moveDetective</value>
+  </data>
+  <data name="&gt;&gt;moveDetective.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;moveDetective.Parent" xml:space="preserve">
+    <value>detMovement</value>
+  </data>
+  <data name="&gt;&gt;moveDetective.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="movedDet.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="movedDet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 24</value>
+  </data>
+  <data name="movedDet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 29</value>
+  </data>
+  <data name="movedDet.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;movedDet.Name" xml:space="preserve">
+    <value>movedDet</value>
+  </data>
+  <data name="&gt;&gt;movedDet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;movedDet.Parent" xml:space="preserve">
+    <value>detMovement</value>
+  </data>
+  <data name="&gt;&gt;movedDet.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="detective.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="detective.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="detective.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 27</value>
+  </data>
+  <data name="detective.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="detective.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="detective.Text" xml:space="preserve">
+    <value>Detektive:</value>
+  </data>
+  <data name="&gt;&gt;detective.Name" xml:space="preserve">
+    <value>detective</value>
+  </data>
+  <data name="&gt;&gt;detective.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;detective.Parent" xml:space="preserve">
+    <value>detMovement</value>
+  </data>
+  <data name="&gt;&gt;detective.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chooseDetPlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chooseDetPlay.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="chooseDetPlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="chooseDetPlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 21</value>
+  </data>
+  <data name="chooseDetPlay.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="chooseDetPlay.Text" xml:space="preserve">
+    <value>Wähle deinen Zug:</value>
+  </data>
+  <data name="&gt;&gt;chooseDetPlay.Name" xml:space="preserve">
+    <value>chooseDetPlay</value>
+  </data>
+  <data name="&gt;&gt;chooseDetPlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chooseDetPlay.Parent" xml:space="preserve">
+    <value>detMovement</value>
+  </data>
+  <data name="&gt;&gt;chooseDetPlay.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="computeEnt.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="computeEnt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 37</value>
+  </data>
+  <data name="computeEnt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 118</value>
+  </data>
+  <data name="computeEnt.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;computeEnt.Name" xml:space="preserve">
+    <value>computeEnt</value>
+  </data>
+  <data name="&gt;&gt;computeEnt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;computeEnt.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;computeEnt.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="startPos2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="startPos2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="startPos2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 46</value>
+  </data>
+  <data name="startPos2.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="startPos2.Text" xml:space="preserve">
+    <value>Startposition des Diebes eingeben:</value>
+  </data>
+  <data name="&gt;&gt;startPos2.Name" xml:space="preserve">
+    <value>startPos2</value>
+  </data>
+  <data name="&gt;&gt;startPos2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startPos2.Parent" xml:space="preserve">
+    <value>GameSettings</value>
+  </data>
+  <data name="&gt;&gt;startPos2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="GameSettings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="playDetective.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="playDetective.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 185</value>
+  </data>
+  <data name="playDetective.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="playDetective.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="playDetective.Text" xml:space="preserve">
+    <value>Detektive spielen</value>
+  </data>
+  <data name="&gt;&gt;playDetective.Name" xml:space="preserve">
+    <value>playDetective</value>
+  </data>
+  <data name="&gt;&gt;playDetective.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;playDetective.Parent" xml:space="preserve">
+    <value>GameSettings</value>
+  </data>
+  <data name="&gt;&gt;playDetective.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="playThief.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="playThief.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 148</value>
+  </data>
+  <data name="playThief.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="playThief.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="playThief.Text" xml:space="preserve">
+    <value>Dieb spielen</value>
+  </data>
+  <data name="&gt;&gt;playThief.Name" xml:space="preserve">
+    <value>playThief</value>
+  </data>
+  <data name="&gt;&gt;playThief.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;playThief.Parent" xml:space="preserve">
+    <value>GameSettings</value>
+  </data>
+  <data name="&gt;&gt;playThief.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="detectiveAmountInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="detectiveAmountInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 114</value>
+  </data>
+  <data name="detectiveAmountInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="detectiveAmountInput.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmountInput.Name" xml:space="preserve">
+    <value>detectiveAmountInput</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmountInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmountInput.Parent" xml:space="preserve">
+    <value>GameSettings</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmountInput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="detectiveAmount.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="detectiveAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 81</value>
+  </data>
+  <data name="detectiveAmount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 30</value>
+  </data>
+  <data name="detectiveAmount.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="detectiveAmount.Text" xml:space="preserve">
+    <value>Anzahl der Diebe eingeben:</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmount.Name" xml:space="preserve">
+    <value>detectiveAmount</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmount.Parent" xml:space="preserve">
+    <value>GameSettings</value>
+  </data>
+  <data name="&gt;&gt;detectiveAmount.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="startPosInput2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="startPosInput2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 49</value>
+  </data>
+  <data name="startPosInput2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="startPosInput2.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;startPosInput2.Name" xml:space="preserve">
+    <value>startPosInput2</value>
+  </data>
+  <data name="&gt;&gt;startPosInput2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startPosInput2.Parent" xml:space="preserve">
+    <value>GameSettings</value>
+  </data>
+  <data name="&gt;&gt;startPosInput2.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="GameSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 37</value>
+  </data>
+  <data name="GameSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 326</value>
+  </data>
+  <data name="GameSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="GameSettings.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;GameSettings.Name" xml:space="preserve">
+    <value>GameSettings</value>
+  </data>
+  <data name="&gt;&gt;GameSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GameSettings.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GameSettings.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="restartGame.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="restartGame.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="restartGame.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 366</value>
+  </data>
+  <data name="restartGame.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="restartGame.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="restartGame.Text" xml:space="preserve">
+    <value>Spiel neustarten</value>
+  </data>
+  <data name="restartGame.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;restartGame.Name" xml:space="preserve">
+    <value>restartGame</value>
+  </data>
+  <data name="&gt;&gt;restartGame.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;restartGame.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;restartGame.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="editGraph.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="editGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="editGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>658, 3</value>
+  </data>
+  <data name="editGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="editGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="editGraph.Text" xml:space="preserve">
+    <value>Graph bearbeiten</value>
+  </data>
+  <data name="editGraph.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;editGraph.Name" xml:space="preserve">
+    <value>editGraph</value>
+  </data>
+  <data name="&gt;&gt;editGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;editGraph.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;editGraph.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="detMovement.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>349, 0</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>290, 101</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Roter Knoten = Position des Diebes
+Diamand Form = Position der Detektive
+</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>detMovement</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="detMovement.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 422</value>
+  </data>
+  <data name="detMovement.Size" type="System.Drawing.Size, System.Drawing">
+    <value>638, 101</value>
+  </data>
+  <data name="detMovement.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="detMovement.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;detMovement.Name" xml:space="preserve">
+    <value>detMovement</value>
+  </data>
+  <data name="&gt;&gt;detMovement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;detMovement.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;detMovement.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="thiefMovement.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>349, 0</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>290, 101</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Roter Knoten = Position des Diebes
+Diamand Form = Position der Detektive
+</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>thiefMovement</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="moveThiefToTarget.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="moveThiefToTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>198, 22</value>
+  </data>
+  <data name="moveThiefToTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 31</value>
+  </data>
+  <data name="moveThiefToTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="moveThiefToTarget.Text" xml:space="preserve">
+    <value>Dieb bewegen</value>
+  </data>
+  <data name="&gt;&gt;moveThiefToTarget.Name" xml:space="preserve">
+    <value>moveThiefToTarget</value>
+  </data>
+  <data name="&gt;&gt;moveThiefToTarget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;moveThiefToTarget.Parent" xml:space="preserve">
+    <value>thiefMovement</value>
+  </data>
+  <data name="&gt;&gt;moveThiefToTarget.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="targetThiefInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="targetThiefInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>92, 24</value>
+  </data>
+  <data name="targetThiefInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 29</value>
+  </data>
+  <data name="targetThiefInput.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;targetThiefInput.Name" xml:space="preserve">
+    <value>targetThiefInput</value>
+  </data>
+  <data name="&gt;&gt;targetThiefInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;targetThiefInput.Parent" xml:space="preserve">
+    <value>thiefMovement</value>
+  </data>
+  <data name="&gt;&gt;targetThiefInput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="targetVertexofThief.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="targetVertexofThief.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="targetVertexofThief.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 27</value>
+  </data>
+  <data name="targetVertexofThief.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 21</value>
+  </data>
+  <data name="targetVertexofThief.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="targetVertexofThief.Text" xml:space="preserve">
+    <value>Zielknoten:</value>
+  </data>
+  <data name="&gt;&gt;targetVertexofThief.Name" xml:space="preserve">
+    <value>targetVertexofThief</value>
+  </data>
+  <data name="&gt;&gt;targetVertexofThief.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;targetVertexofThief.Parent" xml:space="preserve">
+    <value>thiefMovement</value>
+  </data>
+  <data name="&gt;&gt;targetVertexofThief.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chooseThiefPlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chooseThiefPlay.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="chooseThiefPlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="chooseThiefPlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 21</value>
+  </data>
+  <data name="chooseThiefPlay.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="chooseThiefPlay.Text" xml:space="preserve">
+    <value>Wähle deinen Zug:</value>
+  </data>
+  <data name="&gt;&gt;chooseThiefPlay.Name" xml:space="preserve">
+    <value>chooseThiefPlay</value>
+  </data>
+  <data name="&gt;&gt;chooseThiefPlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chooseThiefPlay.Parent" xml:space="preserve">
+    <value>thiefMovement</value>
+  </data>
+  <data name="&gt;&gt;chooseThiefPlay.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="thiefMovement.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 419</value>
+  </data>
+  <data name="thiefMovement.Size" type="System.Drawing.Size, System.Drawing">
+    <value>635, 101</value>
+  </data>
+  <data name="thiefMovement.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="thiefMovement.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;thiefMovement.Name" xml:space="preserve">
+    <value>thiefMovement</value>
+  </data>
+  <data name="&gt;&gt;thiefMovement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;thiefMovement.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;thiefMovement.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="TorusCreate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="torusGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="torusGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="torusGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 45</value>
+  </data>
+  <data name="torusGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="torusGraph.Text" xml:space="preserve">
+    <value>Größe des Torusgraphen eingeben:</value>
+  </data>
+  <data name="&gt;&gt;torusGraph.Name" xml:space="preserve">
+    <value>torusGraph</value>
+  </data>
+  <data name="&gt;&gt;torusGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;torusGraph.Parent" xml:space="preserve">
+    <value>TorusCreate</value>
+  </data>
+  <data name="&gt;&gt;torusGraph.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="torusN.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="torusN.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 48</value>
+  </data>
+  <data name="torusN.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 29</value>
+  </data>
+  <data name="torusN.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;torusN.Name" xml:space="preserve">
+    <value>torusN</value>
+  </data>
+  <data name="&gt;&gt;torusN.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;torusN.Parent" xml:space="preserve">
+    <value>TorusCreate</value>
+  </data>
+  <data name="&gt;&gt;torusN.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="torusM.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="torusM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>131, 48</value>
+  </data>
+  <data name="torusM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 29</value>
+  </data>
+  <data name="torusM.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;torusM.Name" xml:space="preserve">
+    <value>torusM</value>
+  </data>
+  <data name="&gt;&gt;torusM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;torusM.Parent" xml:space="preserve">
+    <value>TorusCreate</value>
+  </data>
+  <data name="&gt;&gt;torusM.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="createTorusGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="createTorusGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 83</value>
+  </data>
+  <data name="createTorusGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="createTorusGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="createTorusGraph.Text" xml:space="preserve">
+    <value>Torusgraph erstellen</value>
+  </data>
+  <data name="&gt;&gt;createTorusGraph.Name" xml:space="preserve">
+    <value>createTorusGraph</value>
+  </data>
+  <data name="&gt;&gt;createTorusGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;createTorusGraph.Parent" xml:space="preserve">
+    <value>TorusCreate</value>
+  </data>
+  <data name="&gt;&gt;createTorusGraph.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="x.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="x.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="x.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 51</value>
+  </data>
+  <data name="x.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 21</value>
+  </data>
+  <data name="x.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="x.Text" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="&gt;&gt;x.Name" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="&gt;&gt;x.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;x.Parent" xml:space="preserve">
+    <value>TorusCreate</value>
+  </data>
+  <data name="&gt;&gt;x.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="TorusCreate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 196</value>
+  </data>
+  <data name="TorusCreate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="TorusCreate.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="TorusCreate.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;TorusCreate.Name" xml:space="preserve">
+    <value>TorusCreate</value>
+  </data>
+  <data name="&gt;&gt;TorusCreate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TorusCreate.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TorusCreate.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="chooseGraphTyp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="chooseGraphTyp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="chooseGraphTyp.Items" xml:space="preserve">
+    <value>Torusgraph</value>
+  </data>
+  <data name="chooseGraphTyp.Items1" xml:space="preserve">
+    <value>Ungerichteter Kreisgraph</value>
+  </data>
+  <data name="chooseGraphTyp.Items2" xml:space="preserve">
+    <value>Gerichteter Kreisgraph</value>
+  </data>
+  <data name="chooseGraphTyp.Items3" xml:space="preserve">
+    <value>Graph von unärer Funktion</value>
+  </data>
+  <data name="chooseGraphTyp.Items4" xml:space="preserve">
+    <value>Komplett verbundener Graph</value>
+  </data>
+  <data name="chooseGraphTyp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 161</value>
+  </data>
+  <data name="chooseGraphTyp.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="chooseGraphTyp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="chooseGraphTyp.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chooseGraphTyp.Name" xml:space="preserve">
+    <value>chooseGraphTyp</value>
+  </data>
+  <data name="&gt;&gt;chooseGraphTyp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chooseGraphTyp.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;chooseGraphTyp.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="createUnCircleGraph.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="unCircleSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="unCircleSize.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unCircleSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="unCircleSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 21</value>
+  </data>
+  <data name="unCircleSize.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="unCircleSize.Text" xml:space="preserve">
+    <value>Größe eingeben:</value>
+  </data>
+  <data name="&gt;&gt;unCircleSize.Name" xml:space="preserve">
+    <value>unCircleSize</value>
+  </data>
+  <data name="&gt;&gt;unCircleSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unCircleSize.Parent" xml:space="preserve">
+    <value>createUnCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;unCircleSize.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="createUndirectedCircleGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="createUndirectedCircleGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 59</value>
+  </data>
+  <data name="createUndirectedCircleGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="createUndirectedCircleGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="createUndirectedCircleGraph.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="&gt;&gt;createUndirectedCircleGraph.Name" xml:space="preserve">
+    <value>createUndirectedCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;createUndirectedCircleGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;createUndirectedCircleGraph.Parent" xml:space="preserve">
+    <value>createUnCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;createUndirectedCircleGraph.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="unCircleSizeInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unCircleSizeInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 24</value>
+  </data>
+  <data name="unCircleSizeInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="unCircleSizeInput.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;unCircleSizeInput.Name" xml:space="preserve">
+    <value>unCircleSizeInput</value>
+  </data>
+  <data name="&gt;&gt;unCircleSizeInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unCircleSizeInput.Parent" xml:space="preserve">
+    <value>createUnCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;unCircleSizeInput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="createUnCircleGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 196</value>
+  </data>
+  <data name="createUnCircleGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="createUnCircleGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="createUnCircleGraph.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;createUnCircleGraph.Name" xml:space="preserve">
+    <value>createUnCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;createUnCircleGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;createUnCircleGraph.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;createUnCircleGraph.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="createDiCircleGraph.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="diCircleLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="diCircleLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="diCircleLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="diCircleLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 21</value>
+  </data>
+  <data name="diCircleLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="diCircleLabel.Text" xml:space="preserve">
+    <value>Größe eingeben:</value>
+  </data>
+  <data name="&gt;&gt;diCircleLabel.Name" xml:space="preserve">
+    <value>diCircleLabel</value>
+  </data>
+  <data name="&gt;&gt;diCircleLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;diCircleLabel.Parent" xml:space="preserve">
+    <value>createDiCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;diCircleLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="createDirectedCircleGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="createDirectedCircleGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 59</value>
+  </data>
+  <data name="createDirectedCircleGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="createDirectedCircleGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="createDirectedCircleGraph.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="&gt;&gt;createDirectedCircleGraph.Name" xml:space="preserve">
+    <value>createDirectedCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;createDirectedCircleGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;createDirectedCircleGraph.Parent" xml:space="preserve">
+    <value>createDiCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;createDirectedCircleGraph.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="diCircleSizeInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="diCircleSizeInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 24</value>
+  </data>
+  <data name="diCircleSizeInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="diCircleSizeInput.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;diCircleSizeInput.Name" xml:space="preserve">
+    <value>diCircleSizeInput</value>
+  </data>
+  <data name="&gt;&gt;diCircleSizeInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;diCircleSizeInput.Parent" xml:space="preserve">
+    <value>createDiCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;diCircleSizeInput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="createDiCircleGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 196</value>
+  </data>
+  <data name="createDiCircleGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 166</value>
+  </data>
+  <data name="createDiCircleGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="createDiCircleGraph.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;createDiCircleGraph.Name" xml:space="preserve">
+    <value>createDiCircleGraph</value>
+  </data>
+  <data name="&gt;&gt;createDiCircleGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;createDiCircleGraph.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;createDiCircleGraph.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="createFullyConGraphPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="fullyConCreate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="fullyConCreate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 62</value>
+  </data>
+  <data name="fullyConCreate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="fullyConCreate.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="fullyConCreate.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="&gt;&gt;fullyConCreate.Name" xml:space="preserve">
+    <value>fullyConCreate</value>
+  </data>
+  <data name="&gt;&gt;fullyConCreate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fullyConCreate.Parent" xml:space="preserve">
+    <value>createFullyConGraphPanel</value>
+  </data>
+  <data name="&gt;&gt;fullyConCreate.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="fullyConSizeInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="fullyConSizeInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 27</value>
+  </data>
+  <data name="fullyConSizeInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="fullyConSizeInput.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;fullyConSizeInput.Name" xml:space="preserve">
+    <value>fullyConSizeInput</value>
+  </data>
+  <data name="&gt;&gt;fullyConSizeInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fullyConSizeInput.Parent" xml:space="preserve">
+    <value>createFullyConGraphPanel</value>
+  </data>
+  <data name="&gt;&gt;fullyConSizeInput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="fullyConSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fullyConSize.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="fullyConSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="fullyConSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 21</value>
+  </data>
+  <data name="fullyConSize.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="fullyConSize.Text" xml:space="preserve">
+    <value>Größe eingeben:</value>
+  </data>
+  <data name="&gt;&gt;fullyConSize.Name" xml:space="preserve">
+    <value>fullyConSize</value>
+  </data>
+  <data name="&gt;&gt;fullyConSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fullyConSize.Parent" xml:space="preserve">
+    <value>createFullyConGraphPanel</value>
+  </data>
+  <data name="&gt;&gt;fullyConSize.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="createFullyConGraphPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 196</value>
+  </data>
+  <data name="createFullyConGraphPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="createFullyConGraphPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="createFullyConGraphPanel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;createFullyConGraphPanel.Name" xml:space="preserve">
+    <value>createFullyConGraphPanel</value>
+  </data>
+  <data name="&gt;&gt;createFullyConGraphPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;createFullyConGraphPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;createFullyConGraphPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="createUnaryFunc.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="unaryFuncDomainLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="unaryFuncDomainLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unaryFuncDomainLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 59</value>
+  </data>
+  <data name="unaryFuncDomainLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 21</value>
+  </data>
+  <data name="unaryFuncDomainLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="unaryFuncDomainLabel.Text" xml:space="preserve">
+    <value>Definitionsbereich eingeben:</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncDomainLabel.Name" xml:space="preserve">
+    <value>unaryFuncDomainLabel</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncDomainLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncDomainLabel.Parent" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncDomainLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lunaryFuncToLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lunaryFuncToLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="lunaryFuncToLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>102, 86</value>
+  </data>
+  <data name="lunaryFuncToLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 21</value>
+  </data>
+  <data name="lunaryFuncToLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="lunaryFuncToLabel.Text" xml:space="preserve">
+    <value>bis</value>
+  </data>
+  <data name="&gt;&gt;lunaryFuncToLabel.Name" xml:space="preserve">
+    <value>lunaryFuncToLabel</value>
+  </data>
+  <data name="&gt;&gt;lunaryFuncToLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lunaryFuncToLabel.Parent" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;lunaryFuncToLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="unaryFuncStartDomImput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unaryFuncStartDomImput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 83</value>
+  </data>
+  <data name="unaryFuncStartDomImput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 29</value>
+  </data>
+  <data name="unaryFuncStartDomImput.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncStartDomImput.Name" xml:space="preserve">
+    <value>unaryFuncStartDomImput</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncStartDomImput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncStartDomImput.Parent" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncStartDomImput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="unaryFuncEndDomImput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unaryFuncEndDomImput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 83</value>
+  </data>
+  <data name="unaryFuncEndDomImput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 29</value>
+  </data>
+  <data name="unaryFuncEndDomImput.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncEndDomImput.Name" xml:space="preserve">
+    <value>unaryFuncEndDomImput</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncEndDomImput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncEndDomImput.Parent" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncEndDomImput.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="unaryFuncCreate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unaryFuncCreate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 118</value>
+  </data>
+  <data name="unaryFuncCreate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="unaryFuncCreate.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="unaryFuncCreate.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncCreate.Name" xml:space="preserve">
+    <value>unaryFuncCreate</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncCreate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncCreate.Parent" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncCreate.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="unaryFuncInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unaryFuncInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 27</value>
+  </data>
+  <data name="unaryFuncInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="unaryFuncInput.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncInput.Name" xml:space="preserve">
+    <value>unaryFuncInput</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncInput.Parent" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncInput.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="unaryFuncLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="unaryFuncLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unaryFuncLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="unaryFuncLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 21</value>
+  </data>
+  <data name="unaryFuncLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="unaryFuncLabel.Text" xml:space="preserve">
+    <value>unäre Funktion eingeben:</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncLabel.Name" xml:space="preserve">
+    <value>unaryFuncLabel</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncLabel.Parent" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;unaryFuncLabel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="createUnaryFunc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 196</value>
+  </data>
+  <data name="createUnaryFunc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="createUnaryFunc.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="createUnaryFunc.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;createUnaryFunc.Name" xml:space="preserve">
+    <value>createUnaryFunc</value>
+  </data>
+  <data name="&gt;&gt;createUnaryFunc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;createUnaryFunc.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;createUnaryFunc.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>de</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="$this.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>895, 544</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAAAAAAAEAIAAqEAAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAEAAAABAAgGAAAAXHKoZgAAD/FJ
+        REFUeNrt3X+QnVV9x/H3/shPEgIhJASBmPJDUMTa0imUFpzSWumkM7TiVFsHpM4Qqc2MP8b+/oG2juPU
+        WsY4tWJt0bFiKyq06dgCYxUkIBgQsQYIgRgC+UFYNiHZTTbZe/vH97nc3WRDsnvPvfuc+7xfM3eyruzZ
+        Z88953PPc57znKeHFaspLAKuA94JnAP0IakMtgG3AzcCj7383TWrWi64v/j3dOCTwJVjviepHE4BVgIX
+        AquA+1IV3AvMBW4ArrLzS6X2s8CngOUAY0bvLQXAFcDbrFspCxcC16YqrBd4OzDfepWy8RZgYaoAON/6
+        lLJyBjEvkCQAZlmfUlbmALNTBYCkijIAJANAkgEgyQCQVA2TXfm3C7gTGAJ6rD4piV7gUmJJfqkDYCvw
+        PuA5HD1IKdSJS/G35BAAdWB0zL+SWtfoUx03lZt/Yuif4FZEqfLihp5pO512GC9VmAEgGQCSDABJBoAk
+        A0CSASDJAJBkAEgyACQZAJIMAEkGgCQDQJIBIMkAkGQASDIAJBkAkgwASQaAJANAkgEgyQCQZABIMgAk
+        GQCSDABJBoAkA0CSASDJAJBkAEgyACQZAJIMAEkGgCQDQDIArALJAJBkAEiaJj0GgFRN9eJlAEgVdADY
+        YQBI1VQHvgEMGABSlaxZ1fjqTmAl8G1gjwEgVcsocCtwJfBW4CZgkwEgdbvmKABgF3AHcD3wFuD9wD3A
+        0Jj/podEVw36rX2pRCGwYnXjOzXg8eJ1M3AxcBXwq8ScwZABIHVrEIwPg0Hgm8TI4BxgAbDRAJCqEAbN
+        IBgF1qf8FQaAlEsQtIGTgFKFGQCSASDJAJBkAEgyACQZAJIMAEkGgCQDQJIBIMkAkGQASDIAJBkAkgwA
+        SQaAJANAkgEgyQCQZABIMgAkGQCSDABJBoAkA0CSASDJAJBkAEgyACQZAJIMAEkGgCQDQJIBIMkAkGQA
+        SDIAJAPAKpAMAEkGgKQq6S/lUa1Ynba8Nas85nYea5nfl5zecwPgMDOBRcDxQN8kfm4U2A3sBEZYsbqT
+        jW0BsBCYO8mf2wcMAi+83LjacczNRttb1O2Cop5TOgjsBerF/x4pvjcC7C++PnIHyiEYmsfeX9TjCZNs
+        o9NpCBgGBsocAHOBDwO/VXzdM4mfrRV/4O3AXxSNsRON4ULgE8CZwIwpdJptwJ8D/93muu0BVgKrigBI
+        3XBrRWdvfL2neD92ESH3PLAFeBrYXLxeKP6b8cFQ7jCYAfwhcA0wj3xOqQ8UfeK+MgfAWcC7iHSdqmuB
+        LwEPdeiYfxO4rIWff1XRmO4oOk67nAhcB5w3ze9xDXgJ2AE8WbxPa4FHgK1AreRhsBR4N7A8k45/qNeU
+        OQBOAGa1WMZsYH6HjrcXOCVBOScXxz3UxmOdX4TAdOslRiALgLOBK4hToaeAu4H/LAJhEGiODMoTBPOI
+        09Nc7Sz7HEA9o8rsofXAapTTbjMp7/nqbOC1xetq4AHgi8Tp3EBJgyBX93sZUGU2F3gT8Fnga8QpVnPC
+        sgtm4afRKPAtA0A5mFEEwReBG4FlhkDLBnAEoMzMA64HvgJcYgi05AngcQNAObqIGA2sMASm7PvAgAGg
+        XP0UMTdwpSEwaaPA98B7AZS3U4k5gUsNgUnZDvzAAFA3WEZz9aWOzWPE6ksDQF3h54gl33H/haOAo7mf
+        Ynm8AaBu8dvAVVbDUe0vAgADQN1kNvAB4AzAUcCR/Zi4AgCU/3ZgldsO4i6+Q5cvzyGWRc8khuWzO3Q8
+        byBuIPtIRnVYB54jbl9v9zLwTcR8yVYA1qwyANSSfwA+w+H3FcwoAmABsISYqLsAeCNwLu29geZq4BZg
+        Q4f3gZiqUSKwbqP992fs5pBb4w0AtWIXMQo4VguB1wNvJa7fn96GYzqTmAv4WCZ1WCeW5e7o6G8tgtEA
+        UCt6xjamCY0/Fx8AvkPc6vt54P3E5F3qU4SrivJ3ZDIKOHo9tokBoPYa26ibYVAnNv14DzEhdQNwUsLf
+        ej6xOOhW34BX5lUAdTYMxn/K7QM+DXyIxqYfacwk7hPIZY8+A0CVDoKbgb+muY9gCpfQnjkGA0BKFgSh
+        Dvwj8PWEpS8jVgi6JsAAUAYhMERco342UckzgF+ygg0A5RMCDwFfTVjyhcRaBBkAykAd+DLx3IAUzmTs
+        9mEyAFRSzVHAD4F7EpW6kMazD5wHMACUhf3Ek5FSPBiln1iCLANAGVlLuqWx5zL5x7QZAFLHNU8DfgKs
+        T1Tqcjr3dCgDQEpgD7FUOIUlwGKr1ABQXh4mzaPhGrckywBQRjYSTw5u1WzgNMArAQaASq85D/As8GKC
+        EvuI7cNlACgju4j961PwFMAAUGb2JAyAxXhrsAGgrBxIGACLcPObCVkpKrNUi4EWFG19f0n/zlGg/ZOU
+        E2w5ZgCozAYSlXMcsVX53hL+jb3A5cUxpj5NqRFbgD8IDE60P6IBoDJ7MVE5c4pXGfUB1xevdhgB/hb4
+        SyZYV2EAqMz2EMPjVj8ZGw8pKat2PhBkFnAZsR5i+ND/00lAlU9zmDoMHEzUCWZVuEb7OULIGAAqs6FE
+        AdCPo10MAOWmnqic2VR7BGAAKEupTgGg/Q/eNACkxPbTuEYuA0CV46e2ASDJAJBkAEgyAFSd9uk8gAGg
+        ipqHW3qnUDcAlKNUn/4HSbeeIEePc4RboV0eqTKbSZpbZPdT3r0AasC9wCbSnu70EJ/8m4GbOcJ6CgNA
+        ZTYnURst8whgFPg08O+0Z0T+io9YMwBUPs2dceaQZgSwr3iVVf1YOmvL3BFImZlPmk/F4ZIHwBE7aLs5
+        CagyW5ConGEm2AxDBoDK7aRE5ewitsaSAaCMLEpUzgtU+zKgAaDszCTdE32eNwAMAOXlOODkRGVtz7ki
+        DABV0fHEI71aVQOeszoNAOWguQZgKXBCghJHgGeAabnMZgBIU7OcWAfQqt3ANquzugGQ2+2kNdLthpuz
+        15FmFeAO0j1j0ADooNEEHaGPNJ8inTSE16xnARckKmszMGhXzy8A9hKPiG5Vp5Y795DuxpWqjwBOAV6b
+        qKzHKO+dgAbAK9hH61tC9xKXkzoh1Whjd2UDoDkB+EbgtAQl1oD/s5vnGQB7aX39dh+N9eTtfvZ6/K7j
+        DYAkLifNk3x2GwD5BsD+4g1s1aIOHe9xpLl55YVKtsRmQJ8G/HKiUn8CPAV4CTDDABgCBhKUcyqduRJw
+        YvFqVdVnrH8FOCdRWT9I1IYMgGkwTKzhbtVy4uGQ7TF+4UqrATBCFZetNuvwROBq0kym1oG1+GixbANg
+        FNiSKABO7sDxngfMbbGMYRrLVqsyZB0/N/M24BcTlbwduM8unm8AAGxMUMariEUl7ZwI7AMupvVTjQGq
+        tGpt/PtxPvAB0m0D/hDwJOD5f8YBsIGYC2jFHNJNKh2pAZ8K/HyCErdQlXPW8Z1/CfAx4DWJSq8D38Rd
+        gLIPgKcTdYgraFxXTjUKGF/Om4GzEpS6HnipYp1/MfB3wIqEv+EZ4C67d64B0ByybSPNacB5wDuO0ABb
+        tRj4PdKsW3+4qzt949X008C/AL+b+LfdQYweHf4fRdl3BX4JWAdc1mI5vcDvA98GHny5QU6lcYxvwD3A
+        e4CLEvytg8Rlq/w7+tG9Gng7cB0xSZvSIPCvOPvfFQEA8F3gD4gtolrxauATwLtpTA5NNgQOb9zvBN5H
+        mpHUE8Urp0+t0WPo9D3E1ZGTicnYy4FfJ671t2N9xl3A/V1Yj5UNgHXEXECKCaJLicck/RHxOKbxlX6k
+        BnP4GzOf+PT6U9Is/gG4m/wmAC8CXuTwAJxFLIteSKyPOIP4pF9KO9dkxO6/nyOHZwA09RKT1HNJcxp5
+        LGrEKdK68gbAmlWNjrel6BypZogvAb5aBMFXGPvgxKMn8InFz68Efo10l6z2EOetuXkHY+dWpt/XidO8
+        nD79+4D3Fq9O2gqszGEEUANuIyaK5iYqcynwJ8A1wAPEkHE9sXhkD3HpsY/m+v4ziAmrXwDekPA4Gh4u
+        jkNT9xTw97iXwmT6wCW5PBrs3qKDvClxuacCVxavA0Xn30eMCHqJ4erc4tWuKyY14BZi+Oqs9dSMEPM7
+        j1oVkzKv3OsAmp1hF3G56EAbf9sMYoi/lJgwPIO4xDeP9l4u/SFwu22xJV8CvjBBu9Erq+e0J+B/0Di/
+        6x6jxKRVtdb/p/W/wA20vmK0ksofAM1OMUic4w12Uf1/i5iI1NQ8QFwifmaC9qKuCIDx7gT+qUvqfjvw
+        URqX/my4k/UgcD3wYzt/twdA8409SEz23Jl5ve8nbn75jk1wSv4HeBdxx5+dv+sDYPwbvB34IDF5lqNR
+        YDXwWRvvpO0FPkVcvvWTv1IBMN6jxPAvt8s+NeAm4CM0VqvZeI/VOmIZ94cYu2uS9VehABj/Zq8Fri3+
+        zcEwcdvrH1OFW37T2QD8GbFW498Yu9DHzt+yXBYCjQ+B5pLddcQNOX9F3F02q6RHvZmY8PsCYx9SMX0N
+        uOzbjg8Rp3jfIJb3PnlYG1AKPfkFwOEh8DRxq+/dxJZSryvRke4D1gAfB75fogY8RLmellMnLu9uJFZ9
+        3gF8j0O3SC9fx6+R923HB/IMgLGNIYJgCPhn4rr6NcSo4KxpPLohYkPKm4D/IiavytSIB4lJtDOnoaMP
+        E0uuXyRu9HoCeKR4bWCi5yKU9xN/J3EPwuIMe9AI8KN8A2Bs42iOBjYBHyaWhv5G8foZ0jxn/mhGiQUp
+        dwO3Fv/uKmlDHiJuZX4EOJ30p4K14m+vEaOg3UXo7Cw6+PPE8w92MzYc8+j0hwbAB4n5iVPIZ05tHzEi
+        /Vr+ATC2sTSDYCNwI/B54PXEPgAXE1uDLSHN+v6RolFvKjrSPcRdhU8T6xXK3ph/VLzK9R7mZy35TEQf
+        pocVq5/i2LdlWk/s6LK11G/YxPf1zyKGasuIoe9y4tNvCXHL71xi16He4uuDNDeWGCKGrQPEuv3NRUff
+        ADxLDGfrXdKgVSHdMQI41OEjAohJr2eK13eL7zUe6T27ePUX35tNDOlHio69vwiDEY426WPHlwFQsiAY
+        a3wo1IlbjA8wlWvzdnYZAF0QClJF5boUWJIBIMkAkGQASDIAJBkAkgwASQaAJANAkgEgyQCQDABJBoAk
+        A0CSASDJAJBkAEgyACQZAJIMAEkGgCQDQJIBIMkAkGQASDIAJBkAkgwASQaAJANAkgEgaRr0T+FnagCs
+        WG3tSdNpzaqOB0AfcBJwAEcP0nQYBvYC8SHcYghMNgCWAbcBB30fpI7rAbYAHwfuSlHgZANgFnC274M0
+        bc4FTgAeBba3WpjDeCk/ZwNLUxRkAEj56UnVdw0AqcIMAMkAkFTVANhtNUjVDYD7rQapugHwZWCbVSFV
+        MwDuBT4DjFodUhZqqfprf1HQJ4sweC+wyPqVSu0R4NlUAQCwB/gbYC3wO8AFwHzrWSqdJ4GPAjtTFPb/
+        iYUu6JSNwCIAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>911, 567</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Entanglement ist ein Maß für die Komläxität eines Graphs</value>
+  </data>
+  <data name="&gt;&gt;openFileDialog1.Name" xml:space="preserve">
+    <value>openFileDialog1</value>
+  </data>
+  <data name="&gt;&gt;openFileDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainScreen</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

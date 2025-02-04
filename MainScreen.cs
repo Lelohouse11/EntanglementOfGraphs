@@ -424,36 +424,36 @@ namespace EntanglementOfGraphs
         private void MoveThief()
         {
             TextOutput.Clear();
-            bool detCanMove = false;
+            bool thiefCanMove = false;
             foreach (var item in gameTree.thiefStrategy) // prüft ob Detetkiv noch einen guten Zug machen kann
             {
                 if (item.source.Equals(currentPos))
                 {
-                    detCanMove = true;
+                    thiefCanMove = true;
                     break;
                 }
             }
-            if (!detCanMove) // wenn er Detektiv keinen guten Zug mehr hat, hat der Spieler verloren
+            if (!thiefCanMove) // wenn er Detektiv keinen guten Zug mehr hat, hat der Spieler verloren
             {
                 detMovement.Hide();
-                TextOutput.Text = "Du hast Verloren!";
+                TextOutput.Text = "Du hast Gewonnen!";
             }
             else
             {
-                if (graph.GetNextPossibleStates(currentPos).Count == 0) // Der Detektiv kann dann nicht mehr gewinnen
+                int nextThiefMove = gameTree.BestThiefMove(currentPos); // bester Zug
+                graph.ColorVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White);
+                currentPos.MoveThief(nextThiefMove);
+                currentPos.ChangeTurn();
+                graph.ColorVertex(nextThiefMove.ToString(), Microsoft.Msagl.Drawing.Color.Red);
+                GraphPicture.Refresh();
+                if (!gameTree.GetOutgoingStates(currentPos).Any()) // Der Detektiv kann dann nicht mehr gewinnen
                 {
                     detMovement.Hide();
-                    TextOutput.Text = "Du hast Gewonnen!";
+                    TextOutput.Text = "Du hast Verloren!";
 
                 }
-                else // führt den Zug des Diebes durch
+                else
                 {
-                    int nextThiefMove = gameTree.BestThiefMove(currentPos); // bester Zug
-                    graph.ColorVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White);
-                    currentPos.MoveThief(nextThiefMove);
-                    currentPos.ChangeTurn();
-                    graph.ColorVertex(nextThiefMove.ToString(), Microsoft.Msagl.Drawing.Color.Red);
-                    GraphPicture.Refresh();
                     TextOutput.Text = $"Du bist am Zug! Wähle einen Detektiv oder tue nichts. Noch nicht Plazierte Detektive: {gameTree.detectiveAmount - currentPos.detectives.Count}.";
                 }
             }

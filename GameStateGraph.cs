@@ -150,10 +150,8 @@ namespace EntaglementOfGraphs
                                     continueFixpoint = false; 
                                     break;
                                 }
-                                else
-                                {
-                                    continueFixpoint = continueFixpoint || (bool)temp;
-                                }
+                                continueFixpoint = continueFixpoint || (bool)temp;
+                                
                             }
                         }
                     }
@@ -207,16 +205,15 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         private bool AddFlaggedThiefGameState(GameState<V> previousState)
         {
-            bool goOn = false;
             bool detWin = true;
             var nextPossibleStates = graph.GetNextPossibleStates(previousState);
             List<GameState<V>> exsistingNextPossibleStates = [];
             int minDistanceToWin = VertexCount;
             double winningChanceSum = 0;
             var isNewPState = GetExistingState(previousState);
-            foreach (var targetState in nextPossibleStates) // checkt, ob alle ausgehenden Kanten wieder in den sicheren GameStateGraph führen
+            foreach (var nextState in nextPossibleStates) // checkt, ob alle ausgehenden Kanten wieder in den sicheren GameStateGraph führen
             {
-                var isNewState = GetExistingState(targetState);
+                var isNewState = GetExistingState(nextState);
                 if (isNewState != null)
                 {
                     if (isNewState.winningChance != 1) //wenn nicht alle Kanten in den Baum führen gewinnt der Detektiv nicht sicher
@@ -225,9 +222,9 @@ namespace EntaglementOfGraphs
                     }
 
                     winningChanceSum += isNewState.winningChance; // summiert die Gewinnchancen des Detektivs
-                    if (targetState.distanceToWin < minDistanceToWin) // sucht kürzesten Weg zum Gewinn
+                    if (nextState.distanceToWin < minDistanceToWin) // sucht kürzesten Weg zum Gewinn
                     {
-                        minDistanceToWin = targetState.distanceToWin;
+                        minDistanceToWin = nextState.distanceToWin;
                     }
                     if (isNewPState == null)
                     {
@@ -237,7 +234,7 @@ namespace EntaglementOfGraphs
                     {
                         if (!isExistingEdge(previousState, isNewState))
                         {
-                            AddEdge(new Edge<GameState<V>>(GetExistingState(previousState), GetExistingState(isNewState)));
+                            AddEdge(new Edge<GameState<V>>(isNewPState, isNewState));
                         }
                     }
                 }
@@ -264,11 +261,11 @@ namespace EntaglementOfGraphs
             {
                 AddVertex(previousState); //fügt alle Knoten hinzu
                 //isNewPState = previousState;
-                goOn = true;
                 foreach (var targetState in exsistingNextPossibleStates) // alle Kanten vom Knoten werden hinzugefügt
                 {
                     AddEdge(new Edge<GameState<V>>(previousState, GetExistingState(targetState)));
                 }
+                return true;
             }
             else
             {
@@ -279,7 +276,7 @@ namespace EntaglementOfGraphs
                     changeAllPreviousWC(isNewPState);
                 }
             }    
-            return goOn;
+            return false;
         }
 
             /// <summary>
@@ -288,25 +285,22 @@ namespace EntaglementOfGraphs
             /// <param name="state"></param>
             /// <param name="newWC"></param>
         private void changeAllPreviousWC(GameState<V> state)
-        {
-            if (state.detectivesTurn)
+        {            
+            foreach (var previousState in GetIncomingStates(state))
             {
-                foreach (var previousState in GetIncomingStates(state))
+                if (previousState.winningChance < state.winningChance)
                 {
-                    if (previousState.winningChance < state.winningChance)
+                    previousState.distanceToWin = state.distanceToWin + 1;
+                    if (state.detectivesTurn)
                     {
-                        previousState.distanceToWin = state.distanceToWin + 1;
-                        if (state.detectivesTurn)
-                        {
-                            previousState.winningChance += (state.winningChance - previousState.winningChance) / OutDegree(previousState);
-                        }
-                        else
-                        {
-                            previousState.winningChance += state.winningChance;
-                        }
-                        changeAllPreviousWC(previousState);
+                        previousState.winningChance += (state.winningChance - previousState.winningChance) / OutDegree(previousState);
                     }
-                }
+                    else
+                    {
+                        previousState.winningChance = state.winningChance;
+                    }
+                    changeAllPreviousWC(previousState);
+                }                
             }
             
         }
@@ -339,29 +333,28 @@ namespace EntaglementOfGraphs
 
         private bool AddFlaggedDetectiveGameState(GameState<V> previousState, GameState<V> currentState)
         {
-            bool goOn = false;
             var isNewState = GetExistingState(previousState); //checken ob schon vorhandener Knoten
+            GameState<V> cloned = currentState.Clone().ChangeTurn();
             if (isNewState == null) // hier auch falsch
-            {
-               
+            {        
                 previousState.distanceToWin = currentState.distanceToWin + 1;
                 previousState.winningChance = currentState.winningChance;
-                
-                AddVertex(previousState); // Hinzufügen, wenn neu
-                goOn = true;
+                AddVertex(previousState); // Hinzufügen, wenn neu und auch möglich
+                AddEdge(new Edge<GameState<V>>(previousState, currentState)); // Kante hinzufügen
+                return true;
             }
             else if (isNewState.winningChance < currentState.winningChance)
             {
                 isNewState.distanceToWin = currentState.distanceToWin + 1;
                 isNewState.winningChance = currentState.winningChance;
                 changeAllPreviousWC(isNewState);
+                if (!isExistingEdge(isNewState, currentState))
+                {
+                    AddEdge(new Edge<GameState<V>>(isNewState, currentState)); // Kante hinzufügen
+                }
+                changeAllPreviousWC(isNewState);
             }
-            var sourceState = isNewState ?? previousState;
-            if (!isExistingEdge(sourceState, currentState))
-            {
-                AddEdge(new Edge<GameState<V>>(sourceState, currentState)); // Kante hinzufügen
-            }
-            return goOn;
+            return false;
         }
 
         /// <summary>
@@ -370,7 +363,7 @@ namespace EntaglementOfGraphs
         public void CreateStrategies()
         {
             var vertexCount = VertexCount;
-            var edgeCount = EdgeCount;
+            var edgeCount = Edges;
             var allStates = Vertices.ToList();
             foreach (var state in allStates) // geht alle Knoten im Spielbaum durch
             {
@@ -399,6 +392,7 @@ namespace EntaglementOfGraphs
             {
                 if (state.winningChance == 1)
                 {
+                    bestWinningChance = 1;
                     break;
                 }
                 if (state.winningChance > bestWinningChance)
@@ -575,7 +569,7 @@ namespace EntaglementOfGraphs
                 var outgoingStateCount = outgoingStates.Count;
                 if (outgoingStateCount <= detectiveAmount) // prüft ob Fluchtmöglichkeiten von Detektiven blockiert werden können
                 {
-                    var tempState = new GameState<V>(detectiveAmount, state, false);
+                    var tempState = new GameState<V>(detectiveAmount, state, true);
                     for (var i = 0; i < outgoingStateCount; i++)
                     {
                         tempState.detectives.Add(outgoingStates[i]);// setzt Detektive auf die Fluchtmöglichkeit

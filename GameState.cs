@@ -31,8 +31,8 @@ namespace EntaglementOfGraphs
         public GameState<V> Clone()
         {
             var cloned = new GameState<V>(detectiveAmount,thiefPos, detectivesTurn);
-            cloned.winningChance = winningChance;
-            cloned.distanceToWin = distanceToWin;
+            //cloned.winningChance = winningChance;
+            //cloned.distanceToWin = distanceToWin;
             foreach (var i in detectives)
             {
                 cloned.detectives.Add(i);
