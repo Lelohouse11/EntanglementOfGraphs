@@ -2,6 +2,7 @@ using EntaglementOfGraphs;
 using QuikGraph;
 using System.Linq.Expressions;
 using System.Linq.Dynamic.Core;
+using System.Diagnostics;
 
 namespace EntanglementOfGraphs
 {
@@ -11,6 +12,8 @@ namespace EntanglementOfGraphs
         GameStateGraph<int> gameTree;
         GameState<int> currentPos;
         bool gamestarted;
+        private long maxMemoryUsed = 0;
+        
 
         public MainScreen()
         {
@@ -55,6 +58,19 @@ namespace EntanglementOfGraphs
             vertexInput.Focus();
         }
 
+        private void MonitorMemoryUsage(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                long currentMemoryUsed = GC.GetTotalMemory(false);
+                if (currentMemoryUsed > maxMemoryUsed)
+                {
+                    maxMemoryUsed = currentMemoryUsed;
+                }
+                Thread.Sleep(10);
+            }
+        }
+
         /// <summary>
         /// berechnet das Entanglement vom aktuell angezeigten Graph Graph
         /// </summary>
@@ -69,7 +85,19 @@ namespace EntanglementOfGraphs
             {
                 if (startPos <= graph.VertexCount) // muss gültiger Knoten sein
                 {
-                    TextOutput.Text = $"Das Entanglement ist {graph.MinEntanglement(startPos).ToString()}.";
+                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                    GC.Collect();
+                    Task memoryMonitorTask = Task.Run(() => MonitorMemoryUsage(cancellationTokenSource.Token));                  
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+
+                    int? entanglement = graph.MinEntanglement(startPos);
+
+                    stopwatch.Stop();
+                    cancellationTokenSource.Cancel();
+                    memoryMonitorTask.Wait();
+                    TextOutput.Text = $"Das Entanglement ist {entanglement}. " +
+                                      $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed} Bytes.";
+                    maxMemoryUsed = 0;                  
                     startPosInput.Clear();
                 }
                 else // es war kein gültiger Knoten
