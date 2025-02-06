@@ -42,7 +42,7 @@ namespace EntaglementOfGraphs
                 finalStates.Add(state);
             }
             
-        }      
+        }            
 
         /// <summary>
         /// verbindet alle gefundenen Iterationen des Gametrees zu GameStateGraph
@@ -54,6 +54,7 @@ namespace EntaglementOfGraphs
             var nextPossibleStates = graph.GetNextPossibleStates(currentState);
             bool thiefStateSave = true;
             bool entered = false;
+            List<GameState<V>> exsistingnextStates = [];
             foreach (var nextState in nextPossibleStates) // fügt gefunden Knoten hinzu und verbindet sie
             {
                 var isNewState = GetExistingState(nextState);
@@ -61,16 +62,27 @@ namespace EntaglementOfGraphs
                 {
                     AddVertex(nextState);
                 }
+                else
+                {
+                    exsistingnextStates.Add(isNewState);
+                }
                 var targetState = isNewState ?? nextState; // wenn nextState nicht neu, alte vorhandene Pos benutzen
                 AddEdge(new Edge<GameState<V>>(currentState, targetState));
 
-                if (!currentState.detectivesTurn && finalStates.Contains(targetState)) return true;
-                        
+                if (!currentState.detectivesTurn && finalStates.Contains(targetState))
+                {
+                    currentState.savePathFound = true;
+                    return true;
+                }                        
                 if (isNewState == null) // Wenn NextPos neu oder Detektive sich nicht bewegen || currentState.detectivesTurn
                 {                    
                     if (currentState.detectivesTurn)
                     {
-                        if (BuildGameStateGraphForwards(targetState)) return true;
+                        if (BuildGameStateGraphForwards(targetState))
+                        {
+                            currentState.savePathFound = true;
+                            return true;
+                        }
                     }
                     else
                     {
@@ -79,7 +91,16 @@ namespace EntaglementOfGraphs
                     }
                 }
             }
-            if (entered) return thiefStateSave;
+            foreach (var exsistingNextState in exsistingnextStates)
+            {
+                thiefStateSave = thiefStateSave && exsistingNextState.savePathFound;
+            }
+            if (entered)
+            {
+                currentState.savePathFound = thiefStateSave;
+                return thiefStateSave;
+            }
+            currentState.savePathFound = false;
             return false;
         }       
 

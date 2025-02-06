@@ -23,6 +23,7 @@ namespace EntaglementOfGraphs
         public int distanceToWin;
         public double winningChance;
         public int possiblePreviousStepsCount;
+        public bool savePathFound=false;
 
         /// <summary>
         /// clont Instanz zur weitere Verarbeitung
