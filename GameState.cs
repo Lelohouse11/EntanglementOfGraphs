@@ -22,7 +22,7 @@ namespace EntaglementOfGraphs
         public int detectiveAmount = detectiveAmount;
         public int distanceToWin;
         public double winningChance;
-        //public double wcANDdist; // GewinnWahrscheinlichkeit für Detektiv bei Zufälliger Zugwahl von Dieb + Anzahl an Zügen bis Sieg
+        public int possiblePreviousStepsCount;
 
         /// <summary>
         /// clont Instanz zur weitere Verarbeitung

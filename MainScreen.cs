@@ -9,11 +9,11 @@ namespace EntanglementOfGraphs
     public partial class MainScreen
     {
         FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
-        GameStateGraph<int> gameTree;
+        GameStateGraph<int>? gameTree;
         GameState<int> currentPos;
         bool gamestarted;
         private long maxMemoryUsed = 0;
-        
+
 
         public MainScreen()
         {
@@ -83,12 +83,13 @@ namespace EntanglementOfGraphs
             bool isNumber = int.TryParse(startPosInput.Text, out startPos);
             if (isNumber) // prüft ob Startposition gültige Zahl ist
             {
-                if (startPos <= graph.VertexCount) // muss gültiger Knoten sein
+                if (graph.ContainsVertex(startPos)) // muss gültiger Knoten sein nein überarbeiten
                 {
                     CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                    Stopwatch stopwatch = new Stopwatch();
                     GC.Collect();
-                    Task memoryMonitorTask = Task.Run(() => MonitorMemoryUsage(cancellationTokenSource.Token));                  
-                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    Task memoryMonitorTask = Task.Run(() => MonitorMemoryUsage(cancellationTokenSource.Token));
+                    stopwatch.Start();
 
                     int? entanglement = graph.MinEntanglement(startPos);
 
@@ -97,7 +98,8 @@ namespace EntanglementOfGraphs
                     memoryMonitorTask.Wait();
                     TextOutput.Text = $"Das Entanglement ist {entanglement}. " +
                                       $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed} Bytes.";
-                    maxMemoryUsed = 0;                  
+                    maxMemoryUsed = 0;
+                    gameTree = null;
                     startPosInput.Clear();
                 }
                 else // es war kein gültiger Knoten
@@ -349,36 +351,45 @@ namespace EntanglementOfGraphs
             bool isMovedDetectiveNumber = int.TryParse(movedDet.Text, out movedDetective);
             if (isMovedDetectiveNumber) // gültige Zahl für gewählten Detektiv
             {
-                if ((0 < movedDetective) && (movedDetective <= gameTree.detectiveAmount)) // gültige Wahl für Detektiv
+
+                if (currentPos.detectives.Contains(movedDetective)) // gültige Wahl für Detektiv
                 {
-                    if (currentPos.detectives.Count >= movedDetective) // Wenn Detektiv schon auf Spielfeld war
-                    {
-                        var detPos = currentPos.detectives.ElementAt(movedDetective - 1);
-                        graph.ShapeVertex(detPos.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
-                        currentPos.MoveDetective(detPos);
-                        currentPos.ChangeTurn();
-                    }
-                    else // Wenn Detektive noch nicht auf Spielfeld war
-                    {
-                        currentPos.MoveDetective(movedDetective);
-                        currentPos.ChangeTurn();
-                    }
-                    graph.ShapeVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
-                    GraphPicture.Refresh();
-                    Thread.Sleep(1000);
-                    MoveThief(); // simuliert zug des Diebes
-                    movedDet.Clear();
+                    graph.ShapeVertex(movedDetective.ToString(), Microsoft.Msagl.Drawing.Shape.Box);
+                    currentPos.MoveDetective(movedDetective);
+                    currentPos.ChangeTurn();
                 }
+                else if (movedDetective == -1) // Wenn Detektive noch nicht auf Spielfeld war
+                {
+                    currentPos.MoveDetective(0);
+                    currentPos.ChangeTurn();
+                }                
                 else // ungültige Detektivewahl
                 {
-                    TextOutput.Text = $"Bitte eine Ganzzahl zwischen 0 und {gameTree.detectiveAmount} für den zu bewegenden Detektiv eingeben.";
+                    if (currentPos.detectives.Count == currentPos.detectiveAmount)
+                    {
+                        TextOutput.Text = $"Bitte geben Sie {string.Join(", ", currentPos.detectives)} für den zu bewegenden Detektiv ein.";
+                    }
+                    else if (currentPos.detectives.Count == 0)
+                    {
+                        TextOutput.Text = $"Bitte geben Sie 0 für den zu bewegenden Detektiv ein.";
+                    }
+                    else
+                    {
+                        TextOutput.Text = $"Bitte geben Sie {string.Join(", ", currentPos.detectives)}, -1 für den zu bewegenden Detektiv ein.";
+                    }
                     movedDet.Clear();
                     movedDet.Focus();
+                    return;
                 }
+                graph.ShapeVertex(currentPos.thiefPos.ToString(), Microsoft.Msagl.Drawing.Shape.Diamond);
+                GraphPicture.Refresh();
+                Thread.Sleep(1000);
+                MoveThief(); // simuliert zug des Diebes
+                movedDet.Clear();
             }
             else // ungültige Detektivewahl
             {
-                TextOutput.Text = $"Bitte eine Ganzzahl zwischen 0 und {gameTree.detectiveAmount} für den zu bewegenden Detektiv eingeben.";
+                TextOutput.Text = $"Bitte geben Sie {string.Join(", ", currentPos.detectives)}, -1 für den zu bewegenden Detektiv ein.";
                 movedDet.Clear();
                 movedDet.Focus();
             }
@@ -482,7 +493,7 @@ namespace EntanglementOfGraphs
                 }
                 else
                 {
-                    TextOutput.Text = $"Du bist am Zug! Wähle einen Detektiv oder tue nichts. Noch nicht Plazierte Detektive: {gameTree.detectiveAmount - currentPos.detectives.Count}.";
+                    TextOutput.Text = $"Du bist am Zug! Wähle einen Detektiv (Knotenummer) oder tue nichts. Noch nicht Plazierte Detektive (-1): {gameTree.detectiveAmount - currentPos.detectives.Count}.";
                 }
             }
         }

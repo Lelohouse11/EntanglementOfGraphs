@@ -55,7 +55,8 @@ namespace EntaglementOfGraphs
             var gameStateGraph = new GameStateGraph<V>(this, startState);
             if (gameStateGraphTyp == GameStateGraphTyp.Forward) //wenn ierativer Aufbau
             {
-                return gameStateGraph.BuildGameStateGraphForwards(startState);
+                gameStateGraph.BuildGameStateGraphForwards(startState);
+                return gameStateGraph;
             }
             else if (gameStateGraphTyp == GameStateGraphTyp.Backward) // wenn rekursiver Aufbau
             {                
@@ -88,7 +89,7 @@ namespace EntaglementOfGraphs
 
             if (currentState.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
             {
-                nextPossibleStates.Add(currentState.ChangeTurn());
+                nextPossibleStates.Add(currentState.Clone().ChangeTurn());
                 if (currentState.detectiveAmount > currentState.detectives.Count)
                 {
                     nextPossibleStates.Add(currentState.Clone().MoveDetective(default).ChangeTurn());
@@ -176,7 +177,8 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public bool IsEntanglement(GameState<V> startState)
         {
-            var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Backward);
+            return new GameStateGraph<V>(this,startState).BuildGameStateGraphForwards(startState);
+            var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Forward);
             return gameStateGraph.OutEdges(startState).Any();
 
         }
