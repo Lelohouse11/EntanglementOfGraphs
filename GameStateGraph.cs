@@ -36,10 +36,11 @@ namespace EntaglementOfGraphs
             possibleFinalStates = GetPossibleFinalStates();
             foreach (var state in possibleFinalStates)
             {
-                state.winningChance = 1;
-                state.distanceToWin = 0;
+                //var temp = state.Clone().ChangeTurn();
                 AddVertex(state);
+                //AddVertex(temp);
                 finalStates.Add(state);
+                //finalStates.Add(temp);
             }
             
         }            
@@ -49,59 +50,86 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="currentState"></param>
         /// <returns></returns>
-        public bool BuildGameStateGraphForwards(GameState<V> currentState)
+        public bool BuildGameStateGraphForward(GameState<V> currentState)
         {
             var nextPossibleStates = graph.GetNextPossibleStates(currentState);
             bool thiefStateSave = true;
-            bool entered = false;
-            List<GameState<V>> exsistingnextStates = [];
+            List<GameState<V>> existingNextStates = [];
             foreach (var nextState in nextPossibleStates) // fügt gefunden Knoten hinzu und verbindet sie
             {
-                var isNewState = GetExistingState(nextState);
-                if (isNewState == null) // prüft ob nextState neu ist
+                var existingState = GetExistingState(nextState);
+                if (existingState == null) // prüft ob nextState neu ist
                 {
                     AddVertex(nextState);
                 }
                 else
                 {
-                    exsistingnextStates.Add(isNewState);
+                    existingNextStates.Add(existingState);
                 }
-                var targetState = isNewState ?? nextState; // wenn nextState nicht neu, alte vorhandene Pos benutzen
+                var targetState = existingState ?? nextState; // wenn nextState nicht neu, alte vorhandene Pos benutzen
                 AddEdge(new Edge<GameState<V>>(currentState, targetState));
 
-                if (!currentState.detectivesTurn && finalStates.Contains(targetState))
+                //if (!currentState.detectivesTurn && finalStates.Contains(targetState))
+                
+                
+                foreach ( var finalstate in finalStates)
+                {
+                    if (finalstate.Equals(targetState))
+                    {
+                        currentState.savePathFound = true;
+                        targetState.savePathFound = true ;
+                        return true;                        
+                    }
+                }
+                
+                
+
+                if (finalStates.Contains(targetState))
                 {
                     currentState.savePathFound = true;
                     return true;
-                }                        
-                if (isNewState == null) // Wenn NextPos neu oder Detektive sich nicht bewegen || currentState.detectivesTurn
-                {                    
+                }
+                
+                if (existingState == null) // Wenn NextPos neu oder Detektive sich nicht bewegen || currentState.detectivesTurn
+                {
+                    var result = BuildGameStateGraphForward(nextState);
                     if (currentState.detectivesTurn)
                     {
-                        if (BuildGameStateGraphForwards(targetState))
+                        if (result)
                         {
                             currentState.savePathFound = true;
-                            return true;
+                            return true; // Was ist mit schon vorhanden Knoten?
                         }
                     }
                     else
                     {
-                        entered = true;
-                        thiefStateSave = thiefStateSave && BuildGameStateGraphForwards(targetState);
+                        thiefStateSave = thiefStateSave && result;
                     }
                 }
             }
-            foreach (var exsistingNextState in exsistingnextStates)
+            if (currentState.detectivesTurn)
             {
-                thiefStateSave = thiefStateSave && exsistingNextState.savePathFound;
+                foreach (var existingNextState in existingNextStates)
+                {
+                    if(existingNextState.savePathFound)
+                    {
+                        currentState.savePathFound = true;
+                        return true;
+                    }
+                }
             }
-            if (entered)
-            {
+            else
+            { // thiefTurn
+                if (thiefStateSave) // D still win
+                {                
+                    foreach (var exsistingNextState in existingNextStates)
+                    {
+                        thiefStateSave = thiefStateSave && exsistingNextState.savePathFound;
+                    }
+                }
                 currentState.savePathFound = thiefStateSave;
-                return thiefStateSave;
             }
-            currentState.savePathFound = false;
-            return false;
+            return currentState.savePathFound;
         }       
 
         /// <summary>
@@ -593,18 +621,19 @@ namespace EntaglementOfGraphs
         public List<GameState<V>> GetPossibleFinalStates()
         {
             var result = new List<GameState<V>>();
-            foreach (var state in graph.Vertices) //geht jeden Knoten des Graphen durch
+            foreach (var thiefPos in graph.Vertices) //geht jeden Knoten des Graphen durch
             {
-                var outgoingStates = graph.GetOutgoingVertex(state).Distinct().ToList();
+                var outgoingStates = graph.GetOutgoingVertex(thiefPos).Distinct().ToList();
                 var outgoingStateCount = outgoingStates.Count;
                 if (outgoingStateCount <= detectiveAmount) // prüft ob Fluchtmöglichkeiten von Detektiven blockiert werden können
                 {
-                    var tempState = new GameState<V>(detectiveAmount, state, true);
+                    var tempState = new GameState<V>(detectiveAmount, thiefPos, true);                    
                     for (var i = 0; i < outgoingStateCount; i++)
                     {
                         tempState.detectives.Add(outgoingStates[i]);// setzt Detektive auf die Fluchtmöglichkeit
                         tempState.winningChance = 1;
                         tempState.distanceToWin = 0;
+                        tempState.savePathFound = true;
                     }
                                        
                     if (detectiveAmount == outgoingStateCount)
@@ -616,6 +645,15 @@ namespace EntaglementOfGraphs
                         AddAllDetektivesToState(tempState, result);
                     }
                 }
+            }
+            var temp = result.ToArray().ToList();
+            foreach (var finalState in temp)
+            {
+                var cloned = finalState.Clone().ChangeTurn();
+                cloned.distanceToWin = finalState.distanceToWin;
+                cloned.winningChance = finalState.winningChance;
+                cloned.savePathFound = finalState.savePathFound;
+                result.Add(cloned);
             }
             return result;
         }
@@ -631,6 +669,9 @@ namespace EntaglementOfGraphs
             foreach (var s in graph.Vertices.Except(state.detectives)) //Konten die noch frei sind
             {               
                 var finalState = state.Clone();
+                finalState.winningChance = 1;
+                finalState.distanceToWin = 0;
+                finalState.savePathFound = true;
                 finalState.detectives.Add(s);
                 if (finalState.detectives.Count == detectiveAmount)
                 {

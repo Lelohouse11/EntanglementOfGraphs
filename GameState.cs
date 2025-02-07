@@ -23,7 +23,7 @@ namespace EntaglementOfGraphs
         public int distanceToWin;
         public double winningChance;
         public int possiblePreviousStepsCount;
-        public bool savePathFound=false;
+        public bool savePathFound = false;
 
         /// <summary>
         /// clont Instanz zur weitere Verarbeitung
@@ -32,6 +32,7 @@ namespace EntaglementOfGraphs
         public GameState<V> Clone()
         {
             var cloned = new GameState<V>(detectiveAmount,thiefPos, detectivesTurn);
+            //cloned.savePathFound = savePathFound;
             //cloned.winningChance = winningChance;
             //cloned.distanceToWin = distanceToWin;
             foreach (var i in detectives)

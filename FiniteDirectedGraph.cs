@@ -55,7 +55,7 @@ namespace EntaglementOfGraphs
             var gameStateGraph = new GameStateGraph<V>(this, startState);
             if (gameStateGraphTyp == GameStateGraphTyp.Forward) //wenn ierativer Aufbau
             {
-                gameStateGraph.BuildGameStateGraphForwards(startState);
+                gameStateGraph.BuildGameStateGraphForward(startState);
                 return gameStateGraph;
             }
             else if (gameStateGraphTyp == GameStateGraphTyp.Backward) // wenn rekursiver Aufbau
@@ -177,8 +177,10 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public bool IsEntanglement(GameState<V> startState)
         {
-            return new GameStateGraph<V>(this,startState).BuildGameStateGraphForwards(startState);
-            var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Forward);
+            var temp = new GameStateGraph<V>(this, startState);
+            var r=temp.BuildGameStateGraphForward(startState);
+            return r;
+            var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Backward);
             return gameStateGraph.OutEdges(startState).Any();
 
         }
