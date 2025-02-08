@@ -198,11 +198,8 @@ namespace EntaglementOfGraphs
                     {
                         if (flagged)
                         {
-                            //var temp = graph.GetPreviousPossibleStates(currentState);
                             foreach (var previousState in graph.GetPreviousPossibleStates(currentState)) // alle Knoten mit den man jetzigen Knoten ereichen kann
                             {
-                                //AddFlaggedDetectiveGameState(previousState, currentState);
-                                //continueFixpoint = true;                                          // stimmt noch was nicht
                                 continueFixpoint = continueFixpoint || AddFlaggedDetectiveGameState(previousState, currentState); // fügt Detektivknoten hinzu
                             }
                         }
@@ -267,13 +264,11 @@ namespace EntaglementOfGraphs
                 {
                     if (!ContainsState(targetState)) return false; //wenn nicht alle Kanten in den Baum führen gewinnt der Detektiv nicht sicher
                 }
-                foreach (var targetState in nextPossibleStates)
-                {
-                    GetExistingState(targetState).possiblePreviousStepsCount--;
-                }
+                previousState.possiblePreviousStepsCount = graph.GetPreviousPossibleStates(previousState).Count;
                 AddVertex(previousState);
                 foreach (var targetState in nextPossibleStates) // alle Kanten vom Knoten werden hinzugefügt
-                {       
+                {
+                    GetExistingState(targetState).possiblePreviousStepsCount--;
                     AddEdge(new Edge<GameState<V>>(previousState, GetExistingState(targetState)));                        
                 }
                 return true;
@@ -289,10 +284,17 @@ namespace EntaglementOfGraphs
         private bool AddFlaggedThiefGameState(GameState<V> previousState)
         {
             var nextPossibleStates = graph.GetNextPossibleStates(previousState);
-            List<GameState<V>> exsistingNextPossibleStates = [];
             int minDistanceToWin = VertexCount;
             double winningChanceSum = 0;
             var isNewPState = GetExistingState(previousState);
+
+            var sourceState = isNewPState;
+            if (isNewPState == null)
+            {
+                AddVertex(previousState); //fügt alle Knoten hinzu
+                sourceState = previousState;
+            }
+
             foreach (var nextState in nextPossibleStates) // checkt, ob alle ausgehenden Kanten wieder in den sicheren GameStateGraph führen
             {
                 var isNewState = GetExistingState(nextState);
@@ -303,27 +305,15 @@ namespace EntaglementOfGraphs
                     {
                         minDistanceToWin = isNewState.distanceToWin;
                     }
-                    exsistingNextPossibleStates.Add(isNewState); // Knoten zu dennen Kanten gehen bei nicht sicheren Zuständen
+                    if (!isExistingEdge(sourceState, isNewState))
+                    {
+                        AddEdge(new Edge<GameState<V>>(sourceState, isNewState));
+                    }
                 }
             }            
 
             previousState.winningChance = winningChanceSum / nextPossibleStates.Count; // Wahrscheinlichkeit des Gewinns bei Zufälliger Zugwahl
-            previousState.distanceToWin += minDistanceToWin + 1;
-
-            var sourceState = isNewPState;
-            if (isNewPState == null)
-            {
-                AddVertex(previousState); //fügt alle Knoten hinzu
-                sourceState = previousState;
-            }         
-
-            foreach (var targetState in exsistingNextPossibleStates) // alle Kanten vom Knoten werden hinzugefügt
-            {
-                if (!isExistingEdge(sourceState, targetState))
-                {
-                    AddEdge(new Edge<GameState<V>>(sourceState, targetState));
-                }
-            }
+            previousState.distanceToWin += minDistanceToWin + 1;           
                 
             if(isNewPState != null)
             {
@@ -373,22 +363,22 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         private bool? AddDetectiveGameState (GameState<V> previousState, GameState<V> currentState)
         {
-            bool? goOn = false;
             var isNewState = GetExistingState(previousState); //checken ob schon vorhandener Knoten
             if (isNewState == null)
             {
+                previousState.possiblePreviousStepsCount = graph.GetPreviousPossibleStates(previousState).Count;
                 AddVertex(previousState); // Hinzufügen, wenn neu
                 currentState.possiblePreviousStepsCount--;
-                goOn = true;
-            }
-            
-            else if (isNewState.Equals(startState)) // prüft ob Startknoten gefunden
+                AddEdge(new Edge<GameState<V>>(previousState, currentState));
+                return true;
+            }            
+            if (isNewState.Equals(startState)) // prüft ob Startknoten gefunden
             {
-                goOn = null;
-            }
-            var sourceState = isNewState ?? previousState;
-            AddEdge(new Edge<GameState<V>>(sourceState, currentState)); // Kante hinzufügen            
-            return goOn;
+                currentState.possiblePreviousStepsCount--;
+                AddEdge(new Edge<GameState<V>>(startState, currentState));
+                return null;
+            }           
+            return false;
         }
 
         private bool AddFlaggedDetectiveGameState(GameState<V> previousState, GameState<V> currentState)
@@ -449,26 +439,20 @@ namespace EntaglementOfGraphs
             double bestWinningChance = 0;
             int bestDistanceToWin = VertexCount;
             foreach (var state in outgoingStates) // findet die beste Gewinnwahrscheinlichkeit
-            {
-                if (state.winningChance == 1)
-                {
-                    bestWinningChance = 1;
-                    break;
-                }
+            {                
                 if (state.winningChance > bestWinningChance)
                 {
                     bestWinningChance = state.winningChance;
+                    bestDistanceToWin = VertexCount;
+                    result = [];
                 }
-            }
-            foreach (var state in outgoingStates) // findet zur besten Gewinnwahrscheinlichkeit den kürzesten Weg
-            {  
+
                 if ((state.winningChance == bestWinningChance) && (state.distanceToWin < bestDistanceToWin))
                 {
                     bestDistanceToWin = state.distanceToWin;
+                    result = [];
                 }
-            }
-            foreach (var state in outgoingStates) // fügt beste und kürzeste Züge hinzu
-            {
+
                 if ((state.winningChance == bestWinningChance) && (state.distanceToWin == bestDistanceToWin))
                 {
                     result.Add(state);
@@ -491,47 +475,37 @@ namespace EntaglementOfGraphs
             var nextPossibleStates = graph.GetNextPossibleStates(currentState);
             double worstWinningChance = 1;
             int worstDistanceToWin = 0;
-            bool saveWinFound = true;
+            //bool saveWinFound = true;
             foreach (var possibleState in nextPossibleStates) //prüft ob Dieb sicher gewinnen kann
             {
-                saveWinFound = true;
                 foreach (var state in outgoingVertex)
                 {
-                    if (possibleState.Equals(state)) // ist im GameStateGraph
+                    if (!possibleState.Equals(state)) // ist im GameStateGraph
                     {
-                        saveWinFound = false; // soll nicht jinzugefügt werden, da kein sicherer Gewinn
-                        break;
+                        result.Add(possibleState);
+                        return;
                     }
-                }
-                if (saveWinFound) // sicherer Spielzug gefunden und hinzufügen
-                {
-                    result.Add(possibleState);
-                    break;
                 }
             }
-            if (!saveWinFound) //sichere Spielzug nicht gefunden, finde den Sichersten
+
+            foreach (var state in outgoingVertex)
             {
-                foreach (var state in outgoingVertex) // finde die schlechteste Gewinnwahrscheinlichkeit
-                {
-                    if ((state.winningChance < worstWinningChance))
-                    {
-                        worstWinningChance = state.winningChance;
-                    }
-                }
-                foreach (var state in outgoingVertex) // finde zur schlechtesten Gewinnwahrscheinlichkeit den längsten Weg
-                {
-                    if ((state.winningChance == worstWinningChance) && (state.distanceToWin > worstDistanceToWin))
-                    {
-                        worstDistanceToWin = state.distanceToWin;
-                    }
+                if ((state.winningChance < worstWinningChance))
+                {   // finde die schlechteste Gewinnwahrscheinlichkeit
+                    worstWinningChance = state.winningChance;
+                    worstDistanceToWin = 0;
+                    result = [];
                 }
 
-                foreach (var state in outgoingVertex) // füge alle längsten und schlechtesten Möglichkeiten hinzu
-                {
-                    if ((state.winningChance == worstWinningChance) && (state.distanceToWin == worstDistanceToWin))
-                    {
-                        result.Add(state);
-                    }
+                if ((state.winningChance == worstWinningChance) && (state.distanceToWin > worstDistanceToWin))
+                {   // finde zur schlechtesten Gewinnwahrscheinlichkeit den längsten Weg
+                    worstDistanceToWin = state.distanceToWin;
+                    result = [];
+                }
+
+                if ((state.winningChance == worstWinningChance) && (state.distanceToWin == worstDistanceToWin))
+                {   // füge alle längsten und schlechtesten Möglichkeiten hinzu
+                    result.Add(state);
                 }
             }
             thiefStrategy.Add(new Move<V>(currentState, result));

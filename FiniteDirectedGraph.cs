@@ -177,9 +177,6 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public bool IsEntanglement(GameState<V> startState)
         {
-            var temp = new GameStateGraph<V>(this, startState);
-            var r=temp.BuildGameStateGraphForward(startState);
-            return r;
             var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Backward);
             return gameStateGraph.OutEdges(startState).Any();
 

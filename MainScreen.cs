@@ -3,6 +3,11 @@ using QuikGraph;
 using System.Linq.Expressions;
 using System.Linq.Dynamic.Core;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+using System.Data;
+using System.Windows;
+using System.Windows.Navigation;
 
 namespace EntanglementOfGraphs
 {
@@ -12,13 +17,26 @@ namespace EntanglementOfGraphs
         GameStateGraph<int>? gameTree;
         GameState<int> currentPos;
         bool gamestarted;
+        private int startThiefPos = 1;
         private long maxMemoryUsed = 0;
-
+        IProgress<string>? progress = null;
+        string filepath = "output.txt";
+        int count = 2;
+        Stopwatch globalStopwatch = new Stopwatch();
 
         public MainScreen()
         {
             InitializeComponent();
             graph.CreateImage(GraphPicture);
+
+            progress = new Progress<string>(s =>
+            {
+                AppendToFile(filepath, s);
+                count = count + 2;
+                TestingGraphClasses(count);
+                //TextOutput.Text = s;
+                //entanglement.Enabled = true;
+            });
         }
 
 
@@ -28,8 +46,8 @@ namespace EntanglementOfGraphs
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GraphPicture_Paint(object sender, PaintEventArgs e)
-        {            
-            graph.DrawImage(e.Graphics, GraphPicture);            
+        {
+            graph.DrawImage(e.Graphics, GraphPicture);
         }
 
         /// <summary>
@@ -62,12 +80,40 @@ namespace EntanglementOfGraphs
         {
             while (!token.IsCancellationRequested)
             {
-                long currentMemoryUsed = GC.GetTotalMemory(false);
+                long currentMemoryUsed = Process.GetCurrentProcess().WorkingSet64;
+
                 if (currentMemoryUsed > maxMemoryUsed)
                 {
                     maxMemoryUsed = currentMemoryUsed;
                 }
+                if (globalStopwatch.ElapsedMilliseconds > 600000)
+                {
+                    Environment.Exit(0);
+                }
                 Thread.Sleep(10);
+            }
+        }
+
+        private void CalculateEntanglementOfThread()
+        {
+            CancellationTokenSource cancellationTokenForInnerStopwatch = new CancellationTokenSource();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            Task memoryMonitorTask = Task.Run(() => MonitorMemoryUsage(cancellationTokenForInnerStopwatch.Token));
+            int? entanglement = graph.MinEntanglement(startThiefPos);
+            stopwatch.Stop();
+            cancellationTokenForInnerStopwatch.Cancel();
+            memoryMonitorTask.Wait();
+            string result = $"{graph.VertexCount}-viele Knoten: Das Entanglement ist {entanglement}. " +
+                  $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed} Bytes.";
+            progress?.Report(result);
+        }
+
+        private void AppendToFile(string filepath, string content)
+        {
+            using (StreamWriter writer = new StreamWriter(filepath, true))
+            {
+                writer.WriteLine(content);
             }
         }
 
@@ -78,28 +124,19 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void entanglement_Click(object sender, EventArgs e)
         {
+
             TextOutput.Clear();
-            int startPos;
-            bool isNumber = int.TryParse(startPosInput.Text, out startPos);
+
+            bool isNumber = int.TryParse(startPosInput.Text, out startThiefPos);
             if (isNumber) // prüft ob Startposition gültige Zahl ist
             {
-                if (graph.ContainsVertex(startPos)) // muss gültiger Knoten sein nein überarbeiten
+                if (graph.ContainsVertex(startThiefPos)) // muss gültiger Knoten sein nein überarbeiten
                 {
-                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-                    Stopwatch stopwatch = new Stopwatch();
+                    entanglement.Enabled = false;
                     GC.Collect();
-                    Task memoryMonitorTask = Task.Run(() => MonitorMemoryUsage(cancellationTokenSource.Token));
-                    stopwatch.Start();
-
-                    int? entanglement = graph.MinEntanglement(startPos);
-
-                    stopwatch.Stop();
-                    cancellationTokenSource.Cancel();
-                    memoryMonitorTask.Wait();
-                    TextOutput.Text = $"Das Entanglement ist {entanglement}. " +
-                                      $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed} Bytes.";
+                    var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
+                    t.Start();
                     maxMemoryUsed = 0;
-                    gameTree = null;
                     startPosInput.Clear();
                 }
                 else // es war kein gültiger Knoten
@@ -115,6 +152,15 @@ namespace EntanglementOfGraphs
                 startPosInput.Clear();
                 startPosInput.Focus();
             }
+        }
+
+        private void TestingGraphClasses(int i)
+        {
+            graph = new FullyConnectedGraph(i);
+            GC.Collect();
+            var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
+            t.Start();
+            maxMemoryUsed = 0;
         }
 
         /// <summary>
@@ -182,11 +228,19 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void deleteGraph_Click(object sender, EventArgs e)
         {
+            AppendToFile(filepath, "");
+            AppendToFile(filepath, "Komplett verbundener Graph mit Rückwärts Aufbau:");
+
+            globalStopwatch.Start();
+            TestingGraphClasses(count);
+
+            /*
             TextOutput.Clear();
             graph = new FiniteDirectedGraph<int>();
             graph.CreateImage(GraphPicture);
             GraphPicture.Refresh();
-        }        
+            */
+        }
 
         /// <summary>
         /// wechselt in den Spielemodus
@@ -362,7 +416,7 @@ namespace EntanglementOfGraphs
                 {
                     currentPos.MoveDetective(0);
                     currentPos.ChangeTurn();
-                }                
+                }
                 else // ungültige Detektivewahl
                 {
                     if (currentPos.detectives.Count == currentPos.detectiveAmount)
@@ -675,7 +729,8 @@ namespace EntanglementOfGraphs
             bool istEndDomainNumber = int.TryParse(unaryFuncEndDomImput.Text, out endDomain);
             if (isStartDomainNumber && istEndDomainNumber)
             {
-                Func<int, int>? func = CreateFunction(unaryFuncInput.Text);
+                Func<int, int>  func = CreateFunction(unaryFuncInput.Text);
+
                 if (func != null)
                 {
 
@@ -688,7 +743,7 @@ namespace EntanglementOfGraphs
                 }
                 else
                 {
-                    TextOutput.Text = "Ungültige Funktion eingegeben. Bitte nur x als Variable benutzen und nur gültige mathematische Operationen.";
+                    TextOutput.Text = "Ungültige Funktion eingegeben. Bitte nur x als Variable benutzen und nur gültige mathematische Operationen (+, -, *, /, ^).";
                     unaryFuncInput.Clear();
                 }
                 unaryFuncInput.Focus();
@@ -702,19 +757,22 @@ namespace EntanglementOfGraphs
             }
         }
 
-        private Func<int, int>? CreateFunction(string funktionString)
+        private Func<int, int> CreateFunction(string funktionString)
         {
-            var parameter = Expression.Parameter(typeof(int), "x");
-            try
-            {
-                var lambda = System.Linq.Dynamic.Core.DynamicExpressionParser.ParseLambda(new[] { parameter }, typeof(int), "x => " + funktionString);
-                return (Func<int, int>)lambda.Compile();
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
 
+            return x =>
+            {
+                try
+                {
+                    var dataTable = new DataTable();
+                    var temp = dataTable.Compute(funktionString.Replace("x", x.ToString()), string.Empty);
+                    return Convert.ToInt32(temp);
+                }
+                catch
+                {
+                    return 0;
+                };
+            };
         }
     }
 }
