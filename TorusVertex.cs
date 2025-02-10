@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace EntaglementOfGraphs
 {
     /// <summary>
-    /// Sturktur für Torusknoten (x,x)
+    /// Sturktur für Torusknoten (x_Label,x_Label)
     /// </summary>
-    public struct TorusVertex(int ersterWert, int zweiterWert) : IComparable<TorusVertex>, IEquatable<TorusVertex>
+    public struct TorusVertex(int ersterWert, int zweiterWert) : IEquatable<TorusVertex>
     {
         public int ErsterWert { get; set; } = ersterWert;
 

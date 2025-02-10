@@ -31,697 +31,734 @@ namespace EntanglementOfGraphs
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
-            GraphPicture = new PictureBox();
-            vertexInput = new TextBox();
-            headline = new Label();
-            input = new Label();
-            newVertex = new Button();
-            entanglement = new Button();
-            TextOutput = new TextBox();
-            vertex = new Label();
-            edgeFrom = new Label();
-            edgeTo = new Label();
-            edgeSource = new TextBox();
-            edgeTarget = new TextBox();
-            addEdge = new Button();
-            deleteGraph = new Button();
-            startPos = new Label();
-            startPosInput = new TextBox();
-            playGraph = new Button();
-            graphCreate = new Panel();
-            doNothingDet = new Button();
-            moveDetective = new Button();
+            graph_PictureBox = new PictureBox();
+            vertexInput_TextBox = new TextBox();
+            headline_Label = new Label();
+            vertexInput_Label = new Label();
+            newVertex_Button = new Button();
+            entanglement_Button = new Button();
+            TextOutput_TextBox = new TextBox();
+            vertex_Label = new Label();
+            edgeFrom_Label = new Label();
+            edgeTo_Label = new Label();
+            edgeSource_TextBox = new TextBox();
+            edgeTarget_TextBox = new TextBox();
+            addEdge_Button = new Button();
+            deleteGraph_Button = new Button();
+            startPosEnt_Label = new Label();
+            startPosInputEnt_TextBox = new TextBox();
+            playGraph_Button = new Button();
+            graphCreate_Panel = new Panel();
+            deleteEdge_Button = new Button();
+            deleteVertex_Button = new Button();
+            doNothingDet_Button = new Button();
+            moveDetective_Button = new Button();
             movedDet = new TextBox();
-            detective = new Label();
-            chooseDetPlay = new Label();
-            computeEnt = new Panel();
-            startPos2 = new Label();
-            GameSettings = new Panel();
-            playDetective = new Button();
-            playThief = new Button();
-            detectiveAmountInput = new TextBox();
-            detectiveAmount = new Label();
-            startPosInput2 = new TextBox();
-            restartGame = new Button();
-            editGraph = new Button();
-            detMovement = new Panel();
-            label1 = new Label();
-            thiefMovement = new Panel();
-            label2 = new Label();
-            moveThiefToTarget = new Button();
-            targetThiefInput = new TextBox();
-            targetVertexofThief = new Label();
-            chooseThiefPlay = new Label();
-            TorusCreate = new Panel();
-            torusGraph = new Label();
-            torusN = new TextBox();
-            torusM = new TextBox();
+            detective_Label = new Label();
+            chooseDetPlay_Label = new Label();
+            computeEnt_Panel = new Panel();
+            chooseFixOrBack_ComboBox = new ComboBox();
+            startPosPlay_Label = new Label();
+            GameSettings_Panel = new Panel();
+            playDetective_Button = new Button();
+            playThief_Button = new Button();
+            detectiveAmountInput_TextBox = new TextBox();
+            detectiveAmount_Label = new Label();
+            startPosInputPlay_TextBox = new TextBox();
+            restartGame_Button = new Button();
+            editGraph_Button = new Button();
+            detMovement_Panel = new Panel();
+            label1_Label = new Label();
+            thiefMovement_Panel = new Panel();
+            label2_Label = new Label();
+            moveThiefToTarget_Button = new Button();
+            targetThiefInput_TextBox = new TextBox();
+            targetVertexofThief_Label = new Label();
+            chooseThiefPlay_Label = new Label();
+            TorusCreate_Panel = new Panel();
+            torusGraph_Label = new Label();
+            torusN_TextBox = new TextBox();
+            torusM_TextBox = new TextBox();
             createTorusGraph = new Button();
-            x = new Label();
-            chooseGraphTyp = new ComboBox();
-            createUnCircleGraph = new Panel();
-            unCircleSize = new Label();
-            createUndirectedCircleGraph = new Button();
-            unCircleSizeInput = new TextBox();
-            createDiCircleGraph = new Panel();
-            diCircleLabel = new Label();
-            createDirectedCircleGraph = new Button();
-            diCircleSizeInput = new TextBox();
+            x_Label = new Label();
+            chooseGraphTyp_ComboBox = new ComboBox();
+            createUnCircleGraph_Panel = new Panel();
+            unCircleSize_Label = new Label();
+            createUndirectedCircleGraph_Button = new Button();
+            unCircleSizeInput_TextBox = new TextBox();
+            createDiCircleGraph_Panel = new Panel();
+            diCircleLabel_Label = new Label();
+            createDirectedCircleGraph_Button = new Button();
+            diCircleSizeInput_TextBox = new TextBox();
             openFileDialog1 = new OpenFileDialog();
-            createFullyConGraphPanel = new Panel();
-            fullyConCreate = new Button();
-            fullyConSizeInput = new TextBox();
-            fullyConSize = new Label();
-            createUnaryFunc = new Panel();
-            unaryFuncDomainLabel = new Label();
-            lunaryFuncToLabel = new Label();
-            unaryFuncStartDomImput = new TextBox();
-            unaryFuncEndDomImput = new TextBox();
-            unaryFuncCreate = new Button();
-            unaryFuncInput = new TextBox();
-            unaryFuncLabel = new Label();
-            ((System.ComponentModel.ISupportInitialize)GraphPicture).BeginInit();
-            graphCreate.SuspendLayout();
-            computeEnt.SuspendLayout();
-            GameSettings.SuspendLayout();
-            detMovement.SuspendLayout();
-            thiefMovement.SuspendLayout();
-            TorusCreate.SuspendLayout();
-            createUnCircleGraph.SuspendLayout();
-            createDiCircleGraph.SuspendLayout();
-            createFullyConGraphPanel.SuspendLayout();
-            createUnaryFunc.SuspendLayout();
+            createFullyConGraph_Panel = new Panel();
+            fullyConCreate_Button = new Button();
+            fullyConSizeInput_TextBox = new TextBox();
+            fullyConSize_Label = new Label();
+            createUnaryFunc_Panel = new Panel();
+            unaryFuncDomain_Label = new Label();
+            lunaryFuncTo_Label = new Label();
+            unaryFuncStartDomImput_TextBox = new TextBox();
+            unaryFuncEndDomImput_TextBox = new TextBox();
+            unaryFuncCreate_Button = new Button();
+            unaryFuncInput_TextBox = new TextBox();
+            unaryFunc_Label = new Label();
+            ((System.ComponentModel.ISupportInitialize)graph_PictureBox).BeginInit();
+            graphCreate_Panel.SuspendLayout();
+            computeEnt_Panel.SuspendLayout();
+            GameSettings_Panel.SuspendLayout();
+            detMovement_Panel.SuspendLayout();
+            thiefMovement_Panel.SuspendLayout();
+            TorusCreate_Panel.SuspendLayout();
+            createUnCircleGraph_Panel.SuspendLayout();
+            createDiCircleGraph_Panel.SuspendLayout();
+            createFullyConGraph_Panel.SuspendLayout();
+            createUnaryFunc_Panel.SuspendLayout();
             SuspendLayout();
             // 
-            // GraphPicture
+            // graph_PictureBox
             // 
-            resources.ApplyResources(GraphPicture, "GraphPicture");
-            GraphPicture.BorderStyle = BorderStyle.FixedSingle;
-            GraphPicture.Name = "GraphPicture";
-            GraphPicture.TabStop = false;
-            GraphPicture.Paint += GraphPicture_Paint;
+            resources.ApplyResources(graph_PictureBox, "graph_PictureBox");
+            graph_PictureBox.BorderStyle = BorderStyle.FixedSingle;
+            graph_PictureBox.Name = "graph_PictureBox";
+            graph_PictureBox.TabStop = false;
+            graph_PictureBox.Paint += GraphPicture_Paint;
             // 
-            // vertexInput
+            // vertexInput_TextBox
             // 
-            vertexInput.BackColor = SystemColors.Window;
-            resources.ApplyResources(vertexInput, "vertexInput");
-            vertexInput.ForeColor = SystemColors.WindowText;
-            vertexInput.Name = "vertexInput";
+            resources.ApplyResources(vertexInput_TextBox, "vertexInput_TextBox");
+            vertexInput_TextBox.BackColor = SystemColors.Window;
+            vertexInput_TextBox.ForeColor = SystemColors.WindowText;
+            vertexInput_TextBox.Name = "vertexInput_TextBox";
             // 
-            // headline
+            // headline_Label
             // 
-            resources.ApplyResources(headline, "headline");
-            headline.ForeColor = SystemColors.WindowText;
-            headline.Name = "headline";
+            resources.ApplyResources(headline_Label, "headline_Label");
+            headline_Label.ForeColor = SystemColors.WindowText;
+            headline_Label.Name = "headline_Label";
             // 
-            // input
+            // vertexInput_Label
             // 
-            resources.ApplyResources(input, "input");
-            input.ForeColor = SystemColors.WindowText;
-            input.Name = "input";
+            resources.ApplyResources(vertexInput_Label, "vertexInput_Label");
+            vertexInput_Label.ForeColor = SystemColors.WindowText;
+            vertexInput_Label.Name = "vertexInput_Label";
             // 
-            // newVertex
+            // newVertex_Button
             // 
-            newVertex.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(newVertex, "newVertex");
-            newVertex.ForeColor = SystemColors.ControlText;
-            newVertex.Name = "newVertex";
-            newVertex.UseVisualStyleBackColor = false;
-            newVertex.Click += newVertex_Click;
+            resources.ApplyResources(newVertex_Button, "newVertex_Button");
+            newVertex_Button.BackColor = SystemColors.ButtonHighlight;
+            newVertex_Button.ForeColor = SystemColors.ControlText;
+            newVertex_Button.Name = "newVertex_Button";
+            newVertex_Button.UseVisualStyleBackColor = false;
+            newVertex_Button.Click += newVertex_Click;
             // 
-            // entanglement
+            // entanglement_Button
             // 
-            entanglement.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(entanglement, "entanglement");
-            entanglement.ForeColor = SystemColors.ControlText;
-            entanglement.Name = "entanglement";
-            entanglement.UseVisualStyleBackColor = false;
-            entanglement.Click += entanglement_Click;
+            resources.ApplyResources(entanglement_Button, "entanglement_Button");
+            entanglement_Button.BackColor = SystemColors.ButtonHighlight;
+            entanglement_Button.ForeColor = SystemColors.ControlText;
+            entanglement_Button.Name = "entanglement_Button";
+            entanglement_Button.UseVisualStyleBackColor = false;
+            entanglement_Button.Click += entanglement_Click;
             // 
-            // TextOutput
+            // TextOutput_TextBox
             // 
-            resources.ApplyResources(TextOutput, "TextOutput");
-            TextOutput.BackColor = SystemColors.Window;
-            TextOutput.ForeColor = SystemColors.WindowText;
-            TextOutput.Name = "TextOutput";
-            TextOutput.ReadOnly = true;
+            resources.ApplyResources(TextOutput_TextBox, "TextOutput_TextBox");
+            TextOutput_TextBox.BackColor = SystemColors.Window;
+            TextOutput_TextBox.ForeColor = SystemColors.WindowText;
+            TextOutput_TextBox.Name = "TextOutput_TextBox";
+            TextOutput_TextBox.ReadOnly = true;
             // 
-            // vertex
+            // vertex_Label
             // 
-            resources.ApplyResources(vertex, "vertex");
-            vertex.ForeColor = SystemColors.WindowText;
-            vertex.Name = "vertex";
+            resources.ApplyResources(vertex_Label, "vertex_Label");
+            vertex_Label.ForeColor = SystemColors.WindowText;
+            vertex_Label.Name = "vertex_Label";
             // 
-            // edgeFrom
+            // edgeFrom_Label
             // 
-            resources.ApplyResources(edgeFrom, "edgeFrom");
-            edgeFrom.ForeColor = SystemColors.WindowText;
-            edgeFrom.Name = "edgeFrom";
+            resources.ApplyResources(edgeFrom_Label, "edgeFrom_Label");
+            edgeFrom_Label.ForeColor = SystemColors.WindowText;
+            edgeFrom_Label.Name = "edgeFrom_Label";
             // 
-            // edgeTo
+            // edgeTo_Label
             // 
-            resources.ApplyResources(edgeTo, "edgeTo");
-            edgeTo.ForeColor = SystemColors.WindowText;
-            edgeTo.Name = "edgeTo";
+            resources.ApplyResources(edgeTo_Label, "edgeTo_Label");
+            edgeTo_Label.ForeColor = SystemColors.WindowText;
+            edgeTo_Label.Name = "edgeTo_Label";
             // 
-            // edgeSource
+            // edgeSource_TextBox
             // 
-            edgeSource.BackColor = SystemColors.Window;
-            resources.ApplyResources(edgeSource, "edgeSource");
-            edgeSource.ForeColor = SystemColors.WindowText;
-            edgeSource.Name = "edgeSource";
+            resources.ApplyResources(edgeSource_TextBox, "edgeSource_TextBox");
+            edgeSource_TextBox.BackColor = SystemColors.Window;
+            edgeSource_TextBox.ForeColor = SystemColors.WindowText;
+            edgeSource_TextBox.Name = "edgeSource_TextBox";
             // 
-            // edgeTarget
+            // edgeTarget_TextBox
             // 
-            edgeTarget.BackColor = SystemColors.Window;
-            resources.ApplyResources(edgeTarget, "edgeTarget");
-            edgeTarget.ForeColor = SystemColors.WindowText;
-            edgeTarget.Name = "edgeTarget";
+            resources.ApplyResources(edgeTarget_TextBox, "edgeTarget_TextBox");
+            edgeTarget_TextBox.BackColor = SystemColors.Window;
+            edgeTarget_TextBox.ForeColor = SystemColors.WindowText;
+            edgeTarget_TextBox.Name = "edgeTarget_TextBox";
             // 
-            // addEdge
+            // addEdge_Button
             // 
-            addEdge.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(addEdge, "addEdge");
-            addEdge.ForeColor = SystemColors.ControlText;
-            addEdge.Name = "addEdge";
-            addEdge.UseVisualStyleBackColor = false;
-            addEdge.Click += addEdge_Click;
+            resources.ApplyResources(addEdge_Button, "addEdge_Button");
+            addEdge_Button.BackColor = SystemColors.ButtonHighlight;
+            addEdge_Button.ForeColor = SystemColors.ControlText;
+            addEdge_Button.Name = "addEdge_Button";
+            addEdge_Button.UseVisualStyleBackColor = false;
+            addEdge_Button.Click += addEdge_Click;
             // 
-            // deleteGraph
+            // deleteGraph_Button
             // 
-            deleteGraph.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(deleteGraph, "deleteGraph");
-            deleteGraph.ForeColor = SystemColors.ControlText;
-            deleteGraph.Name = "deleteGraph";
-            deleteGraph.UseVisualStyleBackColor = false;
-            deleteGraph.Click += deleteGraph_Click;
+            resources.ApplyResources(deleteGraph_Button, "deleteGraph_Button");
+            deleteGraph_Button.BackColor = SystemColors.ButtonHighlight;
+            deleteGraph_Button.ForeColor = SystemColors.ControlText;
+            deleteGraph_Button.Name = "deleteGraph_Button";
+            deleteGraph_Button.UseVisualStyleBackColor = false;
+            deleteGraph_Button.Click += deleteGraph_Click;
             // 
-            // startPos
+            // startPosEnt_Label
             // 
-            resources.ApplyResources(startPos, "startPos");
-            startPos.ForeColor = SystemColors.WindowText;
-            startPos.Name = "startPos";
+            resources.ApplyResources(startPosEnt_Label, "startPosEnt_Label");
+            startPosEnt_Label.ForeColor = SystemColors.WindowText;
+            startPosEnt_Label.Name = "startPosEnt_Label";
             // 
-            // startPosInput
+            // startPosInputEnt_TextBox
             // 
-            startPosInput.BackColor = SystemColors.Window;
-            resources.ApplyResources(startPosInput, "startPosInput");
-            startPosInput.ForeColor = SystemColors.WindowText;
-            startPosInput.Name = "startPosInput";
+            resources.ApplyResources(startPosInputEnt_TextBox, "startPosInputEnt_TextBox");
+            startPosInputEnt_TextBox.BackColor = SystemColors.Window;
+            startPosInputEnt_TextBox.ForeColor = SystemColors.WindowText;
+            startPosInputEnt_TextBox.Name = "startPosInputEnt_TextBox";
             // 
-            // playGraph
+            // playGraph_Button
             // 
-            resources.ApplyResources(playGraph, "playGraph");
-            playGraph.BackColor = SystemColors.ButtonHighlight;
-            playGraph.ForeColor = SystemColors.ControlText;
-            playGraph.Name = "playGraph";
-            playGraph.UseVisualStyleBackColor = false;
-            playGraph.Click += playGraph_Click;
+            resources.ApplyResources(playGraph_Button, "playGraph_Button");
+            playGraph_Button.BackColor = SystemColors.ButtonHighlight;
+            playGraph_Button.ForeColor = SystemColors.ControlText;
+            playGraph_Button.Name = "playGraph_Button";
+            playGraph_Button.UseVisualStyleBackColor = false;
+            playGraph_Button.Click += playGraph_Click;
             // 
-            // graphCreate
+            // graphCreate_Panel
             // 
-            resources.ApplyResources(graphCreate, "graphCreate");
-            graphCreate.Controls.Add(input);
-            graphCreate.Controls.Add(vertexInput);
-            graphCreate.Controls.Add(newVertex);
-            graphCreate.Controls.Add(vertex);
-            graphCreate.Controls.Add(edgeFrom);
-            graphCreate.Controls.Add(edgeTo);
-            graphCreate.Controls.Add(edgeSource);
-            graphCreate.Controls.Add(edgeTarget);
-            graphCreate.Controls.Add(addEdge);
-            graphCreate.Controls.Add(deleteGraph);
-            graphCreate.Name = "graphCreate";
+            resources.ApplyResources(graphCreate_Panel, "graphCreate_Panel");
+            graphCreate_Panel.Controls.Add(deleteEdge_Button);
+            graphCreate_Panel.Controls.Add(deleteVertex_Button);
+            graphCreate_Panel.Controls.Add(vertexInput_Label);
+            graphCreate_Panel.Controls.Add(vertexInput_TextBox);
+            graphCreate_Panel.Controls.Add(newVertex_Button);
+            graphCreate_Panel.Controls.Add(vertex_Label);
+            graphCreate_Panel.Controls.Add(edgeFrom_Label);
+            graphCreate_Panel.Controls.Add(edgeTo_Label);
+            graphCreate_Panel.Controls.Add(edgeSource_TextBox);
+            graphCreate_Panel.Controls.Add(edgeTarget_TextBox);
+            graphCreate_Panel.Controls.Add(addEdge_Button);
+            graphCreate_Panel.Controls.Add(deleteGraph_Button);
+            graphCreate_Panel.Name = "graphCreate_Panel";
             // 
-            // doNothingDet
+            // deleteEdge_Button
             // 
-            doNothingDet.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(doNothingDet, "doNothingDet");
-            doNothingDet.ForeColor = SystemColors.ControlText;
-            doNothingDet.Name = "doNothingDet";
-            doNothingDet.UseVisualStyleBackColor = false;
-            doNothingDet.Click += doNothingDet_Click;
+            resources.ApplyResources(deleteEdge_Button, "deleteEdge_Button");
+            deleteEdge_Button.BackColor = SystemColors.ButtonHighlight;
+            deleteEdge_Button.ForeColor = SystemColors.ControlText;
+            deleteEdge_Button.Name = "deleteEdge_Button";
+            deleteEdge_Button.UseVisualStyleBackColor = false;
+            deleteEdge_Button.Click += deleteEdge_Button_Click;
             // 
-            // moveDetective
+            // deleteVertex_Button
             // 
-            moveDetective.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(moveDetective, "moveDetective");
-            moveDetective.ForeColor = SystemColors.ControlText;
-            moveDetective.Name = "moveDetective";
-            moveDetective.UseVisualStyleBackColor = false;
-            moveDetective.Click += moveDetective_Click;
+            resources.ApplyResources(deleteVertex_Button, "deleteVertex_Button");
+            deleteVertex_Button.BackColor = SystemColors.ButtonHighlight;
+            deleteVertex_Button.ForeColor = SystemColors.ControlText;
+            deleteVertex_Button.Name = "deleteVertex_Button";
+            deleteVertex_Button.UseVisualStyleBackColor = false;
+            deleteVertex_Button.Click += deleteVertex_Button_Click;
+            // 
+            // doNothingDet_Button
+            // 
+            resources.ApplyResources(doNothingDet_Button, "doNothingDet_Button");
+            doNothingDet_Button.BackColor = SystemColors.ButtonHighlight;
+            doNothingDet_Button.ForeColor = SystemColors.ControlText;
+            doNothingDet_Button.Name = "doNothingDet_Button";
+            doNothingDet_Button.UseVisualStyleBackColor = false;
+            doNothingDet_Button.Click += doNothingDet_Click;
+            // 
+            // moveDetective_Button
+            // 
+            resources.ApplyResources(moveDetective_Button, "moveDetective_Button");
+            moveDetective_Button.BackColor = SystemColors.ButtonHighlight;
+            moveDetective_Button.ForeColor = SystemColors.ControlText;
+            moveDetective_Button.Name = "moveDetective_Button";
+            moveDetective_Button.UseVisualStyleBackColor = false;
+            moveDetective_Button.Click += moveDetective_Click;
             // 
             // movedDet
             // 
-            movedDet.BackColor = SystemColors.Window;
             resources.ApplyResources(movedDet, "movedDet");
+            movedDet.BackColor = SystemColors.Window;
             movedDet.ForeColor = SystemColors.WindowText;
             movedDet.Name = "movedDet";
             // 
-            // detective
+            // detective_Label
             // 
-            resources.ApplyResources(detective, "detective");
-            detective.ForeColor = SystemColors.WindowText;
-            detective.Name = "detective";
+            resources.ApplyResources(detective_Label, "detective_Label");
+            detective_Label.ForeColor = SystemColors.WindowText;
+            detective_Label.Name = "detective_Label";
             // 
-            // chooseDetPlay
+            // chooseDetPlay_Label
             // 
-            resources.ApplyResources(chooseDetPlay, "chooseDetPlay");
-            chooseDetPlay.ForeColor = SystemColors.WindowText;
-            chooseDetPlay.Name = "chooseDetPlay";
+            resources.ApplyResources(chooseDetPlay_Label, "chooseDetPlay_Label");
+            chooseDetPlay_Label.ForeColor = SystemColors.WindowText;
+            chooseDetPlay_Label.Name = "chooseDetPlay_Label";
             // 
-            // computeEnt
+            // computeEnt_Panel
             // 
-            resources.ApplyResources(computeEnt, "computeEnt");
-            computeEnt.Controls.Add(startPos);
-            computeEnt.Controls.Add(entanglement);
-            computeEnt.Controls.Add(startPosInput);
-            computeEnt.Name = "computeEnt";
+            resources.ApplyResources(computeEnt_Panel, "computeEnt_Panel");
+            computeEnt_Panel.Controls.Add(chooseFixOrBack_ComboBox);
+            computeEnt_Panel.Controls.Add(startPosEnt_Label);
+            computeEnt_Panel.Controls.Add(entanglement_Button);
+            computeEnt_Panel.Controls.Add(startPosInputEnt_TextBox);
+            computeEnt_Panel.Name = "computeEnt_Panel";
             // 
-            // startPos2
+            // chooseFixOrBack_ComboBox
             // 
-            resources.ApplyResources(startPos2, "startPos2");
-            startPos2.ForeColor = SystemColors.WindowText;
-            startPos2.Name = "startPos2";
+            resources.ApplyResources(chooseFixOrBack_ComboBox, "chooseFixOrBack_ComboBox");
+            chooseFixOrBack_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            chooseFixOrBack_ComboBox.FormattingEnabled = true;
+            chooseFixOrBack_ComboBox.Items.AddRange(new object[] { resources.GetString("chooseFixOrBack_ComboBox.Items"), resources.GetString("chooseFixOrBack_ComboBox.Items1"), resources.GetString("chooseFixOrBack_ComboBox.Items2") });
+            chooseFixOrBack_ComboBox.Name = "chooseFixOrBack_ComboBox";
+            chooseFixOrBack_ComboBox.Tag = "";
             // 
-            // GameSettings
+            // startPosPlay_Label
             // 
-            resources.ApplyResources(GameSettings, "GameSettings");
-            GameSettings.Controls.Add(playDetective);
-            GameSettings.Controls.Add(playThief);
-            GameSettings.Controls.Add(detectiveAmountInput);
-            GameSettings.Controls.Add(detectiveAmount);
-            GameSettings.Controls.Add(startPosInput2);
-            GameSettings.Controls.Add(startPos2);
-            GameSettings.Name = "GameSettings";
+            resources.ApplyResources(startPosPlay_Label, "startPosPlay_Label");
+            startPosPlay_Label.ForeColor = SystemColors.WindowText;
+            startPosPlay_Label.Name = "startPosPlay_Label";
             // 
-            // playDetective
+            // GameSettings_Panel
             // 
-            playDetective.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(playDetective, "playDetective");
-            playDetective.ForeColor = SystemColors.ControlText;
-            playDetective.Name = "playDetective";
-            playDetective.UseVisualStyleBackColor = false;
-            playDetective.Click += playDetective_Click;
+            resources.ApplyResources(GameSettings_Panel, "GameSettings_Panel");
+            GameSettings_Panel.Controls.Add(playDetective_Button);
+            GameSettings_Panel.Controls.Add(playThief_Button);
+            GameSettings_Panel.Controls.Add(detectiveAmountInput_TextBox);
+            GameSettings_Panel.Controls.Add(detectiveAmount_Label);
+            GameSettings_Panel.Controls.Add(startPosInputPlay_TextBox);
+            GameSettings_Panel.Controls.Add(startPosPlay_Label);
+            GameSettings_Panel.Name = "GameSettings_Panel";
             // 
-            // playThief
+            // playDetective_Button
             // 
-            playThief.BackColor = SystemColors.ButtonHighlight;
-            resources.ApplyResources(playThief, "playThief");
-            playThief.ForeColor = SystemColors.ControlText;
-            playThief.Name = "playThief";
-            playThief.UseVisualStyleBackColor = false;
-            playThief.Click += playThief_Click;
+            resources.ApplyResources(playDetective_Button, "playDetective_Button");
+            playDetective_Button.BackColor = SystemColors.ButtonHighlight;
+            playDetective_Button.ForeColor = SystemColors.ControlText;
+            playDetective_Button.Name = "playDetective_Button";
+            playDetective_Button.UseVisualStyleBackColor = false;
+            playDetective_Button.Click += playDetective_Click;
             // 
-            // detectiveAmountInput
+            // playThief_Button
             // 
-            detectiveAmountInput.BackColor = SystemColors.Window;
-            resources.ApplyResources(detectiveAmountInput, "detectiveAmountInput");
-            detectiveAmountInput.ForeColor = SystemColors.WindowText;
-            detectiveAmountInput.Name = "detectiveAmountInput";
+            resources.ApplyResources(playThief_Button, "playThief_Button");
+            playThief_Button.BackColor = SystemColors.ButtonHighlight;
+            playThief_Button.ForeColor = SystemColors.ControlText;
+            playThief_Button.Name = "playThief_Button";
+            playThief_Button.UseVisualStyleBackColor = false;
+            playThief_Button.Click += playThief_Click;
             // 
-            // detectiveAmount
+            // detectiveAmountInput_TextBox
             // 
-            resources.ApplyResources(detectiveAmount, "detectiveAmount");
-            detectiveAmount.ForeColor = SystemColors.WindowText;
-            detectiveAmount.Name = "detectiveAmount";
+            resources.ApplyResources(detectiveAmountInput_TextBox, "detectiveAmountInput_TextBox");
+            detectiveAmountInput_TextBox.BackColor = SystemColors.Window;
+            detectiveAmountInput_TextBox.ForeColor = SystemColors.WindowText;
+            detectiveAmountInput_TextBox.Name = "detectiveAmountInput_TextBox";
             // 
-            // startPosInput2
+            // detectiveAmount_Label
             // 
-            startPosInput2.BackColor = SystemColors.Window;
-            resources.ApplyResources(startPosInput2, "startPosInput2");
-            startPosInput2.ForeColor = SystemColors.WindowText;
-            startPosInput2.Name = "startPosInput2";
+            resources.ApplyResources(detectiveAmount_Label, "detectiveAmount_Label");
+            detectiveAmount_Label.ForeColor = SystemColors.WindowText;
+            detectiveAmount_Label.Name = "detectiveAmount_Label";
             // 
-            // restartGame
+            // startPosInputPlay_TextBox
             // 
-            resources.ApplyResources(restartGame, "restartGame");
-            restartGame.Name = "restartGame";
-            restartGame.UseVisualStyleBackColor = true;
-            restartGame.Click += restartGame_Click_1;
+            resources.ApplyResources(startPosInputPlay_TextBox, "startPosInputPlay_TextBox");
+            startPosInputPlay_TextBox.BackColor = SystemColors.Window;
+            startPosInputPlay_TextBox.ForeColor = SystemColors.WindowText;
+            startPosInputPlay_TextBox.Name = "startPosInputPlay_TextBox";
             // 
-            // editGraph
+            // restartGame_Button
             // 
-            resources.ApplyResources(editGraph, "editGraph");
-            editGraph.BackColor = SystemColors.ButtonHighlight;
-            editGraph.ForeColor = SystemColors.ControlText;
-            editGraph.Name = "editGraph";
-            editGraph.UseVisualStyleBackColor = false;
-            editGraph.Click += editGraph_Click;
+            resources.ApplyResources(restartGame_Button, "restartGame_Button");
+            restartGame_Button.Name = "restartGame_Button";
+            restartGame_Button.UseVisualStyleBackColor = true;
+            restartGame_Button.Click += restartGame_Click_1;
             // 
-            // detMovement
+            // editGraph_Button
             // 
-            resources.ApplyResources(detMovement, "detMovement");
-            detMovement.Controls.Add(label1);
-            detMovement.Controls.Add(doNothingDet);
-            detMovement.Controls.Add(chooseDetPlay);
-            detMovement.Controls.Add(moveDetective);
-            detMovement.Controls.Add(movedDet);
-            detMovement.Controls.Add(detective);
-            detMovement.Name = "detMovement";
+            resources.ApplyResources(editGraph_Button, "editGraph_Button");
+            editGraph_Button.BackColor = SystemColors.ButtonHighlight;
+            editGraph_Button.ForeColor = SystemColors.ControlText;
+            editGraph_Button.Name = "editGraph_Button";
+            editGraph_Button.UseVisualStyleBackColor = false;
+            editGraph_Button.Click += editGraph_Click;
             // 
-            // label1
+            // detMovement_Panel
             // 
-            resources.ApplyResources(label1, "label1");
-            label1.Name = "label1";
+            resources.ApplyResources(detMovement_Panel, "detMovement_Panel");
+            detMovement_Panel.Controls.Add(label1_Label);
+            detMovement_Panel.Controls.Add(doNothingDet_Button);
+            detMovement_Panel.Controls.Add(chooseDetPlay_Label);
+            detMovement_Panel.Controls.Add(moveDetective_Button);
+            detMovement_Panel.Controls.Add(movedDet);
+            detMovement_Panel.Controls.Add(detective_Label);
+            detMovement_Panel.Name = "detMovement_Panel";
             // 
-            // thiefMovement
+            // label1_Label
             // 
-            resources.ApplyResources(thiefMovement, "thiefMovement");
-            thiefMovement.Controls.Add(label2);
-            thiefMovement.Controls.Add(moveThiefToTarget);
-            thiefMovement.Controls.Add(targetThiefInput);
-            thiefMovement.Controls.Add(targetVertexofThief);
-            thiefMovement.Controls.Add(chooseThiefPlay);
-            thiefMovement.Name = "thiefMovement";
+            resources.ApplyResources(label1_Label, "label1_Label");
+            label1_Label.Name = "label1_Label";
             // 
-            // label2
+            // thiefMovement_Panel
             // 
-            resources.ApplyResources(label2, "label2");
-            label2.Name = "label2";
+            resources.ApplyResources(thiefMovement_Panel, "thiefMovement_Panel");
+            thiefMovement_Panel.Controls.Add(label2_Label);
+            thiefMovement_Panel.Controls.Add(moveThiefToTarget_Button);
+            thiefMovement_Panel.Controls.Add(targetThiefInput_TextBox);
+            thiefMovement_Panel.Controls.Add(targetVertexofThief_Label);
+            thiefMovement_Panel.Controls.Add(chooseThiefPlay_Label);
+            thiefMovement_Panel.Name = "thiefMovement_Panel";
             // 
-            // moveThiefToTarget
+            // label2_Label
             // 
-            resources.ApplyResources(moveThiefToTarget, "moveThiefToTarget");
-            moveThiefToTarget.Name = "moveThiefToTarget";
-            moveThiefToTarget.UseVisualStyleBackColor = true;
-            moveThiefToTarget.Click += moveThiefToTarget_Click;
+            resources.ApplyResources(label2_Label, "label2_Label");
+            label2_Label.Name = "label2_Label";
             // 
-            // targetThiefInput
+            // moveThiefToTarget_Button
             // 
-            resources.ApplyResources(targetThiefInput, "targetThiefInput");
-            targetThiefInput.Name = "targetThiefInput";
+            resources.ApplyResources(moveThiefToTarget_Button, "moveThiefToTarget_Button");
+            moveThiefToTarget_Button.Name = "moveThiefToTarget_Button";
+            moveThiefToTarget_Button.UseVisualStyleBackColor = true;
+            moveThiefToTarget_Button.Click += moveThiefToTarget_Click;
             // 
-            // targetVertexofThief
+            // targetThiefInput_TextBox
             // 
-            resources.ApplyResources(targetVertexofThief, "targetVertexofThief");
-            targetVertexofThief.Name = "targetVertexofThief";
+            resources.ApplyResources(targetThiefInput_TextBox, "targetThiefInput_TextBox");
+            targetThiefInput_TextBox.Name = "targetThiefInput_TextBox";
             // 
-            // chooseThiefPlay
+            // targetVertexofThief_Label
             // 
-            resources.ApplyResources(chooseThiefPlay, "chooseThiefPlay");
-            chooseThiefPlay.Name = "chooseThiefPlay";
+            resources.ApplyResources(targetVertexofThief_Label, "targetVertexofThief_Label");
+            targetVertexofThief_Label.Name = "targetVertexofThief_Label";
             // 
-            // TorusCreate
+            // chooseThiefPlay_Label
             // 
-            resources.ApplyResources(TorusCreate, "TorusCreate");
-            TorusCreate.Controls.Add(torusGraph);
-            TorusCreate.Controls.Add(torusN);
-            TorusCreate.Controls.Add(torusM);
-            TorusCreate.Controls.Add(createTorusGraph);
-            TorusCreate.Controls.Add(x);
-            TorusCreate.Name = "TorusCreate";
+            resources.ApplyResources(chooseThiefPlay_Label, "chooseThiefPlay_Label");
+            chooseThiefPlay_Label.Name = "chooseThiefPlay_Label";
             // 
-            // torusGraph
+            // TorusCreate_Panel
             // 
-            resources.ApplyResources(torusGraph, "torusGraph");
-            torusGraph.ForeColor = SystemColors.WindowText;
-            torusGraph.Name = "torusGraph";
+            resources.ApplyResources(TorusCreate_Panel, "TorusCreate_Panel");
+            TorusCreate_Panel.Controls.Add(torusGraph_Label);
+            TorusCreate_Panel.Controls.Add(torusN_TextBox);
+            TorusCreate_Panel.Controls.Add(torusM_TextBox);
+            TorusCreate_Panel.Controls.Add(createTorusGraph);
+            TorusCreate_Panel.Controls.Add(x_Label);
+            TorusCreate_Panel.Name = "TorusCreate_Panel";
             // 
-            // torusN
+            // torusGraph_Label
             // 
-            torusN.BackColor = SystemColors.Window;
-            resources.ApplyResources(torusN, "torusN");
-            torusN.ForeColor = SystemColors.WindowText;
-            torusN.Name = "torusN";
+            resources.ApplyResources(torusGraph_Label, "torusGraph_Label");
+            torusGraph_Label.ForeColor = SystemColors.WindowText;
+            torusGraph_Label.Name = "torusGraph_Label";
             // 
-            // torusM
+            // torusN_TextBox
             // 
-            torusM.BackColor = SystemColors.Window;
-            resources.ApplyResources(torusM, "torusM");
-            torusM.ForeColor = SystemColors.WindowText;
-            torusM.Name = "torusM";
+            resources.ApplyResources(torusN_TextBox, "torusN_TextBox");
+            torusN_TextBox.BackColor = SystemColors.Window;
+            torusN_TextBox.ForeColor = SystemColors.WindowText;
+            torusN_TextBox.Name = "torusN_TextBox";
+            // 
+            // torusM_TextBox
+            // 
+            resources.ApplyResources(torusM_TextBox, "torusM_TextBox");
+            torusM_TextBox.BackColor = SystemColors.Window;
+            torusM_TextBox.ForeColor = SystemColors.WindowText;
+            torusM_TextBox.Name = "torusM_TextBox";
             // 
             // createTorusGraph
             // 
-            createTorusGraph.BackColor = SystemColors.ButtonHighlight;
             resources.ApplyResources(createTorusGraph, "createTorusGraph");
+            createTorusGraph.BackColor = SystemColors.ButtonHighlight;
             createTorusGraph.ForeColor = SystemColors.ControlText;
             createTorusGraph.Name = "createTorusGraph";
             createTorusGraph.UseVisualStyleBackColor = false;
             createTorusGraph.Click += createTorusGraph_Click;
             // 
-            // x
+            // x_Label
             // 
-            resources.ApplyResources(x, "x");
-            x.ForeColor = SystemColors.WindowText;
-            x.Name = "x";
+            resources.ApplyResources(x_Label, "x_Label");
+            x_Label.ForeColor = SystemColors.WindowText;
+            x_Label.Name = "x_Label";
             // 
-            // chooseGraphTyp
+            // chooseGraphTyp_ComboBox
             // 
-            resources.ApplyResources(chooseGraphTyp, "chooseGraphTyp");
-            chooseGraphTyp.DropDownStyle = ComboBoxStyle.DropDownList;
-            chooseGraphTyp.FormattingEnabled = true;
-            chooseGraphTyp.Items.AddRange(new object[] { resources.GetString("chooseGraphTyp.Items"), resources.GetString("chooseGraphTyp.Items1"), resources.GetString("chooseGraphTyp.Items2"), resources.GetString("chooseGraphTyp.Items3"), resources.GetString("chooseGraphTyp.Items4") });
-            chooseGraphTyp.Name = "chooseGraphTyp";
-            chooseGraphTyp.SelectedIndexChanged += chooseGraphTyp_SelectedIndexChanged;
+            resources.ApplyResources(chooseGraphTyp_ComboBox, "chooseGraphTyp_ComboBox");
+            chooseGraphTyp_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            chooseGraphTyp_ComboBox.FormattingEnabled = true;
+            chooseGraphTyp_ComboBox.Items.AddRange(new object[] { resources.GetString("chooseGraphTyp_ComboBox.Items"), resources.GetString("chooseGraphTyp_ComboBox.Items1"), resources.GetString("chooseGraphTyp_ComboBox.Items2"), resources.GetString("chooseGraphTyp_ComboBox.Items3"), resources.GetString("chooseGraphTyp_ComboBox.Items4"), resources.GetString("chooseGraphTyp_ComboBox.Items5") });
+            chooseGraphTyp_ComboBox.Name = "chooseGraphTyp_ComboBox";
+            chooseGraphTyp_ComboBox.SelectedIndexChanged += chooseGraphTyp_SelectedIndexChanged;
             // 
-            // createUnCircleGraph
+            // createUnCircleGraph_Panel
             // 
-            resources.ApplyResources(createUnCircleGraph, "createUnCircleGraph");
-            createUnCircleGraph.Controls.Add(unCircleSize);
-            createUnCircleGraph.Controls.Add(createUndirectedCircleGraph);
-            createUnCircleGraph.Controls.Add(unCircleSizeInput);
-            createUnCircleGraph.Name = "createUnCircleGraph";
+            resources.ApplyResources(createUnCircleGraph_Panel, "createUnCircleGraph_Panel");
+            createUnCircleGraph_Panel.Controls.Add(unCircleSize_Label);
+            createUnCircleGraph_Panel.Controls.Add(createUndirectedCircleGraph_Button);
+            createUnCircleGraph_Panel.Controls.Add(unCircleSizeInput_TextBox);
+            createUnCircleGraph_Panel.Name = "createUnCircleGraph_Panel";
             // 
-            // unCircleSize
+            // unCircleSize_Label
             // 
-            resources.ApplyResources(unCircleSize, "unCircleSize");
-            unCircleSize.Name = "unCircleSize";
+            resources.ApplyResources(unCircleSize_Label, "unCircleSize_Label");
+            unCircleSize_Label.Name = "unCircleSize_Label";
             // 
-            // createUndirectedCircleGraph
+            // createUndirectedCircleGraph_Button
             // 
-            resources.ApplyResources(createUndirectedCircleGraph, "createUndirectedCircleGraph");
-            createUndirectedCircleGraph.Name = "createUndirectedCircleGraph";
-            createUndirectedCircleGraph.UseVisualStyleBackColor = true;
-            createUndirectedCircleGraph.Click += createUndirectedCircleGraph_Click;
+            resources.ApplyResources(createUndirectedCircleGraph_Button, "createUndirectedCircleGraph_Button");
+            createUndirectedCircleGraph_Button.Name = "createUndirectedCircleGraph_Button";
+            createUndirectedCircleGraph_Button.UseVisualStyleBackColor = true;
+            createUndirectedCircleGraph_Button.Click += createUndirectedCircleGraph_Click;
             // 
-            // unCircleSizeInput
+            // unCircleSizeInput_TextBox
             // 
-            resources.ApplyResources(unCircleSizeInput, "unCircleSizeInput");
-            unCircleSizeInput.Name = "unCircleSizeInput";
+            resources.ApplyResources(unCircleSizeInput_TextBox, "unCircleSizeInput_TextBox");
+            unCircleSizeInput_TextBox.Name = "unCircleSizeInput_TextBox";
             // 
-            // createDiCircleGraph
+            // createDiCircleGraph_Panel
             // 
-            resources.ApplyResources(createDiCircleGraph, "createDiCircleGraph");
-            createDiCircleGraph.Controls.Add(diCircleLabel);
-            createDiCircleGraph.Controls.Add(createDirectedCircleGraph);
-            createDiCircleGraph.Controls.Add(diCircleSizeInput);
-            createDiCircleGraph.Name = "createDiCircleGraph";
+            resources.ApplyResources(createDiCircleGraph_Panel, "createDiCircleGraph_Panel");
+            createDiCircleGraph_Panel.Controls.Add(diCircleLabel_Label);
+            createDiCircleGraph_Panel.Controls.Add(createDirectedCircleGraph_Button);
+            createDiCircleGraph_Panel.Controls.Add(diCircleSizeInput_TextBox);
+            createDiCircleGraph_Panel.Name = "createDiCircleGraph_Panel";
             // 
-            // diCircleLabel
+            // diCircleLabel_Label
             // 
-            resources.ApplyResources(diCircleLabel, "diCircleLabel");
-            diCircleLabel.Name = "diCircleLabel";
+            resources.ApplyResources(diCircleLabel_Label, "diCircleLabel_Label");
+            diCircleLabel_Label.Name = "diCircleLabel_Label";
             // 
-            // createDirectedCircleGraph
+            // createDirectedCircleGraph_Button
             // 
-            resources.ApplyResources(createDirectedCircleGraph, "createDirectedCircleGraph");
-            createDirectedCircleGraph.Name = "createDirectedCircleGraph";
-            createDirectedCircleGraph.UseVisualStyleBackColor = true;
-            createDirectedCircleGraph.Click += createDirectedCircleGraph_Click;
+            resources.ApplyResources(createDirectedCircleGraph_Button, "createDirectedCircleGraph_Button");
+            createDirectedCircleGraph_Button.Name = "createDirectedCircleGraph_Button";
+            createDirectedCircleGraph_Button.UseVisualStyleBackColor = true;
+            createDirectedCircleGraph_Button.Click += createDirectedCircleGraph_Click;
             // 
-            // diCircleSizeInput
+            // diCircleSizeInput_TextBox
             // 
-            resources.ApplyResources(diCircleSizeInput, "diCircleSizeInput");
-            diCircleSizeInput.Name = "diCircleSizeInput";
+            resources.ApplyResources(diCircleSizeInput_TextBox, "diCircleSizeInput_TextBox");
+            diCircleSizeInput_TextBox.Name = "diCircleSizeInput_TextBox";
             // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
+            resources.ApplyResources(openFileDialog1, "openFileDialog1");
             // 
-            // createFullyConGraphPanel
+            // createFullyConGraph_Panel
             // 
-            resources.ApplyResources(createFullyConGraphPanel, "createFullyConGraphPanel");
-            createFullyConGraphPanel.Controls.Add(fullyConCreate);
-            createFullyConGraphPanel.Controls.Add(fullyConSizeInput);
-            createFullyConGraphPanel.Controls.Add(fullyConSize);
-            createFullyConGraphPanel.Name = "createFullyConGraphPanel";
+            resources.ApplyResources(createFullyConGraph_Panel, "createFullyConGraph_Panel");
+            createFullyConGraph_Panel.Controls.Add(fullyConCreate_Button);
+            createFullyConGraph_Panel.Controls.Add(fullyConSizeInput_TextBox);
+            createFullyConGraph_Panel.Controls.Add(fullyConSize_Label);
+            createFullyConGraph_Panel.Name = "createFullyConGraph_Panel";
             // 
-            // fullyConCreate
+            // fullyConCreate_Button
             // 
-            resources.ApplyResources(fullyConCreate, "fullyConCreate");
-            fullyConCreate.Name = "fullyConCreate";
-            fullyConCreate.UseVisualStyleBackColor = true;
-            fullyConCreate.Click += fullyConCreate_Click;
+            resources.ApplyResources(fullyConCreate_Button, "fullyConCreate_Button");
+            fullyConCreate_Button.Name = "fullyConCreate_Button";
+            fullyConCreate_Button.UseVisualStyleBackColor = true;
+            fullyConCreate_Button.Click += fullyConCreate_Click;
             // 
-            // fullyConSizeInput
+            // fullyConSizeInput_TextBox
             // 
-            resources.ApplyResources(fullyConSizeInput, "fullyConSizeInput");
-            fullyConSizeInput.Name = "fullyConSizeInput";
+            resources.ApplyResources(fullyConSizeInput_TextBox, "fullyConSizeInput_TextBox");
+            fullyConSizeInput_TextBox.Name = "fullyConSizeInput_TextBox";
             // 
-            // fullyConSize
+            // fullyConSize_Label
             // 
-            resources.ApplyResources(fullyConSize, "fullyConSize");
-            fullyConSize.Name = "fullyConSize";
+            resources.ApplyResources(fullyConSize_Label, "fullyConSize_Label");
+            fullyConSize_Label.Name = "fullyConSize_Label";
             // 
-            // createUnaryFunc
+            // createUnaryFunc_Panel
             // 
-            resources.ApplyResources(createUnaryFunc, "createUnaryFunc");
-            createUnaryFunc.Controls.Add(unaryFuncDomainLabel);
-            createUnaryFunc.Controls.Add(lunaryFuncToLabel);
-            createUnaryFunc.Controls.Add(unaryFuncStartDomImput);
-            createUnaryFunc.Controls.Add(unaryFuncEndDomImput);
-            createUnaryFunc.Controls.Add(unaryFuncCreate);
-            createUnaryFunc.Controls.Add(unaryFuncInput);
-            createUnaryFunc.Controls.Add(unaryFuncLabel);
-            createUnaryFunc.Name = "createUnaryFunc";
+            resources.ApplyResources(createUnaryFunc_Panel, "createUnaryFunc_Panel");
+            createUnaryFunc_Panel.Controls.Add(unaryFuncDomain_Label);
+            createUnaryFunc_Panel.Controls.Add(lunaryFuncTo_Label);
+            createUnaryFunc_Panel.Controls.Add(unaryFuncStartDomImput_TextBox);
+            createUnaryFunc_Panel.Controls.Add(unaryFuncEndDomImput_TextBox);
+            createUnaryFunc_Panel.Controls.Add(unaryFuncCreate_Button);
+            createUnaryFunc_Panel.Controls.Add(unaryFuncInput_TextBox);
+            createUnaryFunc_Panel.Controls.Add(unaryFunc_Label);
+            createUnaryFunc_Panel.Name = "createUnaryFunc_Panel";
             // 
-            // unaryFuncDomainLabel
+            // unaryFuncDomain_Label
             // 
-            resources.ApplyResources(unaryFuncDomainLabel, "unaryFuncDomainLabel");
-            unaryFuncDomainLabel.Name = "unaryFuncDomainLabel";
+            resources.ApplyResources(unaryFuncDomain_Label, "unaryFuncDomain_Label");
+            unaryFuncDomain_Label.Name = "unaryFuncDomain_Label";
             // 
-            // lunaryFuncToLabel
+            // lunaryFuncTo_Label
             // 
-            resources.ApplyResources(lunaryFuncToLabel, "lunaryFuncToLabel");
-            lunaryFuncToLabel.Name = "lunaryFuncToLabel";
+            resources.ApplyResources(lunaryFuncTo_Label, "lunaryFuncTo_Label");
+            lunaryFuncTo_Label.Name = "lunaryFuncTo_Label";
             // 
-            // unaryFuncStartDomImput
+            // unaryFuncStartDomImput_TextBox
             // 
-            resources.ApplyResources(unaryFuncStartDomImput, "unaryFuncStartDomImput");
-            unaryFuncStartDomImput.Name = "unaryFuncStartDomImput";
+            resources.ApplyResources(unaryFuncStartDomImput_TextBox, "unaryFuncStartDomImput_TextBox");
+            unaryFuncStartDomImput_TextBox.Name = "unaryFuncStartDomImput_TextBox";
             // 
-            // unaryFuncEndDomImput
+            // unaryFuncEndDomImput_TextBox
             // 
-            resources.ApplyResources(unaryFuncEndDomImput, "unaryFuncEndDomImput");
-            unaryFuncEndDomImput.Name = "unaryFuncEndDomImput";
+            resources.ApplyResources(unaryFuncEndDomImput_TextBox, "unaryFuncEndDomImput_TextBox");
+            unaryFuncEndDomImput_TextBox.Name = "unaryFuncEndDomImput_TextBox";
             // 
-            // unaryFuncCreate
+            // unaryFuncCreate_Button
             // 
-            resources.ApplyResources(unaryFuncCreate, "unaryFuncCreate");
-            unaryFuncCreate.Name = "unaryFuncCreate";
-            unaryFuncCreate.UseVisualStyleBackColor = true;
-            unaryFuncCreate.Click += unaryFuncCreate_Click;
+            resources.ApplyResources(unaryFuncCreate_Button, "unaryFuncCreate_Button");
+            unaryFuncCreate_Button.Name = "unaryFuncCreate_Button";
+            unaryFuncCreate_Button.UseVisualStyleBackColor = true;
+            unaryFuncCreate_Button.Click += unaryFuncCreate_Click;
             // 
-            // unaryFuncInput
+            // unaryFuncInput_TextBox
             // 
-            resources.ApplyResources(unaryFuncInput, "unaryFuncInput");
-            unaryFuncInput.Name = "unaryFuncInput";
+            resources.ApplyResources(unaryFuncInput_TextBox, "unaryFuncInput_TextBox");
+            unaryFuncInput_TextBox.Name = "unaryFuncInput_TextBox";
             // 
-            // unaryFuncLabel
+            // unaryFunc_Label
             // 
-            resources.ApplyResources(unaryFuncLabel, "unaryFuncLabel");
-            unaryFuncLabel.Name = "unaryFuncLabel";
+            resources.ApplyResources(unaryFunc_Label, "unaryFunc_Label");
+            unaryFunc_Label.Name = "unaryFunc_Label";
             // 
             // MainScreen
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            Controls.Add(createUnaryFunc);
-            Controls.Add(createFullyConGraphPanel);
-            Controls.Add(createUnCircleGraph);
-            Controls.Add(createDiCircleGraph);
-            Controls.Add(restartGame);
-            Controls.Add(detMovement);
-            Controls.Add(GraphPicture);
-            Controls.Add(editGraph);
-            Controls.Add(computeEnt);
-            Controls.Add(graphCreate);
-            Controls.Add(playGraph);
-            Controls.Add(TextOutput);
-            Controls.Add(headline);
-            Controls.Add(GameSettings);
-            Controls.Add(chooseGraphTyp);
-            Controls.Add(TorusCreate);
-            Controls.Add(thiefMovement);
+            Controls.Add(graphCreate_Panel);
+            Controls.Add(createUnaryFunc_Panel);
+            Controls.Add(createFullyConGraph_Panel);
+            Controls.Add(createUnCircleGraph_Panel);
+            Controls.Add(createDiCircleGraph_Panel);
+            Controls.Add(restartGame_Button);
+            Controls.Add(detMovement_Panel);
+            Controls.Add(graph_PictureBox);
+            Controls.Add(editGraph_Button);
+            Controls.Add(computeEnt_Panel);
+            Controls.Add(playGraph_Button);
+            Controls.Add(TextOutput_TextBox);
+            Controls.Add(headline_Label);
+            Controls.Add(GameSettings_Panel);
+            Controls.Add(chooseGraphTyp_ComboBox);
+            Controls.Add(TorusCreate_Panel);
+            Controls.Add(thiefMovement_Panel);
             Name = "MainScreen";
-            ((System.ComponentModel.ISupportInitialize)GraphPicture).EndInit();
-            graphCreate.ResumeLayout(false);
-            graphCreate.PerformLayout();
-            computeEnt.ResumeLayout(false);
-            computeEnt.PerformLayout();
-            GameSettings.ResumeLayout(false);
-            GameSettings.PerformLayout();
-            detMovement.ResumeLayout(false);
-            detMovement.PerformLayout();
-            thiefMovement.ResumeLayout(false);
-            thiefMovement.PerformLayout();
-            TorusCreate.ResumeLayout(false);
-            TorusCreate.PerformLayout();
-            createUnCircleGraph.ResumeLayout(false);
-            createUnCircleGraph.PerformLayout();
-            createDiCircleGraph.ResumeLayout(false);
-            createDiCircleGraph.PerformLayout();
-            createFullyConGraphPanel.ResumeLayout(false);
-            createFullyConGraphPanel.PerformLayout();
-            createUnaryFunc.ResumeLayout(false);
-            createUnaryFunc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)graph_PictureBox).EndInit();
+            graphCreate_Panel.ResumeLayout(false);
+            graphCreate_Panel.PerformLayout();
+            computeEnt_Panel.ResumeLayout(false);
+            computeEnt_Panel.PerformLayout();
+            GameSettings_Panel.ResumeLayout(false);
+            GameSettings_Panel.PerformLayout();
+            detMovement_Panel.ResumeLayout(false);
+            detMovement_Panel.PerformLayout();
+            thiefMovement_Panel.ResumeLayout(false);
+            thiefMovement_Panel.PerformLayout();
+            TorusCreate_Panel.ResumeLayout(false);
+            TorusCreate_Panel.PerformLayout();
+            createUnCircleGraph_Panel.ResumeLayout(false);
+            createUnCircleGraph_Panel.PerformLayout();
+            createDiCircleGraph_Panel.ResumeLayout(false);
+            createDiCircleGraph_Panel.PerformLayout();
+            createFullyConGraph_Panel.ResumeLayout(false);
+            createFullyConGraph_Panel.PerformLayout();
+            createUnaryFunc_Panel.ResumeLayout(false);
+            createUnaryFunc_Panel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private PictureBox GraphPicture;
-        private TextBox vertexInput;
-        private Label headline;
-        private Label input;
-        private Button newVertex;
-        private Button entanglement;
-        private TextBox TextOutput;
-        private Label vertex;
-        private Label edgeFrom;
-        private Label edgeTo;
-        private TextBox edgeSource;
-        private TextBox edgeTarget;
-        private Button addEdge;
-        private Button deleteGraph;
-        private Label startPos;
-        private TextBox startPosInput;
-        private Button playGraph;
-        private Panel graphCreate;
-        private Panel computeEnt;
-        private Label startPos2;
-        private Panel GameSettings;
-        private Label detectiveAmount;
-        private TextBox startPosInput2;
-        private Button playDetective;
-        private Button playThief;
-        private TextBox detectiveAmountInput;
-        private Button editGraph;
-        private Label chooseDetPlay;
+        private PictureBox graph_PictureBox;
+        private TextBox vertexInput_TextBox;
+        private Label headline_Label;
+        private Label vertexInput_Label;
+        private Button newVertex_Button;
+        private Button entanglement_Button;
+        private TextBox TextOutput_TextBox;
+        private Label vertex_Label;
+        private Label edgeFrom_Label;
+        private Label edgeTo_Label;
+        private TextBox edgeSource_TextBox;
+        private TextBox edgeTarget_TextBox;
+        private Button addEdge_Button;
+        private Button deleteGraph_Button;
+        private Label startPosEnt_Label;
+        private TextBox startPosInputEnt_TextBox;
+        private Button playGraph_Button;
+        private Panel graphCreate_Panel;
+        private Panel computeEnt_Panel;
+        private Label startPosPlay_Label;
+        private Panel GameSettings_Panel;
+        private Label detectiveAmount_Label;
+        private TextBox startPosInputPlay_TextBox;
+        private Button playDetective_Button;
+        private Button playThief_Button;
+        private TextBox detectiveAmountInput_TextBox;
+        private Button editGraph_Button;
+        private Label chooseDetPlay_Label;
         private TextBox movedDet;
-        private Label detective;
-        private Button moveDetective;
-        private Button doNothingDet;
-        private Panel detMovement;
-        private Button restartGame;
-        private Label label1;
-        private Panel thiefMovement;
-        private Label targetVertexofThief;
-        private Label chooseThiefPlay;
-        private Label label2;
-        private Button moveThiefToTarget;
-        private TextBox targetThiefInput;
-        private Panel TorusCreate;
-        private Label torusGraph;
-        private TextBox torusN;
-        private TextBox torusM;
+        private Label detective_Label;
+        private Button moveDetective_Button;
+        private Button doNothingDet_Button;
+        private Panel detMovement_Panel;
+        private Button restartGame_Button;
+        private Label label1_Label;
+        private Panel thiefMovement_Panel;
+        private Label targetVertexofThief_Label;
+        private Label chooseThiefPlay_Label;
+        private Label label2_Label;
+        private Button moveThiefToTarget_Button;
+        private TextBox targetThiefInput_TextBox;
+        private Panel TorusCreate_Panel;
+        private Label torusGraph_Label;
+        private TextBox torusN_TextBox;
+        private TextBox torusM_TextBox;
         private Button createTorusGraph;
-        private Label x;
-        private ComboBox chooseGraphTyp;
-        private Panel createUnCircleGraph;
-        private Button createUndirectedCircleGraph;
-        private TextBox unCircleSizeInput;
-        private Label unCircleSize;
-        private Panel createDiCircleGraph;
-        private Button createDirectedCircleGraph;
-        private TextBox diCircleSizeInput;
-        private Label diCircleLabel;
+        private Label x_Label;
+        private ComboBox chooseGraphTyp_ComboBox;
+        private Panel createUnCircleGraph_Panel;
+        private Button createUndirectedCircleGraph_Button;
+        private TextBox unCircleSizeInput_TextBox;
+        private Label unCircleSize_Label;
+        private Panel createDiCircleGraph_Panel;
+        private Button createDirectedCircleGraph_Button;
+        private TextBox diCircleSizeInput_TextBox;
+        private Label diCircleLabel_Label;
         private OpenFileDialog openFileDialog1;
-        private Panel createFullyConGraphPanel;
-        private Button fullyConCreate;
-        private TextBox fullyConSizeInput;
-        private Label fullyConSize;
-        private Panel createUnaryFunc;
-        private Button unaryFuncCreate;
-        private TextBox unaryFuncInput;
-        private Label unaryFuncLabel;
-        private TextBox unaryFuncEndDomImput;
-        private TextBox unaryFuncStartDomImput;
-        private Label lunaryFuncToLabel;
-        private Label unaryFuncDomainLabel;
+        private Panel createFullyConGraph_Panel;
+        private Button fullyConCreate_Button;
+        private TextBox fullyConSizeInput_TextBox;
+        private Label fullyConSize_Label;
+        private Panel createUnaryFunc_Panel;
+        private Button unaryFuncCreate_Button;
+        private TextBox unaryFuncInput_TextBox;
+        private Label unaryFunc_Label;
+        private TextBox unaryFuncEndDomImput_TextBox;
+        private TextBox unaryFuncStartDomImput_TextBox;
+        private Label lunaryFuncTo_Label;
+        private Label unaryFuncDomain_Label;
+        private ComboBox chooseFixOrBack_ComboBox;
+        private Button deleteVertex_Button;
+        private Button deleteEdge_Button;
     }
 }

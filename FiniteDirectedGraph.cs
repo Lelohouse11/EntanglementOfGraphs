@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
-    internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IComparable<V>, IEquatable<V>
+    internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IEquatable<V>
     {
         protected Microsoft.Msagl.Drawing.Graph? msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
         protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer? renderer;
@@ -59,19 +60,13 @@ namespace EntaglementOfGraphs
                 return gameStateGraph;
             }
             else if (gameStateGraphTyp == GameStateGraphTyp.Backward) // wenn rekursiver Aufbau
-            {                
-                foreach (var finalState in gameStateGraph.possibleFinalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
-                {
-                    if (!gameStateGraph.OutEdges(startState).Any())
-                    {
-                        gameStateGraph.BuildGameStateGraphBackwards(finalState, false);
-                    }
-                }
+            { 
+                gameStateGraph.BuildGameStateGraphBackwards();
                 return gameStateGraph;
             }
             else if (gameStateGraphTyp == GameStateGraphTyp.Fixpoint)
             {                
-                gameStateGraph.BuildGameStateGraphFixpoint(false);
+                gameStateGraph.BuildGameStateGraphFixpoint();
                 return gameStateGraph;
             }
             return gameStateGraph;
@@ -85,12 +80,11 @@ namespace EntaglementOfGraphs
         public List<GameState<V>> GetNextPossibleStates(GameState<V> currentState)
         {
             List<GameState<V>> nextPossibleStates = [];
-            // Was ist mit garnicht bewegen?
 
             if (currentState.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
             {
                 nextPossibleStates.Add(currentState.Clone().ChangeTurn());
-                if (currentState.detectiveAmount > currentState.detectives.Count)
+                if (currentState.detectiveMaxAmount > currentState.detectives.Count)
                 {
                     nextPossibleStates.Add(currentState.Clone().MoveDetective(default).ChangeTurn());
                 }
@@ -114,13 +108,23 @@ namespace EntaglementOfGraphs
             return nextPossibleStates;
         }
 
+        /// <summary>
+        /// gibt die möglichen Züge des Diebes zurück als String
+        /// </summary>
+        /// <param name="currentState"></param>
+        /// <returns></returns>
         public String GetNextPossibleStatesForThief(GameState<V> currentState)
         {
             string result = "";
-            foreach (var nextState in GetNextPossibleStates(currentState)) 
+            var nextPossibleStates = GetNextPossibleStates(currentState);
+            if (nextPossibleStates.Count != 0)
             {
-                result += nextState.thiefPos.ToString();
-                result += ", ";
+                result += nextPossibleStates[0].thiefPos;
+                for (int i = 1; i < nextPossibleStates.Count; i++)
+                {
+                    result += ", ";
+                    result += nextPossibleStates[i].thiefPos;
+                }
             }
             return result;
         }
@@ -175,9 +179,9 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="startState"></param>
         /// <returns></returns>
-        public bool IsEntanglement(GameState<V> startState)
+        public bool IsEntanglement(GameState<V> startState, GameStateGraphTyp gameStateGraphTyp)
         {
-            var gameStateGraph = GetGameStateGraph(startState, GameStateGraphTyp.Backward);
+            var gameStateGraph = GetGameStateGraph(startState, gameStateGraphTyp);
             return gameStateGraph.OutEdges(startState).Any();
 
         }
@@ -187,12 +191,12 @@ namespace EntaglementOfGraphs
         /// </summary>
         /// <param name="thiefPos"></param>
         /// <returns></returns>
-        public int? MinEntanglement(V thiefPos)
+        public int? MinEntanglement(V thiefPos, GameStateGraphTyp gameStateGraphTyp)
         {
             int possibleMinEnt = VertexCount;
             foreach (var vertex in Vertices)
             {
-                var temp = GetOutgoingVertexCount(vertex);
+                var temp = GetOutgoingVertex(vertex).Count;
                 if (temp < possibleMinEnt)
                 {
                     possibleMinEnt = temp;
@@ -200,7 +204,7 @@ namespace EntaglementOfGraphs
             }
             for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
             {
-                if (IsEntanglement(new GameState<V>(i, thiefPos, true))) //prüft Entanglment
+                if (IsEntanglement(new GameState<V>(i, thiefPos, true), gameStateGraphTyp)) //prüft Entanglment
                 {
                     return i; //minimalstes Entanglement
                 }
@@ -218,6 +222,15 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
+        /// löscht Knoten von der Zeichnung
+        /// </summary>
+        /// <param name="vertex"></param>
+        public void DeleteVertexToMsagl(V vertex)
+        {
+            msaglGraph.RemoveNode(msaglGraph.FindNode(vertex.ToString()));
+        }
+
+        /// <summary>
         /// fügt Kante zur Zeichnung hinzu
         /// </summary>
         /// <param name="source"></param>
@@ -225,6 +238,13 @@ namespace EntaglementOfGraphs
         public void AddEdgeToMsagl(V source, V target)
         {
             msaglGraph.AddEdge(source.ToString(), target.ToString());
+        }
+
+        public void DeleteEdgeToMsagl(V source, V target)
+        {
+            var edge = msaglGraph.Edges.FirstOrDefault(e => e.Source == source.ToString() && e.Target == target.ToString());
+            
+            msaglGraph.RemoveEdge(edge);
         }
 
         /// <summary>
@@ -287,19 +307,13 @@ namespace EntaglementOfGraphs
             return result;
         }
 
-        /// <summary>
-        /// gibt die Anzahl an erreichbaren Knoten zurück
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
-        public int GetOutgoingVertexCount(V vertex)
+        public Edge<V>? GetExistingEdge(V sourceState, V targetState)
         {
-            int result = 0;
-            foreach (var edge in this.OutEdges(vertex))
+            foreach (var e in Edges)
             {
-                result++;
+                if (e.Source.Equals(sourceState) && e.Target.Equals(targetState)) return e;
             }
-            return result;
+            return null;
         }
     }
 }

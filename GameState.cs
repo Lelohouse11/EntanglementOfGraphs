@@ -14,12 +14,12 @@ namespace EntaglementOfGraphs
     /// <param name="detectiveAmount"></param>
     /// <param name="initalThief"></param>
     /// <param name="initialTurn"></param>
-    public class GameState <V>(int detectiveAmount, V initalThief, bool initialTurn) where V : IComparable<V>, IEquatable<V>
+    public class GameState <V>(int detectiveAmount, V initalThief, bool initialTurn) where V : IEquatable<V>
     {
         public V thiefPos = initalThief;
         public SortedSet<V> detectives = [];
         public bool detectivesTurn = initialTurn;
-        public int detectiveAmount = detectiveAmount;
+        public int detectiveMaxAmount = detectiveAmount;
         public int distanceToWin;
         public double winningChance;
         public int possiblePreviousStepsCount;
@@ -31,10 +31,7 @@ namespace EntaglementOfGraphs
         /// <returns></returns>
         public GameState<V> Clone()
         {
-            var cloned = new GameState<V>(detectiveAmount,thiefPos, detectivesTurn);
-            //cloned.savePathFound = savePathFound;
-            //cloned.winningChance = winningChance;
-            //cloned.distanceToWin = distanceToWin;
+            var cloned = new GameState<V>(detectiveMaxAmount,thiefPos, detectivesTurn);
             foreach (var i in detectives)
             {
                 cloned.detectives.Add(i);
@@ -45,7 +42,7 @@ namespace EntaglementOfGraphs
         /// <summary>
         /// bewegt den Detektiv
         /// </summary>
-        /// <param name="detective"></param>
+        /// <param name="detective">Angabe der Position</param>
         /// <returns></returns>
         public GameState<V> MoveDetective(V? detective)
         {
@@ -96,7 +93,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// gibt den Detektive zurück der Position geändert hat
+        /// gibt den Detektive zurück, der die Position geändert hat
         /// </summary>
         /// <param name="nextState"></param>
         /// <returns></returns>
