@@ -240,6 +240,11 @@ namespace EntaglementOfGraphs
             msaglGraph.AddEdge(source.ToString(), target.ToString());
         }
 
+        /// <summary>
+        /// löscht eine Kante im Graphen
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
         public void DeleteEdgeToMsagl(V source, V target)
         {
             var edge = msaglGraph.Edges.FirstOrDefault(e => e.Source == source.ToString() && e.Target == target.ToString());
@@ -253,8 +258,9 @@ namespace EntaglementOfGraphs
         /// <param name="pb"></param>
         public void CreateImage(PictureBox pb)
         {
-            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
-
+            var layoutSettings = new Microsoft.Msagl.Layout.Layered.SugiyamaLayoutSettings();
+            msaglGraph.LayoutAlgorithmSettings = layoutSettings;
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);            
             renderer.CalculateLayout();
         }
 

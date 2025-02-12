@@ -260,6 +260,7 @@ namespace EntaglementOfGraphs
                 }
 
             } while (continueFixpoint); // macht ewweiter , wenn neuen Knoten oder och nicht Startknoten gefunden wurde
+            if(GetExistingState(startState) == null) AddVertex(startState);
         }
 
         /// <summary>

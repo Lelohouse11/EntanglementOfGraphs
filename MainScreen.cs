@@ -24,7 +24,8 @@ namespace EntanglementOfGraphs
         IProgress<string>? progress1 = null;
 
         string filepath = "output.txt";
-        int count = 2;
+        int count = 1;
+        int count2 = 1;
         Stopwatch globalStopwatch = new Stopwatch();
 
         public MainScreen()
@@ -36,8 +37,16 @@ namespace EntanglementOfGraphs
             progress = new Progress<string>(s =>
             {
                 AppendToFile(filepath, s);
-                count = count + 2;
-                TestingGraphClasses(count);
+                if (count % 4 == 0)
+                {
+                    count = 1;
+                    count2 = count2 + 1;
+                }
+                else
+                {
+                    count = count + 1;
+                }
+                TestingGraphClasses(count2, count);
                 //entanglement_Button.Enabled = true;
             });
             progress1 = new Progress<string>(s =>
@@ -108,11 +117,11 @@ namespace EntanglementOfGraphs
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             Task memoryMonitorTask = Task.Run(() => MonitorMemoryUsage(cancellationTokenForInnerStopwatch.Token));
-            int? entanglement = graph.MinEntanglement(startThiefPos, gameStateGraphTyp);
+            int? entanglement = graph.MinEntanglement(startThiefPos, GameStateGraphTyp.Backward);
             stopwatch.Stop();
             cancellationTokenForInnerStopwatch.Cancel();
             memoryMonitorTask.Wait();
-            string result = $"{graph.VertexCount}-viele Knoten: Das Entanglement ist {entanglement}. " +
+            string result = $"{graph.VertexCount}, ({count2}x{count})-viele Knoten: Das Entanglement ist {entanglement}. " +
                   $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed} Bytes.";
             progress1?.Report(result);
         }
@@ -176,9 +185,9 @@ namespace EntanglementOfGraphs
             }
         }
 
-        private void TestingGraphClasses(int i)
+        private void TestingGraphClasses(int i, int k)
         {
-            graph = new FullyConnectedGraph(i);
+            graph = new TorusGraph(i, k).TranslateToInt();
             GC.Collect();
             var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
             t.Start();
@@ -250,18 +259,21 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void deleteGraph_Click(object sender, EventArgs e)
         {
-            AppendToFile(filepath, "");
-            AppendToFile(filepath, "Komplett verbundener Graph mit Rückwärts Aufbau:");
+            if (false)
+            {
+                AppendToFile(filepath, "");
+                AppendToFile(filepath, "Torus-Graph mit Rückwärts Aufbau:");
 
-            globalStopwatch.Start();
-            TestingGraphClasses(count);
-
-            /*
-            TextOutput_TextBox.Clear();
-            graph = new FiniteDirectedGraph<int>();
-            graph.CreateImage(graph_PictureBox);
-            graph_PictureBox.Refresh();
-            */
+                globalStopwatch.Start();
+                TestingGraphClasses(count2, count);
+            }
+            else
+            {
+                TextOutput_TextBox.Clear();
+                graph = new FiniteDirectedGraph<int>();
+                graph.CreateImage(graph_PictureBox);
+                graph_PictureBox.Refresh();
+            }
         }
 
         /// <summary>
