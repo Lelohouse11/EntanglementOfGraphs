@@ -174,6 +174,9 @@
   <data name="entanglement_Button.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
+  <data name="entanglement_Button.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 84</value>
+  </data>
   <data name="entanglement_Button.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 31</value>
   </data>
@@ -279,12 +282,6 @@
   <data name="startPosEnt_Label.Text" xml:space="preserve">
     <value>Startposition des Diebes eingeben:</value>
   </data>
-  <data name="startPosInputEnt_TextBox.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="startPosInputEnt_TextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 29</value>
-  </data>
   <data name="playGraph_Button.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -372,9 +369,6 @@
   <data name="computeEnt_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="computeEnt_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 156</value>
-  </data>
   <data name="chooseFixOrBack_ComboBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
@@ -384,8 +378,14 @@
   <data name="chooseFixOrBack_ComboBox.Items1" xml:space="preserve">
     <value>Fixpoint</value>
   </data>
+  <data name="chooseFixOrBack_ComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 49</value>
+  </data>
   <data name="chooseFixOrBack_ComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>230, 29</value>
+  </data>
+  <data name="computeEnt_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 156</value>
   </data>
   <data name="startPosPlay_Label.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
@@ -398,12 +398,6 @@
   </data>
   <data name="GameSettings_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
-  </data>
-  <data name="GameSettings_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 326</value>
-  </data>
-  <data name="GameSettings_Panel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="playDetective_Button.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
@@ -444,6 +438,12 @@
   <data name="startPosInputPlay_TextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 29</value>
   </data>
+  <data name="GameSettings_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 326</value>
+  </data>
+  <data name="GameSettings_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="restartGame_Button.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -477,12 +477,6 @@
   <data name="detMovement_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
-  <data name="detMovement_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>638, 101</value>
-  </data>
-  <data name="detMovement_Panel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="label1_Label.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
@@ -494,14 +488,14 @@
 Diamand Form = Position der Detektive
 </value>
   </data>
+  <data name="detMovement_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>638, 101</value>
+  </data>
+  <data name="detMovement_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="thiefMovement_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
-  </data>
-  <data name="thiefMovement_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>635, 101</value>
-  </data>
-  <data name="thiefMovement_Panel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="label2_Label.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
@@ -550,17 +544,14 @@ Diamand Form = Position der Detektive
   <data name="chooseThiefPlay_Label.Text" xml:space="preserve">
     <value>Wähle deinen Zug:</value>
   </data>
+  <data name="thiefMovement_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>635, 101</value>
+  </data>
+  <data name="thiefMovement_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="TorusCreate_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
-  </data>
-  <data name="TorusCreate_Panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>652, 230</value>
-  </data>
-  <data name="TorusCreate_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 164</value>
-  </data>
-  <data name="TorusCreate_Panel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="torusGraph_Label.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
@@ -589,6 +580,15 @@ Diamand Form = Position der Detektive
   <data name="x_Label.Text" xml:space="preserve">
     <value>x</value>
   </data>
+  <data name="TorusCreate_Panel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 230</value>
+  </data>
+  <data name="TorusCreate_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="TorusCreate_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="chooseGraphTyp_ComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -598,17 +598,11 @@ Diamand Form = Position der Detektive
   <data name="chooseGraphTyp_ComboBox.Items" xml:space="preserve">
     <value>Graphentyp generieren...</value>
   </data>
-  <data name="chooseGraphTyp_ComboBox.Items1" xml:space="preserve">
-    <value>Torusgraph</value>
-  </data>
-  <data name="chooseGraphTyp_ComboBox.Items2" xml:space="preserve">
-    <value>Ungerichteter Kreisgraph</value>
-  </data>
   <data name="chooseGraphTyp_ComboBox.Items3" xml:space="preserve">
-    <value>Gerichteter Kreisgraph</value>
+    <value>Ungerichteter Gittergraph</value>
   </data>
   <data name="chooseGraphTyp_ComboBox.Items4" xml:space="preserve">
-    <value>Graph von unärer Funktion</value>
+    <value>Torusgraph</value>
   </data>
   <data name="chooseGraphTyp_ComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>652, 200</value>
@@ -621,15 +615,6 @@ Diamand Form = Position der Detektive
   </data>
   <data name="createUnCircleGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
-  </data>
-  <data name="createUnCircleGraph_Panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>652, 230</value>
-  </data>
-  <data name="createUnCircleGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 164</value>
-  </data>
-  <data name="createUnCircleGraph_Panel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="unCircleSize_Label.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -658,17 +643,17 @@ Diamand Form = Position der Detektive
   <data name="unCircleSizeInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 29</value>
   </data>
-  <data name="createDiCircleGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="createDiCircleGraph_Panel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="createUnCircleGraph_Panel.Location" type="System.Drawing.Point, System.Drawing">
     <value>652, 230</value>
   </data>
-  <data name="createDiCircleGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 166</value>
+  <data name="createUnCircleGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
   </data>
-  <data name="createDiCircleGraph_Panel.Visible" type="System.Boolean, mscorlib">
+  <data name="createUnCircleGraph_Panel.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="createDiCircleGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="diCircleLabel_Label.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -697,14 +682,17 @@ Diamand Form = Position der Detektive
   <data name="diCircleSizeInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 29</value>
   </data>
+  <data name="createDiCircleGraph_Panel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 230</value>
+  </data>
+  <data name="createDiCircleGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 166</value>
+  </data>
+  <data name="createDiCircleGraph_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="createFullyConGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
-  </data>
-  <data name="createFullyConGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 164</value>
-  </data>
-  <data name="createFullyConGraph_Panel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="fullyConCreate_Button.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
@@ -733,80 +721,53 @@ Diamand Form = Position der Detektive
   <data name="fullyConSize_Label.Text" xml:space="preserve">
     <value>Größe eingeben:</value>
   </data>
-  <data name="createUnaryFunc_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="createUnaryFunc_Panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>652, 230</value>
-  </data>
-  <data name="createUnaryFunc_Panel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="createFullyConGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 164</value>
   </data>
-  <data name="createUnaryFunc_Panel.Visible" type="System.Boolean, mscorlib">
+  <data name="createFullyConGraph_Panel.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="unaryFuncDomain_Label.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="unaryFuncDomain_Label.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="GridGraphCreate_Button.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
-  <data name="unaryFuncDomain_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 21</value>
-  </data>
-  <data name="unaryFuncDomain_Label.Text" xml:space="preserve">
-    <value>Definitionsbereich eingeben:</value>
-  </data>
-  <data name="lunaryFuncTo_Label.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lunaryFuncTo_Label.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="lunaryFuncTo_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 21</value>
-  </data>
-  <data name="lunaryFuncTo_Label.Text" xml:space="preserve">
-    <value>bis</value>
-  </data>
-  <data name="unaryFuncStartDomImput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="unaryFuncStartDomImput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 29</value>
-  </data>
-  <data name="unaryFuncEndDomImput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="unaryFuncEndDomImput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 29</value>
-  </data>
-  <data name="unaryFuncCreate_Button.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="unaryFuncCreate_Button.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="GridGraphCreate_Button.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 31</value>
   </data>
-  <data name="unaryFuncCreate_Button.Text" xml:space="preserve">
+  <data name="GridGraphCreate_Button.Text" xml:space="preserve">
     <value>Graph erstellen</value>
   </data>
-  <data name="unaryFuncInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="unaryFuncInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 29</value>
-  </data>
-  <data name="unaryFunc_Label.AutoSize" type="System.Boolean, mscorlib">
+  <data name="GirdGraphTimes_Label.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="unaryFunc_Label.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="GirdGraphTimes_Label.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
-  <data name="unaryFunc_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 21</value>
+  <data name="GirdGraphTimes_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 21</value>
   </data>
-  <data name="unaryFunc_Label.Text" xml:space="preserve">
-    <value>unäre Funktion eingeben:</value>
+  <data name="GirdGraphTimes_Label.Text" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="GridM_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GirdN_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GirdGraphSize_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="GirdGraphSize_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GirdGraphSize_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 21</value>
+  </data>
+  <data name="GirdGraphSize_Label.Text" xml:space="preserve">
+    <value>Größe des Gitters eingeben:</value>
+  </data>
+  <data name="createGirdGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 167</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

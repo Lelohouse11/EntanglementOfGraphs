@@ -8,7 +8,6 @@ namespace EntaglementOfGraphs
 {
     internal enum GameStateGraphTyp
     {
-        Forward,
         Backward,
         Fixpoint
     }

@@ -46,7 +46,6 @@ namespace EntanglementOfGraphs
             addEdge_Button = new Button();
             deleteGraph_Button = new Button();
             startPosEnt_Label = new Label();
-            startPosInputEnt_TextBox = new TextBox();
             playGraph_Button = new Button();
             graphCreate_Panel = new Panel();
             deleteEdge_Button = new Button();
@@ -95,14 +94,12 @@ namespace EntanglementOfGraphs
             fullyConCreate_Button = new Button();
             fullyConSizeInput_TextBox = new TextBox();
             fullyConSize_Label = new Label();
-            createUnaryFunc_Panel = new Panel();
-            unaryFuncDomain_Label = new Label();
-            lunaryFuncTo_Label = new Label();
-            unaryFuncStartDomImput_TextBox = new TextBox();
-            unaryFuncEndDomImput_TextBox = new TextBox();
-            unaryFuncCreate_Button = new Button();
-            unaryFuncInput_TextBox = new TextBox();
-            unaryFunc_Label = new Label();
+            createGirdGraph_Panel = new Panel();
+            GridGraphCreate_Button = new Button();
+            GirdGraphTimes_Label = new Label();
+            GridM_TextBox = new TextBox();
+            GirdN_TextBox = new TextBox();
+            GirdGraphSize_Label = new Label();
             ((System.ComponentModel.ISupportInitialize)graph_PictureBox).BeginInit();
             graphCreate_Panel.SuspendLayout();
             computeEnt_Panel.SuspendLayout();
@@ -113,7 +110,7 @@ namespace EntanglementOfGraphs
             createUnCircleGraph_Panel.SuspendLayout();
             createDiCircleGraph_Panel.SuspendLayout();
             createFullyConGraph_Panel.SuspendLayout();
-            createUnaryFunc_Panel.SuspendLayout();
+            createGirdGraph_Panel.SuspendLayout();
             SuspendLayout();
             // 
             // graph_PictureBox
@@ -225,13 +222,6 @@ namespace EntanglementOfGraphs
             startPosEnt_Label.ForeColor = SystemColors.WindowText;
             startPosEnt_Label.Name = "startPosEnt_Label";
             // 
-            // startPosInputEnt_TextBox
-            // 
-            resources.ApplyResources(startPosInputEnt_TextBox, "startPosInputEnt_TextBox");
-            startPosInputEnt_TextBox.BackColor = SystemColors.Window;
-            startPosInputEnt_TextBox.ForeColor = SystemColors.WindowText;
-            startPosInputEnt_TextBox.Name = "startPosInputEnt_TextBox";
-            // 
             // playGraph_Button
             // 
             resources.ApplyResources(playGraph_Button, "playGraph_Button");
@@ -319,7 +309,6 @@ namespace EntanglementOfGraphs
             computeEnt_Panel.Controls.Add(chooseFixOrBack_ComboBox);
             computeEnt_Panel.Controls.Add(startPosEnt_Label);
             computeEnt_Panel.Controls.Add(entanglement_Button);
-            computeEnt_Panel.Controls.Add(startPosInputEnt_TextBox);
             computeEnt_Panel.Name = "computeEnt_Panel";
             // 
             // chooseFixOrBack_ComboBox
@@ -589,62 +578,50 @@ namespace EntanglementOfGraphs
             resources.ApplyResources(fullyConSize_Label, "fullyConSize_Label");
             fullyConSize_Label.Name = "fullyConSize_Label";
             // 
-            // createUnaryFunc_Panel
+            // createGirdGraph_Panel
             // 
-            resources.ApplyResources(createUnaryFunc_Panel, "createUnaryFunc_Panel");
-            createUnaryFunc_Panel.Controls.Add(unaryFuncDomain_Label);
-            createUnaryFunc_Panel.Controls.Add(lunaryFuncTo_Label);
-            createUnaryFunc_Panel.Controls.Add(unaryFuncStartDomImput_TextBox);
-            createUnaryFunc_Panel.Controls.Add(unaryFuncEndDomImput_TextBox);
-            createUnaryFunc_Panel.Controls.Add(unaryFuncCreate_Button);
-            createUnaryFunc_Panel.Controls.Add(unaryFuncInput_TextBox);
-            createUnaryFunc_Panel.Controls.Add(unaryFunc_Label);
-            createUnaryFunc_Panel.Name = "createUnaryFunc_Panel";
+            resources.ApplyResources(createGirdGraph_Panel, "createGirdGraph_Panel");
+            createGirdGraph_Panel.Controls.Add(GridGraphCreate_Button);
+            createGirdGraph_Panel.Controls.Add(GirdGraphTimes_Label);
+            createGirdGraph_Panel.Controls.Add(GridM_TextBox);
+            createGirdGraph_Panel.Controls.Add(GirdN_TextBox);
+            createGirdGraph_Panel.Controls.Add(GirdGraphSize_Label);
+            createGirdGraph_Panel.Name = "createGirdGraph_Panel";
             // 
-            // unaryFuncDomain_Label
+            // GridGraphCreate_Button
             // 
-            resources.ApplyResources(unaryFuncDomain_Label, "unaryFuncDomain_Label");
-            unaryFuncDomain_Label.Name = "unaryFuncDomain_Label";
+            resources.ApplyResources(GridGraphCreate_Button, "GridGraphCreate_Button");
+            GridGraphCreate_Button.Name = "GridGraphCreate_Button";
+            GridGraphCreate_Button.UseVisualStyleBackColor = true;
+            GridGraphCreate_Button.Click += GridGraphCreate_Button_Click;
             // 
-            // lunaryFuncTo_Label
+            // GirdGraphTimes_Label
             // 
-            resources.ApplyResources(lunaryFuncTo_Label, "lunaryFuncTo_Label");
-            lunaryFuncTo_Label.Name = "lunaryFuncTo_Label";
+            resources.ApplyResources(GirdGraphTimes_Label, "GirdGraphTimes_Label");
+            GirdGraphTimes_Label.Name = "GirdGraphTimes_Label";
             // 
-            // unaryFuncStartDomImput_TextBox
+            // GridM_TextBox
             // 
-            resources.ApplyResources(unaryFuncStartDomImput_TextBox, "unaryFuncStartDomImput_TextBox");
-            unaryFuncStartDomImput_TextBox.Name = "unaryFuncStartDomImput_TextBox";
+            resources.ApplyResources(GridM_TextBox, "GridM_TextBox");
+            GridM_TextBox.Name = "GridM_TextBox";
             // 
-            // unaryFuncEndDomImput_TextBox
+            // GirdN_TextBox
             // 
-            resources.ApplyResources(unaryFuncEndDomImput_TextBox, "unaryFuncEndDomImput_TextBox");
-            unaryFuncEndDomImput_TextBox.Name = "unaryFuncEndDomImput_TextBox";
+            resources.ApplyResources(GirdN_TextBox, "GirdN_TextBox");
+            GirdN_TextBox.Name = "GirdN_TextBox";
             // 
-            // unaryFuncCreate_Button
+            // GirdGraphSize_Label
             // 
-            resources.ApplyResources(unaryFuncCreate_Button, "unaryFuncCreate_Button");
-            unaryFuncCreate_Button.Name = "unaryFuncCreate_Button";
-            unaryFuncCreate_Button.UseVisualStyleBackColor = true;
-            unaryFuncCreate_Button.Click += unaryFuncCreate_Click;
-            // 
-            // unaryFuncInput_TextBox
-            // 
-            resources.ApplyResources(unaryFuncInput_TextBox, "unaryFuncInput_TextBox");
-            unaryFuncInput_TextBox.Name = "unaryFuncInput_TextBox";
-            // 
-            // unaryFunc_Label
-            // 
-            resources.ApplyResources(unaryFunc_Label, "unaryFunc_Label");
-            unaryFunc_Label.Name = "unaryFunc_Label";
+            resources.ApplyResources(GirdGraphSize_Label, "GirdGraphSize_Label");
+            GirdGraphSize_Label.Name = "GirdGraphSize_Label";
             // 
             // MainScreen
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
+            Controls.Add(createGirdGraph_Panel);
             Controls.Add(graphCreate_Panel);
-            Controls.Add(createUnaryFunc_Panel);
             Controls.Add(createFullyConGraph_Panel);
             Controls.Add(createUnCircleGraph_Panel);
             Controls.Add(createDiCircleGraph_Panel);
@@ -665,7 +642,6 @@ namespace EntanglementOfGraphs
             graphCreate_Panel.ResumeLayout(false);
             graphCreate_Panel.PerformLayout();
             computeEnt_Panel.ResumeLayout(false);
-            computeEnt_Panel.PerformLayout();
             GameSettings_Panel.ResumeLayout(false);
             GameSettings_Panel.PerformLayout();
             detMovement_Panel.ResumeLayout(false);
@@ -680,8 +656,8 @@ namespace EntanglementOfGraphs
             createDiCircleGraph_Panel.PerformLayout();
             createFullyConGraph_Panel.ResumeLayout(false);
             createFullyConGraph_Panel.PerformLayout();
-            createUnaryFunc_Panel.ResumeLayout(false);
-            createUnaryFunc_Panel.PerformLayout();
+            createGirdGraph_Panel.ResumeLayout(false);
+            createGirdGraph_Panel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -703,7 +679,6 @@ namespace EntanglementOfGraphs
         private Button addEdge_Button;
         private Button deleteGraph_Button;
         private Label startPosEnt_Label;
-        private TextBox startPosInputEnt_TextBox;
         private Button playGraph_Button;
         private Panel graphCreate_Panel;
         private Panel computeEnt_Panel;
@@ -749,16 +724,14 @@ namespace EntanglementOfGraphs
         private Button fullyConCreate_Button;
         private TextBox fullyConSizeInput_TextBox;
         private Label fullyConSize_Label;
-        private Panel createUnaryFunc_Panel;
-        private Button unaryFuncCreate_Button;
-        private TextBox unaryFuncInput_TextBox;
-        private Label unaryFunc_Label;
-        private TextBox unaryFuncEndDomImput_TextBox;
-        private TextBox unaryFuncStartDomImput_TextBox;
-        private Label lunaryFuncTo_Label;
-        private Label unaryFuncDomain_Label;
         private ComboBox chooseFixOrBack_ComboBox;
         private Button deleteVertex_Button;
         private Button deleteEdge_Button;
+        private Panel createGirdGraph_Panel;
+        private Button GridGraphCreate_Button;
+        private Label GirdGraphTimes_Label;
+        private TextBox GridM_TextBox;
+        private TextBox GirdN_TextBox;
+        private Label GirdGraphSize_Label;
     }
 }

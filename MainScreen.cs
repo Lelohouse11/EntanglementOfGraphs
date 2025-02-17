@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 using System.Data;
 using System.Windows;
 using System.Windows.Navigation;
+using EntanglementOfGraphs;
+using Microsoft.Msagl.Drawing;
 
 namespace EntanglementOfGraphs
 {
@@ -117,11 +119,11 @@ namespace EntanglementOfGraphs
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             Task memoryMonitorTask = Task.Run(() => MonitorMemoryUsage(cancellationTokenForInnerStopwatch.Token));
-            int? entanglement = graph.MinEntanglement(startThiefPos, GameStateGraphTyp.Backward);
+            int? entanglement = graph.MinEntanglement(gameStateGraphTyp);
             stopwatch.Stop();
             cancellationTokenForInnerStopwatch.Cancel();
             memoryMonitorTask.Wait();
-            string result = $"{graph.VertexCount}, ({count2}x{count})-viele Knoten: Das Entanglement ist {entanglement}. " +
+            string result = $"Das Entanglement ist {entanglement}. " +
                   $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed} Bytes.";
             progress1?.Report(result);
         }
@@ -144,45 +146,26 @@ namespace EntanglementOfGraphs
 
             TextOutput_TextBox.Clear();
 
-            bool isNumber = int.TryParse(startPosInputEnt_TextBox.Text, out startThiefPos);
-            if (isNumber) // prüft ob Startposition gültige Zahl ist
+
+            string selectedCalcultaion = (string)chooseFixOrBack_ComboBox.SelectedItem;
+            if (selectedCalcultaion.Equals("Fixpoint"))
             {
-                if (graph.ContainsVertex(startThiefPos)) // muss gültiger Knoten sein nein überarbeiten
-                {
-                    string selectedCalcultaion = (string)chooseFixOrBack_ComboBox.SelectedItem;
-                    if (selectedCalcultaion.Equals("Fixpoint"))
-                    {
-                        gameStateGraphTyp = GameStateGraphTyp.Fixpoint;
-                    }
-                    else if (selectedCalcultaion.Equals("Rückwärts"))
-                    {
-                        gameStateGraphTyp = GameStateGraphTyp.Backward;
-                    }
-                    else
-                    {
-                        TextOutput_TextBox.Text = "Bitte eine Berechnungsart auswählen.";
-                        return;
-                    }
-                    entanglement_Button.Enabled = false;
-                    GC.Collect();
-                    var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
-                    t.Start();
-                    maxMemoryUsed = 0;
-                    startPosInputEnt_TextBox.Clear();
-                }
-                else // es war kein gültiger Knoten
-                {
-                    TextOutput_TextBox.Text = "Bitte einen exsistierenden Knoten eingeben.";
-                    startPosInputEnt_TextBox.Clear();
-                    startPosInputEnt_TextBox.Focus();
-                }
+                gameStateGraphTyp = GameStateGraphTyp.Fixpoint;
             }
-            else // es war keine gültige Zahl
+            else if (selectedCalcultaion.Equals("Rückwärts"))
             {
-                TextOutput_TextBox.Text = "Bitte eine Ganzzahl für die Startposition eingeben.";
-                startPosInputEnt_TextBox.Clear();
-                startPosInputEnt_TextBox.Focus();
+                gameStateGraphTyp = GameStateGraphTyp.Backward;
             }
+            else
+            {
+                TextOutput_TextBox.Text = "Bitte eine Berechnungsart auswählen.";
+                return;
+            }
+            entanglement_Button.Enabled = false;
+            GC.Collect();
+            var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
+            t.Start();
+            maxMemoryUsed = 0;
         }
 
         private void TestingGraphClasses(int i, int k)
@@ -284,14 +267,13 @@ namespace EntanglementOfGraphs
         private void playGraph_Click(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
-            startPosInputEnt_TextBox.Clear();
             graphCreate_Panel.Hide();
             chooseGraphTyp_ComboBox.Hide();
             TorusCreate_Panel.Hide();
             createDiCircleGraph_Panel.Hide();
             createUnCircleGraph_Panel.Hide();
             createFullyConGraph_Panel.Hide();
-            createUnaryFunc_Panel.Hide();
+            createGirdGraph_Panel.Hide();
             computeEnt_Panel.Hide();
             playGraph_Button.Hide();
             GameSettings_Panel.Show();
@@ -316,7 +298,7 @@ namespace EntanglementOfGraphs
             createDiCircleGraph_Panel.Hide();
             createUnCircleGraph_Panel.Hide();
             createFullyConGraph_Panel.Hide();
-            createUnaryFunc_Panel.Hide();
+            createGirdGraph_Panel.Hide();
             computeEnt_Panel.Show();
             playGraph_Button.Show();
             GameSettings_Panel.Hide();
@@ -638,7 +620,6 @@ namespace EntanglementOfGraphs
         private void restartGame_Click_1(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
-            startPosInputEnt_TextBox.Clear();
             graphCreate_Panel.Hide();
             TorusCreate_Panel.Hide();
             computeEnt_Panel.Hide();
@@ -661,7 +642,7 @@ namespace EntanglementOfGraphs
             createDiCircleGraph_Panel.Visible = selectedGraph.Equals("Gerichteter Kreisgraph");
             createUnCircleGraph_Panel.Visible = selectedGraph.Equals("Ungerichteter Kreisgraph");
             createFullyConGraph_Panel.Visible = selectedGraph.Equals("Komplett verbundener Graph");
-            createUnaryFunc_Panel.Visible = selectedGraph.Equals("Graph von unärer Funktion");
+            createGirdGraph_Panel.Visible = selectedGraph.Equals("Ungerichteter Gittergraph");
 
         }
 
@@ -755,43 +736,6 @@ namespace EntanglementOfGraphs
             fullyConSizeInput_TextBox.Focus();
         }
 
-        private void unaryFuncCreate_Click(object sender, EventArgs e)
-        {
-            TextOutput_TextBox.Clear();
-            int startDomain;
-            int endDomain;
-            bool isStartDomainNumber = int.TryParse(unaryFuncStartDomImput_TextBox.Text, out startDomain);
-            bool istEndDomainNumber = int.TryParse(unaryFuncEndDomImput_TextBox.Text, out endDomain);
-            if (isStartDomainNumber && istEndDomainNumber)
-            {
-                Func<int, int> func = CreateFunction(unaryFuncInput_TextBox.Text);
-
-                if (func != null)
-                {
-
-                    graph = new UnaryFunctionGraph(func, startDomain, endDomain);
-                    graph.CreateImage(graph_PictureBox);
-                    graph_PictureBox.Refresh();
-                    unaryFuncInput_TextBox.Clear();
-                    unaryFuncStartDomImput_TextBox.Clear();
-                    unaryFuncEndDomImput_TextBox.Clear();
-                }
-                else
-                {
-                    TextOutput_TextBox.Text = "Ungültige Funktion eingegeben. Bitte nur x als Variable benutzen und nur gültige mathematische Operationen (+, -, *, /, ^).";
-                    unaryFuncInput_TextBox.Clear();
-                }
-                unaryFuncInput_TextBox.Focus();
-            }
-            else
-            {
-                TextOutput_TextBox.Text = "Bitte eine Ganzzahl für den Definitionsbereich eingeben.";
-                unaryFuncStartDomImput_TextBox.Clear();
-                unaryFuncEndDomImput_TextBox.Clear();
-                unaryFuncStartDomImput_TextBox.Focus();
-            }
-        }
-
         private Func<int, int> CreateFunction(string funktionString)
         {
 
@@ -806,7 +750,8 @@ namespace EntanglementOfGraphs
                 catch
                 {
                     return 0;
-                };
+                }
+                ;
             };
         }
 
@@ -851,7 +796,7 @@ namespace EntanglementOfGraphs
                 {
                     var possibleEdge = graph.GetExistingEdge(source, target);
 
-                    if(possibleEdge != null)
+                    if (possibleEdge != null)
                     {
                         graph.RemoveEdge(possibleEdge);
                         graph.DeleteEdgeToMsagl(source, target);
@@ -883,5 +828,88 @@ namespace EntanglementOfGraphs
                 edgeSource_TextBox.Focus();
             }
         }
+
+        private void GridGraphCreate_Button_Click(object sender, EventArgs e)
+        {
+            TextOutput_TextBox.Clear();
+            int n;
+            int m;
+            bool isNNumber = int.TryParse(GirdN_TextBox.Text, out n);
+            bool istMNumber = int.TryParse(GridM_TextBox.Text, out m);
+            if (isNNumber && istMNumber)
+            {
+                graph = new UndirectedGirdGraph(n, m);
+                graph.CreateImage(graph_PictureBox);
+                graph_PictureBox.Refresh();
+                GirdN_TextBox.Clear();
+                GridM_TextBox.Clear();
+                GirdN_TextBox.Focus();
+            }
+            else
+            {
+                TextOutput_TextBox.Text = "Bitte Ganzzahlen für die Größe eingeben.";
+                GirdN_TextBox.Clear();
+                GridM_TextBox.Clear();
+                GirdN_TextBox.Focus();
+            }
+        }
     }
 }
+/*
+TextOutput_TextBox.Clear();
+int n;
+int m;
+bool isNNumber = int.TryParse(unaryFuncStartDomImput_TextBox.Text, out n);
+bool istMNumber = int.TryParse(unaryFuncEndDomImput_TextBox.Text, out m);
+if (isNNumber && istMNumber)
+{
+    graph = new UndirectedGirdGraph(n, m);
+    Func<int, int> func = CreateFunction(unaryFuncInput_TextBox.Text);
+    graph.CreateImage(graph_PictureBox);
+    graph_PictureBox.Refresh();
+    unaryFuncInput_TextBox.Clear();
+    unaryFuncStartDomImput_TextBox.Clear();
+    unaryFuncEndDomImput_TextBox.Clear();
+    unaryFuncInput_TextBox.Focus();
+}
+else
+{
+    TextOutput_TextBox.Text = "Bitte Ganzzahlen für die Größe eingeben.";
+    unaryFuncStartDomImput_TextBox.Clear();
+    unaryFuncEndDomImput_TextBox.Clear();
+    unaryFuncStartDomImput_TextBox.Focus();
+}
+/*
+TextOutput_TextBox.Clear();
+int n;
+int m;
+bool isNNumber = int.TryParse(unaryFuncStartDomImput_TextBox.Text, out n);
+bool istMNumber = int.TryParse(unaryFuncEndDomImput_TextBox.Text, out m);
+if (isNNumber && istMNumber)
+{
+    Func<int, int> func = CreateFunction(unaryFuncInput_TextBox.Text);
+
+    if (func != null)
+    {
+
+        graph = new UnaryFunctionGraph(func, n, m);
+        graph.CreateImage(graph_PictureBox);
+        graph_PictureBox.Refresh();
+        unaryFuncInput_TextBox.Clear();
+        unaryFuncStartDomImput_TextBox.Clear();
+        unaryFuncEndDomImput_TextBox.Clear();
+    }
+    else
+    {
+        TextOutput_TextBox.Text = "Ungültige Funktion eingegeben. Bitte nur x als Variable benutzen und nur gültige mathematische Operationen (+, -, *, /, ^).";
+        unaryFuncInput_TextBox.Clear();
+    }
+    unaryFuncInput_TextBox.Focus();
+}
+else
+{
+    TextOutput_TextBox.Text = "Bitte eine Ganzzahl für den Definitionsbereich eingeben.";
+    unaryFuncStartDomImput_TextBox.Clear();
+    unaryFuncEndDomImput_TextBox.Clear();
+    unaryFuncStartDomImput_TextBox.Focus();
+}*/

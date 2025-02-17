@@ -43,34 +43,7 @@ namespace EntaglementOfGraphs
         public FiniteDirectedGraph()
         {
 
-        }
-
-        /// <summary>
-        /// erstellt einen GameStateGraph (Spielverlauf) auf verschiedene Art und Weisen
-        /// </summary>
-        /// <param name="startState"></param>
-        /// <param name="gameStateGraphTyp"></param>
-        /// <returns></returns>
-        public GameStateGraph<V> GetGameStateGraph(GameState<V> startState, GameStateGraphTyp gameStateGraphTyp)
-        {
-            var gameStateGraph = new GameStateGraph<V>(this, startState);
-            if (gameStateGraphTyp == GameStateGraphTyp.Forward) //wenn ierativer Aufbau
-            {
-                gameStateGraph.BuildGameStateGraphForward(startState);
-                return gameStateGraph;
-            }
-            else if (gameStateGraphTyp == GameStateGraphTyp.Backward) // wenn rekursiver Aufbau
-            { 
-                gameStateGraph.BuildGameStateGraphBackwards();
-                return gameStateGraph;
-            }
-            else if (gameStateGraphTyp == GameStateGraphTyp.Fixpoint)
-            {                
-                gameStateGraph.BuildGameStateGraphFixpoint();
-                return gameStateGraph;
-            }
-            return gameStateGraph;
-        }
+        }        
 
         /// <summary>
         /// gibt alle möglichen Zustände durch nächsten Move zurück
@@ -175,23 +148,11 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// nutzt den rekursiven Gamtree um Entanglement zu überprüfen
-        /// </summary>
-        /// <param name="startState"></param>
-        /// <returns></returns>
-        public bool IsEntanglement(GameState<V> startState, GameStateGraphTyp gameStateGraphTyp)
-        {
-            var gameStateGraph = GetGameStateGraph(startState, gameStateGraphTyp);
-            return gameStateGraph.OutEdges(startState).Any();
-
-        }
-
-        /// <summary>
         /// berechnet minimalstest Entanglement
         /// </summary>
         /// <param name="thiefPos"></param>
         /// <returns></returns>
-        public int? MinEntanglement(V thiefPos, GameStateGraphTyp gameStateGraphTyp)
+        public int? MinEntanglement(GameStateGraphTyp gameStateGraphTyp)
         {
             int possibleMinEnt = VertexCount;
             foreach (var vertex in Vertices)
@@ -202,13 +163,26 @@ namespace EntaglementOfGraphs
                     possibleMinEnt = temp;
                 }
             }
-            for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
+            if (gameStateGraphTyp == GameStateGraphTyp.Fixpoint)
             {
-                if (IsEntanglement(new GameState<V>(i, thiefPos, true), gameStateGraphTyp)) //prüft Entanglment
+                for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
                 {
-                    return i; //minimalstes Entanglement
+                    if (new GameStateGraph<V>(this,i).BuildGameStateGraphFixpoint()) //prüft Entanglment
+                    {
+                        return i; //minimalstes Entanglement
+                    }
                 }
             }
+            else 
+            {
+                for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
+                {
+                    if (new GameStateGraph<V>(this, i).BuildGameStateGraphBackwards()) //prüft Entanglment
+                    {
+                        return i; //minimalstes Entanglement
+                    }
+                }
+            }                
             return null; // Fehler wenn kein Entanglement gefunden wurde
         }
 
