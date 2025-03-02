@@ -18,10 +18,13 @@ namespace EntanglementOfGraphs
         FiniteDirectedGraph<int> graph = new FiniteDirectedGraph<int>();
         GameStateGraph<int>? gameStateGraph;
         GameState<int> currentState;
-        bool gamestarted;
+        private bool gamestarted;
+        private bool choosedPlayer;
         GameStateGraphTyp gameStateGraphTyp;
         private long maxMemoryUsed = 0;
-        IProgress<string>? progress = null;
+        IProgress<string>? progressforEnt = null;
+        IProgress<string>? progressforDetective = null;
+        IProgress<string>? progressforThief = null;
 
         public MainScreen()
         {
@@ -29,10 +32,29 @@ namespace EntanglementOfGraphs
             graph.CreateImage(graph_PictureBox);
             chooseDFSOrBFS_ComboBox.SelectedIndex = 0;
             chooseGraphTyp_ComboBox.SelectedIndex = 0;            
-            progress = new Progress<string>(s =>
+            progressforEnt = new Progress<string>(s =>
             {
                 ActivateAllButtons();
                 TextOutput_TextBox.Text = s;
+            });
+            progressforDetective = new Progress<string>(s =>
+            {
+                ActivateAllButtons();
+                graph_PictureBox.Refresh();
+                thiefMovement_Panel.Hide();
+                detMovement_Panel.Show();
+                restartGame_Button.Show();
+                gamestarted = true;
+                TextOutput_TextBox.Text = s;
+            });
+            progressforThief = new Progress<string>(s =>
+            {
+                detMovement_Panel.Hide();
+                thiefMovement_Panel.Show();
+                restartGame_Button.Show();
+                MoveDet();
+                ActivateAllButtons();
+                gamestarted = true;
             });
         }
 
@@ -106,7 +128,7 @@ namespace EntanglementOfGraphs
             memoryMonitorTask.Wait();
             string result = $"Das Entanglement ist {entanglement}. " +
                   $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed/1000} KiloBytes.";
-            progress?.Report(result);
+            progressforEnt?.Report(result);
         }
 
         /// <summary>
@@ -295,7 +317,7 @@ namespace EntanglementOfGraphs
         /// prüft eingabe und erstellt das Spiel und passende Strategien
         /// </summary>
         /// <returns></returns>
-        private void checkGameSettings(bool choosedPlayer)
+        private void checkGameSettings(bool choosedP)
         {
             TextOutput_TextBox.Clear();
             int startPos;
@@ -311,11 +333,14 @@ namespace EntanglementOfGraphs
                     {
                         if (graph.VertexCount >= detectiveAmount) // gültige Anzahl an Detektiven und dann erstellung des Spiels
                         {
+                            currentState = new GameState<int>(detectiveAmount, startPos, true);
+                            choosedPlayer = choosedP;
                             startPosInputPlay_TextBox.Clear();
                             detectiveAmountInput_TextBox.Clear();
                             GameSettings_Panel.Hide();
                             DeactivateAllButtons();
-                            CalculateStrategiesOfThread(detectiveAmount, startPos, choosedPlayer);
+                            var t = new Thread(new ThreadStart(CalculateStrategiesOfThread), 1000000000);
+                            t.Start();
                         }
                         else // kein gültige Anzahl an Detektiven
                         {
@@ -349,31 +374,21 @@ namespace EntanglementOfGraphs
         /// <summary>
         /// berechnet das Entanglement des Graphen
         /// </summary>
-        private void CalculateStrategiesOfThread(int detectiveAmount, int startPos, bool choosedPlayer)
-        {
-            currentState = new GameState<int>(detectiveAmount, startPos, true);
+        private void CalculateStrategiesOfThread()
+        {            
             gameStateGraph = new GameStateGraph<int>(graph, currentState);
             gameStateGraph.BuildFlaggedGameStateGraphBFS();
             gameStateGraph.CreateStrategies();
-            graph.ColorVertex(startPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
-            graph_PictureBox.Refresh();
+            graph.ColorVertex(currentState.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
             if (choosedPlayer) // Spieler ist Detektiv
-            {
-                thiefMovement_Panel.Hide();
-                detMovement_Panel.Show();
-                restartGame_Button.Show();
-                TextOutput_TextBox.Text = $"Du bist am Zug! Wähle einen Detektiv (Knotenummer) oder tue nichts. Noch nicht Plazierte Detektive (-1): {gameStateGraph.detectiveMaxAmount - currentState.detectives.Count}.";
-                gamestarted = true;
+            {              
+                string result = $"Du bist am Zug! Wähle einen Detektiv (Knotenummer) oder tue nichts. Noch nicht Plazierte Detektive (-1): {gameStateGraph.detectiveMaxAmount - currentState.detectives.Count}.";
+                progressforDetective?.Report(result);
             }
             else // Spieler ist Dieb
             {
-                detMovement_Panel.Hide();
-                thiefMovement_Panel.Show();
-                restartGame_Button.Show();
-                MoveDet();
-                gamestarted = true;
+                progressforThief?.Report("");
             }
-            ActivateAllButtons();
         }
 
         /// <summary>
@@ -841,6 +856,7 @@ namespace EntanglementOfGraphs
         /// </summary>
         private void DeactivateAllButtons()
         {
+            deleteGraph_Button.Enabled = false;
             newVertex_Button.Enabled = false;
             addEdge_Button.Enabled = false;
             deleteVertex_Button.Enabled = false;
@@ -866,6 +882,7 @@ namespace EntanglementOfGraphs
         /// </summary>
         private void ActivateAllButtons()
         {
+            deleteGraph_Button.Enabled = true;
             newVertex_Button.Enabled = true;
             addEdge_Button.Enabled = true;
             deleteVertex_Button.Enabled = true;
