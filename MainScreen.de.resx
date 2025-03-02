@@ -1,0 +1,852 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="graph_PictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="graph_PictureBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>634, 379</value>
+  </data>
+  <data name="graph_PictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="vertexInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="vertexInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 29</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="headline_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="headline_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt</value>
+  </data>
+  <data name="headline_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>460, 25</value>
+  </data>
+  <data name="headline_Label.Text" xml:space="preserve">
+    <value>Tool zum Berechnen vom Entanglement von Graphen</value>
+  </data>
+  <data name="vertexInput_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="vertexInput_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="vertexInput_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 21</value>
+  </data>
+  <data name="vertexInput_Label.Text" xml:space="preserve">
+    <value>Graph erstellen:</value>
+  </data>
+  <data name="newVertex_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="newVertex_Button.Location" type="System.Drawing.Point, System.Drawing">
+    <value>311, 24</value>
+  </data>
+  <data name="newVertex_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 31</value>
+  </data>
+  <data name="newVertex_Button.Text" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="entanglement_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="entanglement_Button.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 84</value>
+  </data>
+  <data name="entanglement_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="entanglement_Button.Text" xml:space="preserve">
+    <value>Entanglement berechnen</value>
+  </data>
+  <data name="TextOutput_TextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="TextOutput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="TextOutput_TextBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="TextOutput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 113</value>
+  </data>
+  <data name="vertex_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="vertex_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="vertex_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 21</value>
+  </data>
+  <data name="vertex_Label.Text" xml:space="preserve">
+    <value>Knoten:</value>
+  </data>
+  <data name="edgeFrom_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="edgeFrom_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeFrom_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 21</value>
+  </data>
+  <data name="edgeFrom_Label.Text" xml:space="preserve">
+    <value>Kante von:</value>
+  </data>
+  <data name="edgeTo_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="edgeTo_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeTo_Label.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 64</value>
+  </data>
+  <data name="edgeTo_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 21</value>
+  </data>
+  <data name="edgeTo_Label.Text" xml:space="preserve">
+    <value>zu:</value>
+  </data>
+  <data name="edgeSource_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeSource_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 29</value>
+  </data>
+  <data name="edgeTarget_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="edgeTarget_TextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 59</value>
+  </data>
+  <data name="edgeTarget_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 29</value>
+  </data>
+  <data name="addEdge_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="addEdge_Button.Location" type="System.Drawing.Point, System.Drawing">
+    <value>311, 57</value>
+  </data>
+  <data name="addEdge_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 31</value>
+  </data>
+  <data name="addEdge_Button.Text" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="deleteGraph_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="deleteGraph_Button.Location" type="System.Drawing.Point, System.Drawing">
+    <value>529, 24</value>
+  </data>
+  <data name="deleteGraph_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 64</value>
+  </data>
+  <data name="deleteGraph_Button.Text" xml:space="preserve">
+    <value>Graph löschen</value>
+  </data>
+  <data name="startPosEnt_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="startPosEnt_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 46</value>
+  </data>
+  <data name="startPosEnt_Label.Text" xml:space="preserve">
+    <value>Startposition des Diebes eingeben:</value>
+  </data>
+  <data name="playGraph_Button.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="playGraph_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="playGraph_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="playGraph_Button.Text" xml:space="preserve">
+    <value>Auf Graph spielen</value>
+  </data>
+  <data name="graphCreate_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="deleteEdge_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="deleteEdge_Button.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="deleteEdge_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 31</value>
+  </data>
+  <data name="deleteEdge_Button.Text" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="deleteVertex_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="deleteVertex_Button.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="deleteVertex_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 31</value>
+  </data>
+  <data name="deleteVertex_Button.Text" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="graphCreate_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>638, 101</value>
+  </data>
+  <data name="doNothingDet_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="doNothingDet_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>340, 31</value>
+  </data>
+  <data name="doNothingDet_Button.Text" xml:space="preserve">
+    <value>Keinen Detektiv bewegen</value>
+  </data>
+  <data name="moveDetective_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="moveDetective_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 31</value>
+  </data>
+  <data name="moveDetective_Button.Text" xml:space="preserve">
+    <value>Auf Dieb bewegen</value>
+  </data>
+  <data name="detective_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="detective_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="detective_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 21</value>
+  </data>
+  <data name="detective_Label.Text" xml:space="preserve">
+    <value>Detektive:</value>
+  </data>
+  <data name="chooseDetPlay_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chooseDetPlay_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="chooseDetPlay_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 21</value>
+  </data>
+  <data name="chooseDetPlay_Label.Text" xml:space="preserve">
+    <value>Wähle deinen Zug:</value>
+  </data>
+  <data name="computeEnt_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="chooseFixOrBack_ComboBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="chooseFixOrBack_ComboBox.Items" xml:space="preserve">
+    <value>Berechnungsart auswählen...</value>
+  </data>
+  <data name="chooseFixOrBack_ComboBox.Items1" xml:space="preserve">
+    <value>Tiefensuche</value>
+  </data>
+  <data name="chooseFixOrBack_ComboBox.Items2" xml:space="preserve">
+    <value>Breitensuche</value>
+  </data>
+  <data name="chooseFixOrBack_ComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 49</value>
+  </data>
+  <data name="chooseFixOrBack_ComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>230, 29</value>
+  </data>
+  <data name="computeEnt_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 156</value>
+  </data>
+  <data name="startPosPlay_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="startPosPlay_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 46</value>
+  </data>
+  <data name="startPosPlay_Label.Text" xml:space="preserve">
+    <value>Startposition des Diebes eingeben:</value>
+  </data>
+  <data name="GameSettings_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="playDetective_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="playDetective_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="playDetective_Button.Text" xml:space="preserve">
+    <value>Detektive spielen</value>
+  </data>
+  <data name="playThief_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="playThief_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="playThief_Button.Text" xml:space="preserve">
+    <value>Dieb spielen</value>
+  </data>
+  <data name="detectiveAmountInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="detectiveAmountInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="detectiveAmount_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="detectiveAmount_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 30</value>
+  </data>
+  <data name="detectiveAmount_Label.Text" xml:space="preserve">
+    <value>Anzahl der Diebe eingeben:</value>
+  </data>
+  <data name="startPosInputPlay_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="startPosInputPlay_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="GameSettings_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 326</value>
+  </data>
+  <data name="GameSettings_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="restartGame_Button.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="restartGame_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="restartGame_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="restartGame_Button.Text" xml:space="preserve">
+    <value>Spiel neustarten</value>
+  </data>
+  <data name="restartGame_Button.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="editGraph_Button.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="editGraph_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="editGraph_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="editGraph_Button.Text" xml:space="preserve">
+    <value>Graph bearbeiten</value>
+  </data>
+  <data name="editGraph_Button.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="detMovement_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label1_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="label1_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>290, 101</value>
+  </data>
+  <data name="label1_Label.Text" xml:space="preserve">
+    <value>Roter Knoten = Position des Diebes
+Diamand Form = Position der Detektive
+</value>
+  </data>
+  <data name="detMovement_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>638, 101</value>
+  </data>
+  <data name="detMovement_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="thiefMovement_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label2_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="label2_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>290, 101</value>
+  </data>
+  <data name="label2_Label.Text" xml:space="preserve">
+    <value>Roter Knoten = Position des Diebes
+Diamand Form = Position der Detektive
+</value>
+  </data>
+  <data name="moveThiefToTarget_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="moveThiefToTarget_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 31</value>
+  </data>
+  <data name="moveThiefToTarget_Button.Text" xml:space="preserve">
+    <value>Dieb bewegen</value>
+  </data>
+  <data name="targetThiefInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="targetVertexofThief_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="targetVertexofThief_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="targetVertexofThief_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 21</value>
+  </data>
+  <data name="targetVertexofThief_Label.Text" xml:space="preserve">
+    <value>Zielknoten:</value>
+  </data>
+  <data name="chooseThiefPlay_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chooseThiefPlay_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="chooseThiefPlay_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 21</value>
+  </data>
+  <data name="chooseThiefPlay_Label.Text" xml:space="preserve">
+    <value>Wähle deinen Zug:</value>
+  </data>
+  <data name="thiefMovement_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>635, 101</value>
+  </data>
+  <data name="thiefMovement_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TorusCreate_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="torusGraph_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="torusGraph_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 45</value>
+  </data>
+  <data name="torusGraph_Label.Text" xml:space="preserve">
+    <value>Größe des Torusgraphen eingeben:</value>
+  </data>
+  <data name="torusN_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="torusM_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="x_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="x_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="x_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 21</value>
+  </data>
+  <data name="x_Label.Text" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="TorusCreate_Panel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 230</value>
+  </data>
+  <data name="TorusCreate_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="TorusCreate_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.Items" xml:space="preserve">
+    <value>Graphentyp generieren...</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.Items3" xml:space="preserve">
+    <value>Ungerichteter Gittergraph</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.Items4" xml:space="preserve">
+    <value>Torusgraph</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 200</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="chooseGraphTyp_ComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="createUnCircleGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="unCircleSize_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="unCircleSize_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unCircleSize_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 21</value>
+  </data>
+  <data name="unCircleSize_Label.Text" xml:space="preserve">
+    <value>Größe eingeben:</value>
+  </data>
+  <data name="createUndirectedCircleGraph_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="createUndirectedCircleGraph_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="createUndirectedCircleGraph_Button.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="unCircleSizeInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="unCircleSizeInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="createUnCircleGraph_Panel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 230</value>
+  </data>
+  <data name="createUnCircleGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="createUnCircleGraph_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="createDiCircleGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="diCircleLabel_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="diCircleLabel_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="diCircleLabel_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 21</value>
+  </data>
+  <data name="diCircleLabel_Label.Text" xml:space="preserve">
+    <value>Größe eingeben:</value>
+  </data>
+  <data name="createDirectedCircleGraph_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="createDirectedCircleGraph_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="createDirectedCircleGraph_Button.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="diCircleSizeInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="diCircleSizeInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="createDiCircleGraph_Panel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>652, 230</value>
+  </data>
+  <data name="createDiCircleGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 166</value>
+  </data>
+  <data name="createDiCircleGraph_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="createFullyConGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="fullyConCreate_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="fullyConCreate_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="fullyConCreate_Button.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="fullyConSizeInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="fullyConSizeInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 29</value>
+  </data>
+  <data name="fullyConSize_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fullyConSize_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="fullyConSize_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 21</value>
+  </data>
+  <data name="fullyConSize_Label.Text" xml:space="preserve">
+    <value>Größe eingeben:</value>
+  </data>
+  <data name="createFullyConGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 164</value>
+  </data>
+  <data name="createFullyConGraph_Panel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="GridGraphCreate_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GridGraphCreate_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="GridGraphCreate_Button.Text" xml:space="preserve">
+    <value>Graph erstellen</value>
+  </data>
+  <data name="GirdGraphTimes_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="GirdGraphTimes_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GirdGraphTimes_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 21</value>
+  </data>
+  <data name="GirdGraphTimes_Label.Text" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="GridM_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GirdN_TextBox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GirdGraphSize_Label.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="GirdGraphSize_Label.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="GirdGraphSize_Label.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 21</value>
+  </data>
+  <data name="GirdGraphSize_Label.Text" xml:space="preserve">
+    <value>Größe des Gitters eingeben:</value>
+  </data>
+  <data name="createGirdGraph_Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 167</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        iYUu6JSNwCIAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Entanglement ist ein Maß für die Komlexität eines Graphs</value>
+  </data>
+</root>
