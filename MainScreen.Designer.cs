@@ -56,7 +56,7 @@ namespace EntanglementOfGraphs
             detective_Label = new Label();
             chooseDetPlay_Label = new Label();
             computeEnt_Panel = new Panel();
-            chooseFixOrBack_ComboBox = new ComboBox();
+            chooseDFSOrBFS_ComboBox = new ComboBox();
             startPosPlay_Label = new Label();
             GameSettings_Panel = new Panel();
             playDetective_Button = new Button();
@@ -78,7 +78,7 @@ namespace EntanglementOfGraphs
             torusGraph_Label = new Label();
             torusN_TextBox = new TextBox();
             torusM_TextBox = new TextBox();
-            createTorusGraph = new Button();
+            createTorusGraph_Button = new Button();
             x_Label = new Label();
             chooseGraphTyp_ComboBox = new ComboBox();
             createUnCircleGraph_Panel = new Panel();
@@ -306,19 +306,19 @@ namespace EntanglementOfGraphs
             // computeEnt_Panel
             // 
             resources.ApplyResources(computeEnt_Panel, "computeEnt_Panel");
-            computeEnt_Panel.Controls.Add(chooseFixOrBack_ComboBox);
+            computeEnt_Panel.Controls.Add(chooseDFSOrBFS_ComboBox);
             computeEnt_Panel.Controls.Add(startPosEnt_Label);
             computeEnt_Panel.Controls.Add(entanglement_Button);
             computeEnt_Panel.Name = "computeEnt_Panel";
             // 
-            // chooseFixOrBack_ComboBox
+            // chooseDFSOrBFS_ComboBox
             // 
-            resources.ApplyResources(chooseFixOrBack_ComboBox, "chooseFixOrBack_ComboBox");
-            chooseFixOrBack_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            chooseFixOrBack_ComboBox.FormattingEnabled = true;
-            chooseFixOrBack_ComboBox.Items.AddRange(new object[] { resources.GetString("chooseFixOrBack_ComboBox.Items"), resources.GetString("chooseFixOrBack_ComboBox.Items1"), resources.GetString("chooseFixOrBack_ComboBox.Items2") });
-            chooseFixOrBack_ComboBox.Name = "chooseFixOrBack_ComboBox";
-            chooseFixOrBack_ComboBox.Tag = "";
+            resources.ApplyResources(chooseDFSOrBFS_ComboBox, "chooseFixOrBack_ComboBox");
+            chooseDFSOrBFS_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            chooseDFSOrBFS_ComboBox.FormattingEnabled = true;
+            chooseDFSOrBFS_ComboBox.Items.AddRange(new object[] { resources.GetString("chooseFixOrBack_ComboBox.Items"), resources.GetString("chooseFixOrBack_ComboBox.Items1"), resources.GetString("chooseFixOrBack_ComboBox.Items2") });
+            chooseDFSOrBFS_ComboBox.Name = "chooseFixOrBack_ComboBox";
+            chooseDFSOrBFS_ComboBox.Tag = "";
             // 
             // startPosPlay_Label
             // 
@@ -450,7 +450,7 @@ namespace EntanglementOfGraphs
             TorusCreate_Panel.Controls.Add(torusGraph_Label);
             TorusCreate_Panel.Controls.Add(torusN_TextBox);
             TorusCreate_Panel.Controls.Add(torusM_TextBox);
-            TorusCreate_Panel.Controls.Add(createTorusGraph);
+            TorusCreate_Panel.Controls.Add(createTorusGraph_Button);
             TorusCreate_Panel.Controls.Add(x_Label);
             TorusCreate_Panel.Name = "TorusCreate_Panel";
             // 
@@ -474,14 +474,14 @@ namespace EntanglementOfGraphs
             torusM_TextBox.ForeColor = SystemColors.WindowText;
             torusM_TextBox.Name = "torusM_TextBox";
             // 
-            // createTorusGraph
+            // createTorusGraph_Button
             // 
-            resources.ApplyResources(createTorusGraph, "createTorusGraph");
-            createTorusGraph.BackColor = SystemColors.ButtonHighlight;
-            createTorusGraph.ForeColor = SystemColors.ControlText;
-            createTorusGraph.Name = "createTorusGraph";
-            createTorusGraph.UseVisualStyleBackColor = false;
-            createTorusGraph.Click += createTorusGraph_Click;
+            resources.ApplyResources(createTorusGraph_Button, "createTorusGraph");
+            createTorusGraph_Button.BackColor = SystemColors.ButtonHighlight;
+            createTorusGraph_Button.ForeColor = SystemColors.ControlText;
+            createTorusGraph_Button.Name = "createTorusGraph";
+            createTorusGraph_Button.UseVisualStyleBackColor = false;
+            createTorusGraph_Button.Click += createTorusGraph_Click;
             // 
             // x_Label
             // 
@@ -708,7 +708,7 @@ namespace EntanglementOfGraphs
         private Label torusGraph_Label;
         private TextBox torusN_TextBox;
         private TextBox torusM_TextBox;
-        private Button createTorusGraph;
+        private Button createTorusGraph_Button;
         private Label x_Label;
         private ComboBox chooseGraphTyp_ComboBox;
         private Panel createUnCircleGraph_Panel;
@@ -724,7 +724,7 @@ namespace EntanglementOfGraphs
         private Button fullyConCreate_Button;
         private TextBox fullyConSizeInput_TextBox;
         private Label fullyConSize_Label;
-        private ComboBox chooseFixOrBack_ComboBox;
+        private ComboBox chooseDFSOrBFS_ComboBox;
         private Button deleteVertex_Button;
         private Button deleteEdge_Button;
         private Panel createGirdGraph_Panel;

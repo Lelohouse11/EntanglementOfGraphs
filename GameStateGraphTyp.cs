@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
+    /// <summary>
+    /// Enum für die verschiedenen Weisen des Aufbau des Spielzustandsgraphen
+    /// </summary>
     internal enum GameStateGraphTyp
     {
-        Backward,
-        Fixpoint
+        DFS,
+        BFS
     }
 }

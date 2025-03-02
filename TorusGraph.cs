@@ -12,7 +12,7 @@ namespace EntaglementOfGraphs
         public TorusGraph() { }
 
         /// <summary>
-        /// erstellt mxn Torus Graph
+        /// erstellt m x n Torus Graph
         /// </summary>
         /// <param name="mTorus"></param>
         /// <param name="nTorus"></param>
@@ -49,6 +49,10 @@ namespace EntaglementOfGraphs
             }
         }
 
+        /// <summary>
+        /// Übersetzt den Graphen in einen Graphen mit Integerwerten
+        /// </summary>
+        /// <returns></returns>
         public FiniteDirectedGraph<int> TranslateToInt()
         {
             var result = new FiniteDirectedGraph<int>();
@@ -81,7 +85,6 @@ namespace EntaglementOfGraphs
                     }
                 }
             }
-
             return result;
         }
     }

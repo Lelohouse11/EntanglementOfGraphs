@@ -20,40 +20,18 @@ namespace EntanglementOfGraphs
         GameState<int> currentState;
         bool gamestarted;
         GameStateGraphTyp gameStateGraphTyp;
-        private int startThiefPos = 1;
         private long maxMemoryUsed = 0;
         IProgress<string>? progress = null;
-        IProgress<string>? progress1 = null;
-
-        string filepath = "output.txt";
-        int count = 1;
-        int count2 = 1;
-        Stopwatch globalStopwatch = new Stopwatch();
 
         public MainScreen()
         {
             InitializeComponent();
             graph.CreateImage(graph_PictureBox);
-            chooseFixOrBack_ComboBox.SelectedIndex = 0;
-            chooseGraphTyp_ComboBox.SelectedIndex = 0;
+            chooseDFSOrBFS_ComboBox.SelectedIndex = 0;
+            chooseGraphTyp_ComboBox.SelectedIndex = 0;            
             progress = new Progress<string>(s =>
             {
-                AppendToFile(filepath, s);
-                if (count % 4 == 0)
-                {
-                    count = 1;
-                    count2 = count2 + 1;
-                }
-                else
-                {
-                    count = count + 1;
-                }
-                TestingGraphClasses(count2, count);
-                //entanglement_Button.Enabled = true;
-            });
-            progress1 = new Progress<string>(s =>
-            {
-                entanglement_Button.Enabled = true;
+                ActivateAllButtons();
                 TextOutput_TextBox.Text = s;
             });
         }
@@ -95,6 +73,10 @@ namespace EntanglementOfGraphs
             vertexInput_TextBox.Focus();
         }
 
+        /// <summary>
+        /// überwacht den Speicherverbrauch
+        /// </summary>
+        /// <param name="token"></param>
         private void MonitorMemoryUsage(CancellationToken token)
         {
             while (!token.IsCancellationRequested)
@@ -105,14 +87,13 @@ namespace EntanglementOfGraphs
                 {
                     maxMemoryUsed = currentMemoryUsed;
                 }
-                if (globalStopwatch.ElapsedMilliseconds > 600000)
-                {
-                    Environment.Exit(0);
-                }
                 Thread.Sleep(10);
             }
         }
 
+        /// <summary>
+        /// berechnet das Entanglement des Graphen
+        /// </summary>
         private void CalculateEntanglementOfThread()
         {
             CancellationTokenSource cancellationTokenForInnerStopwatch = new CancellationTokenSource();
@@ -124,16 +105,8 @@ namespace EntanglementOfGraphs
             cancellationTokenForInnerStopwatch.Cancel();
             memoryMonitorTask.Wait();
             string result = $"Das Entanglement ist {entanglement}. " +
-                  $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed} Bytes.";
-            progress1?.Report(result);
-        }
-
-        private void AppendToFile(string filepath, string content)
-        {
-            using (StreamWriter writer = new StreamWriter(filepath, true))
-            {
-                writer.WriteLine(content);
-            }
+                  $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed/1000} KiloBytes.";
+            progress?.Report(result);
         }
 
         /// <summary>
@@ -147,30 +120,21 @@ namespace EntanglementOfGraphs
             TextOutput_TextBox.Clear();
 
 
-            string selectedCalcultaion = (string)chooseFixOrBack_ComboBox.SelectedItem;
-            if (selectedCalcultaion.Equals("Fixpoint"))
+            string selectedCalcultaion = (string)chooseDFSOrBFS_ComboBox.SelectedItem;
+            if (selectedCalcultaion.Equals("Breitensuche"))
             {
-                gameStateGraphTyp = GameStateGraphTyp.Fixpoint;
+                gameStateGraphTyp = GameStateGraphTyp.BFS;
             }
-            else if (selectedCalcultaion.Equals("Rückwärts"))
+            else if (selectedCalcultaion.Equals("Tiefensuche"))
             {
-                gameStateGraphTyp = GameStateGraphTyp.Backward;
+                gameStateGraphTyp = GameStateGraphTyp.DFS;
             }
             else
             {
                 TextOutput_TextBox.Text = "Bitte eine Berechnungsart auswählen.";
                 return;
             }
-            entanglement_Button.Enabled = false;
-            GC.Collect();
-            var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
-            t.Start();
-            maxMemoryUsed = 0;
-        }
-
-        private void TestingGraphClasses(int i, int k)
-        {
-            graph = new TorusGraph(i, k).TranslateToInt();
+            DeactivateAllButtons();
             GC.Collect();
             var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
             t.Start();
@@ -242,21 +206,11 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void deleteGraph_Click(object sender, EventArgs e)
         {
-            if (false)
-            {
-                AppendToFile(filepath, "");
-                AppendToFile(filepath, "Torus-Graph mit Rückwärts Aufbau:");
-
-                globalStopwatch.Start();
-                TestingGraphClasses(count2, count);
-            }
-            else
-            {
-                TextOutput_TextBox.Clear();
-                graph = new FiniteDirectedGraph<int>();
-                graph.CreateImage(graph_PictureBox);
-                graph_PictureBox.Refresh();
-            }
+            TextOutput_TextBox.Clear();
+            graph = new FiniteDirectedGraph<int>();
+            graph.CreateImage(graph_PictureBox);
+            graph_PictureBox.Refresh();
+            
         }
 
         /// <summary>
@@ -324,13 +278,7 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void playThief_Click(object sender, EventArgs e)
         {
-            if (checkGameSettings()) //checkt alle Eingaben und erstellt Spiel
-            {
-                thiefMovement_Panel.Show();
-                restartGame_Button.Show();
-                MoveDet();
-                gamestarted = true;
-            }
+            checkGameSettings(false);
         }
 
         /// <summary>
@@ -340,20 +288,14 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void playDetective_Click(object sender, EventArgs e)
         {
-            if (checkGameSettings()) //checkt alle Eingaben und erstellt Spiel
-            {
-                detMovement_Panel.Show();
-                restartGame_Button.Show();
-                TextOutput_TextBox.Text = $"Du bist am Zug! Wähle einen Detektiv oder tue nichts. Noch nicht Plazierte Detektive: {gameStateGraph.detectiveMaxAmount}.";
-                gamestarted = true;
-            }
+            checkGameSettings(true);
         }
 
         /// <summary>
         /// prüft eingabe und erstellt das Spiel und passende Strategien
         /// </summary>
         /// <returns></returns>
-        private bool checkGameSettings()
+        private void checkGameSettings(bool choosedPlayer)
         {
             TextOutput_TextBox.Clear();
             int startPos;
@@ -369,16 +311,11 @@ namespace EntanglementOfGraphs
                     {
                         if (graph.VertexCount >= detectiveAmount) // gültige Anzahl an Detektiven und dann erstellung des Spiels
                         {
-                            currentState = new GameState<int>(detectiveAmount, startPos, true);
-                            gameStateGraph = new GameStateGraph<int>(graph, currentState);
-                            gameStateGraph.BuildFlaggedGameStateGraphFixpoint();
-                            gameStateGraph.CreateStrategies();
-                            graph.ColorVertex(startPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
-                            graph_PictureBox.Refresh();
                             startPosInputPlay_TextBox.Clear();
                             detectiveAmountInput_TextBox.Clear();
                             GameSettings_Panel.Hide();
-                            return true;
+                            DeactivateAllButtons();
+                            CalculateStrategiesOfThread(detectiveAmount, startPos, choosedPlayer);
                         }
                         else // kein gültige Anzahl an Detektiven
                         {
@@ -407,7 +344,36 @@ namespace EntanglementOfGraphs
                 startPosInputPlay_TextBox.Clear();
                 startPosInputPlay_TextBox.Focus();
             }
-            return false;
+        }
+
+        /// <summary>
+        /// berechnet das Entanglement des Graphen
+        /// </summary>
+        private void CalculateStrategiesOfThread(int detectiveAmount, int startPos, bool choosedPlayer)
+        {
+            currentState = new GameState<int>(detectiveAmount, startPos, true);
+            gameStateGraph = new GameStateGraph<int>(graph, currentState);
+            gameStateGraph.BuildFlaggedGameStateGraphBFS();
+            gameStateGraph.CreateStrategies();
+            graph.ColorVertex(startPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
+            graph_PictureBox.Refresh();
+            if (choosedPlayer) // Spieler ist Detektiv
+            {
+                thiefMovement_Panel.Hide();
+                detMovement_Panel.Show();
+                restartGame_Button.Show();
+                TextOutput_TextBox.Text = $"Du bist am Zug! Wähle einen Detektiv (Knotenummer) oder tue nichts. Noch nicht Plazierte Detektive (-1): {gameStateGraph.detectiveMaxAmount - currentState.detectives.Count}.";
+                gamestarted = true;
+            }
+            else // Spieler ist Dieb
+            {
+                detMovement_Panel.Hide();
+                thiefMovement_Panel.Show();
+                restartGame_Button.Show();
+                MoveDet();
+                gamestarted = true;
+            }
+            ActivateAllButtons();
         }
 
         /// <summary>
@@ -477,7 +443,6 @@ namespace EntanglementOfGraphs
             MoveThief();
         }
 
-
         /// <summary>
         /// bewegt den Dieb, wenn man Dieb spielt
         /// </summary>
@@ -527,7 +492,6 @@ namespace EntanglementOfGraphs
             }
         }
 
-
         /// <summary>
         /// simuliert einen Zug des Diebes, nach berechneter Strategie (Spieler ist Detektiv)
         /// </summary>
@@ -537,7 +501,7 @@ namespace EntanglementOfGraphs
             bool thiefCanMove = false;
             foreach (var item in gameStateGraph.thiefStrategy) // prüft ob Detetkiv noch einen guten Zug machen kann
             {
-                if (item.source.Equals(currentState))
+                if (item.source.Equals(currentState) && item.target.Count != 0)
                 {
                     thiefCanMove = true;
                     break;
@@ -627,6 +591,8 @@ namespace EntanglementOfGraphs
             GameSettings_Panel.Show();
             editGraph_Button.Show();
             restartGame_Button.Hide();
+            detMovement_Panel.Hide();
+            thiefMovement_Panel.Hide();
             graph.ColorVertex(currentState.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White); // entfärbt Graph
             foreach (var detective in currentState.detectives)
             {
@@ -635,6 +601,11 @@ namespace EntanglementOfGraphs
             graph_PictureBox.Refresh();
         }
 
+        /// <summary>
+        /// ändert die Anzeige, je nach ausgewähltem Graphen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chooseGraphTyp_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedGraph = (string)chooseGraphTyp_ComboBox.SelectedItem;
@@ -676,6 +647,11 @@ namespace EntanglementOfGraphs
             }
         }
 
+        /// <summary>
+        /// erstellt einen ungerichteten Kreisgraphen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void createUndirectedCircleGraph_Click(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
@@ -696,6 +672,11 @@ namespace EntanglementOfGraphs
             unCircleSizeInput_TextBox.Focus();
         }
 
+        /// <summary>
+        /// erstellt einen gerichteten Kreisgraphen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void createDirectedCircleGraph_Click(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
@@ -716,6 +697,11 @@ namespace EntanglementOfGraphs
             diCircleSizeInput_TextBox.Focus();
         }
 
+        /// <summary>
+        /// erstellt einen vollständig verbundenen Graphen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fullyConCreate_Click(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
@@ -736,25 +722,11 @@ namespace EntanglementOfGraphs
             fullyConSizeInput_TextBox.Focus();
         }
 
-        private Func<int, int> CreateFunction(string funktionString)
-        {
-
-            return x =>
-            {
-                try
-                {
-                    var dataTable = new DataTable();
-                    var temp = dataTable.Compute(funktionString.Replace("x", x.ToString()), string.Empty);
-                    return Convert.ToInt32(temp);
-                }
-                catch
-                {
-                    return 0;
-                }
-                ;
-            };
-        }
-
+        /// <summary>
+        /// lösch einen Knoten und dazugehörige Kanten
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteVertex_Button_Click(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
@@ -782,6 +754,11 @@ namespace EntanglementOfGraphs
             vertexInput_TextBox.Focus();
         }
 
+        /// <summary>
+        /// löscht eine Kante
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteEdge_Button_Click(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
@@ -829,6 +806,11 @@ namespace EntanglementOfGraphs
             }
         }
 
+        /// <summary>
+        /// erstellt einen Gittergraphen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridGraphCreate_Button_Click(object sender, EventArgs e)
         {
             TextOutput_TextBox.Clear();
@@ -853,63 +835,55 @@ namespace EntanglementOfGraphs
                 GirdN_TextBox.Focus();
             }
         }
-    }
-}
-/*
-TextOutput_TextBox.Clear();
-int n;
-int m;
-bool isNNumber = int.TryParse(unaryFuncStartDomImput_TextBox.Text, out n);
-bool istMNumber = int.TryParse(unaryFuncEndDomImput_TextBox.Text, out m);
-if (isNNumber && istMNumber)
-{
-    graph = new UndirectedGirdGraph(n, m);
-    Func<int, int> func = CreateFunction(unaryFuncInput_TextBox.Text);
-    graph.CreateImage(graph_PictureBox);
-    graph_PictureBox.Refresh();
-    unaryFuncInput_TextBox.Clear();
-    unaryFuncStartDomImput_TextBox.Clear();
-    unaryFuncEndDomImput_TextBox.Clear();
-    unaryFuncInput_TextBox.Focus();
-}
-else
-{
-    TextOutput_TextBox.Text = "Bitte Ganzzahlen für die Größe eingeben.";
-    unaryFuncStartDomImput_TextBox.Clear();
-    unaryFuncEndDomImput_TextBox.Clear();
-    unaryFuncStartDomImput_TextBox.Focus();
-}
-/*
-TextOutput_TextBox.Clear();
-int n;
-int m;
-bool isNNumber = int.TryParse(unaryFuncStartDomImput_TextBox.Text, out n);
-bool istMNumber = int.TryParse(unaryFuncEndDomImput_TextBox.Text, out m);
-if (isNNumber && istMNumber)
-{
-    Func<int, int> func = CreateFunction(unaryFuncInput_TextBox.Text);
 
-    if (func != null)
-    {
+        /// <summary>
+        /// deaktiviert alle Buttons
+        /// </summary>
+        private void DeactivateAllButtons()
+        {
+            newVertex_Button.Enabled = false;
+            addEdge_Button.Enabled = false;
+            deleteVertex_Button.Enabled = false;
+            deleteEdge_Button.Enabled = false;
+            entanglement_Button.Enabled = false;
+            playGraph_Button.Enabled = false;
+            editGraph_Button.Enabled = false;
+            playThief_Button.Enabled = false;
+            playDetective_Button.Enabled = false;
+            moveDetective_Button.Enabled = false;
+            doNothingDet_Button.Enabled = false;
+            moveThiefToTarget_Button.Enabled = false;
+            restartGame_Button.Enabled = false;
+            createTorusGraph_Button.Enabled = false;
+            createUndirectedCircleGraph_Button.Enabled = false;
+            createDirectedCircleGraph_Button.Enabled = false;
+            fullyConCreate_Button.Enabled = false;
+            GridGraphCreate_Button.Enabled = false;
+        }
 
-        graph = new UnaryFunctionGraph(func, n, m);
-        graph.CreateImage(graph_PictureBox);
-        graph_PictureBox.Refresh();
-        unaryFuncInput_TextBox.Clear();
-        unaryFuncStartDomImput_TextBox.Clear();
-        unaryFuncEndDomImput_TextBox.Clear();
+        /// <summary>
+        /// aktiviert alle Buttons
+        /// </summary>
+        private void ActivateAllButtons()
+        {
+            newVertex_Button.Enabled = true;
+            addEdge_Button.Enabled = true;
+            deleteVertex_Button.Enabled = true;
+            deleteEdge_Button.Enabled = true;
+            entanglement_Button.Enabled = true;
+            playGraph_Button.Enabled = true;
+            editGraph_Button.Enabled = true;
+            playThief_Button.Enabled = true;
+            playDetective_Button.Enabled = true;
+            moveDetective_Button.Enabled = true;
+            doNothingDet_Button.Enabled = true;
+            moveThiefToTarget_Button.Enabled = true;
+            restartGame_Button.Enabled = true;
+            createTorusGraph_Button.Enabled = true;
+            createUndirectedCircleGraph_Button.Enabled = true;
+            createDirectedCircleGraph_Button.Enabled = true;
+            fullyConCreate_Button.Enabled = true;
+            GridGraphCreate_Button.Enabled = true;
+        }
     }
-    else
-    {
-        TextOutput_TextBox.Text = "Ungültige Funktion eingegeben. Bitte nur x als Variable benutzen und nur gültige mathematische Operationen (+, -, *, /, ^).";
-        unaryFuncInput_TextBox.Clear();
-    }
-    unaryFuncInput_TextBox.Focus();
 }
-else
-{
-    TextOutput_TextBox.Text = "Bitte eine Ganzzahl für den Definitionsbereich eingeben.";
-    unaryFuncStartDomImput_TextBox.Clear();
-    unaryFuncEndDomImput_TextBox.Clear();
-    unaryFuncStartDomImput_TextBox.Focus();
-}*/

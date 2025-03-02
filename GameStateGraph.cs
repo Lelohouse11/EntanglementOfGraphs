@@ -12,7 +12,6 @@ using static System.Windows.Forms.AxHost;
 
 namespace EntaglementOfGraphs
 {
-    //Achtung: die startpos muss für flagged zurück implementiert werden
     internal class GameStateGraph<V> : AdjacencyGraph<GameState<V>, Edge<GameState<V>>> where V : IEquatable<V>
     {
         public readonly int detectiveMaxAmount;
@@ -21,29 +20,33 @@ namespace EntaglementOfGraphs
         private List<GameState<V>> allStartStates;
         public readonly List<Move<V>> detectiveStrategy = [];
         public readonly List<Move<V>> thiefStrategy = [];
-        //private readonly GameState<V> startState;
         public readonly List<GameState<V>> finalStates = [];
 
         /// <summary>
-        /// erstellt GameStateGraph mit Startwerten
+        /// Erstellt einen Spielzustandsgraphen für die Berechnung des Entanglements.
         /// </summary>
         /// <param name="_graph"></param>
-        /// <param name="start"></param>
+        /// <param name="detectiveAmount"></param>
         public GameStateGraph(FiniteDirectedGraph<V> _graph, int detectiveAmount)
         {
             detectiveMaxAmount = detectiveAmount;
             graph = _graph;
             possibleFinalStates = GetPossibleFinalStates();
-            allStartStates = GetAllStartStates(); 
+            allStartStates = GetAllStartStates();
             foreach (var state in possibleFinalStates)
             {
                 state.possiblePreviousStepsCount = graph.GetPreviousPossibleStates(state).Count;
                 AddVertex(state);
                 finalStates.Add(state);
             }
-            
         }
 
+
+        /// <summary>
+        /// Erstellt einen Spielzustandsgraphen für die Berechnung der Strategien.
+        /// </summary>
+        /// <param name="_graph"></param>
+        /// <param name="startState"></param>
         public GameStateGraph(FiniteDirectedGraph<V> _graph, GameState<V> startState)
         {
             detectiveMaxAmount = startState.detectiveMaxAmount;
@@ -57,122 +60,120 @@ namespace EntaglementOfGraphs
                 AddVertex(state);
                 finalStates.Add(state);
             }
-
         }
 
-        public bool BuildGameStateGraphBackwards()
+        /// <summary>
+        /// Startet die Rekursion der Tiefensuche. Der Wahrheitswert gibt an, ob der Detektiv sicher gewinnen kann.
+        /// </summary>
+        /// <returns></returns>
+        public bool BuildGameStateGraphDFS()
         {
-            /*
-            foreach (var startState in allStartStates)
+            foreach (var finalState in finalStates)
             {
-                AddVertex(startState);
-            }
-            */
-            foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
-            {
-                GameStateGraphBackwardsRecursion(finalState);
+                GameStateGraphDFSRecursion(finalState);
                 if (allStartStates.Count == 0) return true;
             }
             return false;
         }
 
         /// <summary>
-        /// baut den GameStateGraph rekursiv auf, allerdings nur bis zum Punkt das Detektiv einen Weg hat, 
-        /// dass er sicher gewinnt
+        /// Baut den GameStateGraph nach der Tiefensuche auf, allerdings nur bis zu dem Punkt, an dem der Detektiv sicher gewinnen kann.
         /// </summary>
         /// <param name="currentState"></param>
-        private void GameStateGraphBackwardsRecursion(GameState<V> currentState)
+        private void GameStateGraphDFSRecursion(GameState<V> currentState)
         {
-            foreach (var previousState in graph.GetPreviousPossibleStates(currentState)) // gehe die vorig möglichen Spielzustände durch
+            foreach (var previousState in graph.GetPreviousPossibleStates(currentState))
             {
                 if (previousState.detectivesTurn)
                 {
-                    var temp = AddDetectiveGameState(previousState, currentState); // fügt Detektivknoten hinzu
+                    var temp = AddDetectiveGameState(previousState, currentState);
                     if (temp == null)
                     {
                         return;
                     }
-                    else if (temp == true) // fügt Detektivknoten hinzu
+                    else if (temp == true)
                     {
-                        GameStateGraphBackwardsRecursion(previousState);
+                        GameStateGraphDFSRecursion(previousState);
                     }
                 }
-                else //wenn der Deib dran ist muss jeder möglicher Zug schon im GameStateGraph gespeichert sein
+                else
                 {
-                    if (AddThiefGameState(previousState)) // fügt Diebknoten hinzu
+                    if (AddThiefGameState(previousState))
                     {
-                        GameStateGraphBackwardsRecursion(previousState);
+                        GameStateGraphDFSRecursion(previousState);
                     }
-                }            
+                }
             }
-            //return false;
         }
 
-        public void BuildFlaggedGameStateGraphBackwards()
+        /// <summary>
+        /// Baut den GameStateGraph nach der Tiefensuche auf mit bestimmten Wahrscheinlichkeiten (hier Flag genannt).
+        /// </summary>
+        public void BuildFlaggedGameStateGraphDFS()
         {
             foreach (var startState in allStartStates)
             {
                 AddVertex(startState);
             }
-            foreach (var finalState in finalStates) // ruft rekursiven Aufruf auf alle Endzustände auf
+            foreach (var finalState in finalStates)
             {
-                FlaggedGameStateGraphBackwardsRecursion(finalState);
+                FlaggedGameStateGraphDFSRecursion(finalState);
             }
         }
 
         /// <summary>
-        /// baut den GameStateGraph rekursiv auf mit Gewinnwahrscheinlichkeit und Distanz
+        /// Baut den GameStateGraph rekursiv auf mit Gewinnwahrscheinlichkeit und Distanz.
         /// </summary>
         /// <param name="currentState"></param>
-        private void FlaggedGameStateGraphBackwardsRecursion(GameState<V> currentState)
+        private void FlaggedGameStateGraphDFSRecursion(GameState<V> currentState)
         {
-            foreach (var previousState in graph.GetPreviousPossibleStates(currentState)) // gehe die vorig möglichen Spielzustände durch
+            foreach (var previousState in graph.GetPreviousPossibleStates(currentState))
             {
                 if (previousState.detectivesTurn)
                 {
-                    if (AddFlaggedDetectiveGameState(previousState, currentState)) // fügt Detektivknoten hinzu
+                    if (AddFlaggedDetectiveGameState(previousState, currentState))
                     {
-                        FlaggedGameStateGraphBackwardsRecursion(previousState);
+                        FlaggedGameStateGraphDFSRecursion(previousState);
                     }
                 }
-                else //wenn der Deib dran ist muss jeder möglicher Zug schon im GameStateGraph gespeichert sein
+                else
                 {
-                    if (AddFlaggedThiefGameState(previousState)) //fügt Detektivknoten hinzu
+                    if (AddFlaggedThiefGameState(previousState))
                     {
-                        FlaggedGameStateGraphBackwardsRecursion(previousState);
+                        FlaggedGameStateGraphDFSRecursion(previousState);
                     }
                 }
             }
         }
 
         /// <summary>
-        /// baut den GameStateGraph durch eine Fixpointiteration auf
+        /// Baut den GameStateGraph durch die Breitensuche auf. Der Wahrheitswert gibt an, ob der Detektiv sicher gewinnen kann.
         /// </summary>
-        public bool BuildGameStateGraphFixpoint()
+        public bool BuildGameStateGraphBFS()
         {
             bool continueFixpoint;
             do
             {
                 continueFixpoint = false;
                 var allVertices = Vertices.ToList();
-                foreach (var currentState in allVertices) // geht alle Knoten in bisheriger Menge durch
+                foreach (var currentState in allVertices)
                 {
-                    if (currentState.detectivesTurn && currentState.possiblePreviousStepsCount > 0) //wenn detektiv vorher dran war wird alles hinzugefügt
+                    if (currentState.detectivesTurn && currentState.possiblePreviousStepsCount > 0)
                     {
                         var previousPossibleStates = graph.GetPreviousPossibleStates(currentState);
                         currentState.possiblePreviousStepsCount = previousPossibleStates.Count;
-                        foreach (var previousState in previousPossibleStates) // alle Knoten mit den man den jetzigen Knoten ereichen kann
+                        foreach (var previousState in previousPossibleStates)
                         {
-                            continueFixpoint = continueFixpoint || AddThiefGameState(previousState); // fügt Diebknoten hinzu                                
+                            continueFixpoint = continueFixpoint || AddThiefGameState(previousState);
                         }
                     }
-                    else if (currentState.possiblePreviousStepsCount > 0)// Dieb war davor dran
+                    else if (currentState.possiblePreviousStepsCount > 0)
                     {
                         var previousPossibleStates = graph.GetPreviousPossibleStates(currentState);
                         currentState.possiblePreviousStepsCount = previousPossibleStates.Count;
-                        foreach (var previousState in previousPossibleStates) // alle Knoten mit den man jetzigen Knoten ereichen kann
+                        foreach (var previousState in previousPossibleStates)
                         {
-                            bool? temp = AddDetectiveGameState(previousState, currentState); // fügt Detektivknoten hinzu
+                            bool? temp = AddDetectiveGameState(previousState, currentState);
                             if (temp == null)
                             {
                                 continueFixpoint = false;
@@ -180,11 +181,9 @@ namespace EntaglementOfGraphs
                             }
                             continueFixpoint = continueFixpoint || (bool)temp;
                         }
-                        
                     }
                 }
-
-            } while (continueFixpoint); // macht ewweiter , wenn neuen Knoten oder och nicht Startknoten gefunden wurde
+            } while (continueFixpoint);
             if (allStartStates.Count == 0)
             {
                 return true;
@@ -193,55 +192,54 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// baut den GameStateGraph durch eine Fixpointiteration auf mit Gewinnwahrscheinlichkeit und Distanz
+        /// Baut den GameStateGraph durch die Breitensuche auf mit Gewinnwahrscheinlichkeit und Distanz.
         /// </summary>
-        public void BuildFlaggedGameStateGraphFixpoint()
+        public void BuildFlaggedGameStateGraphBFS()
         {
             bool continueFixpoint;
             do
             {
                 continueFixpoint = false;
                 var allStates = Vertices.ToList();
-                foreach (var currentState in allStates) // geht alle Knoten in bisheriger Menge durch
+                foreach (var currentState in allStates)
                 {
-                    if (currentState.detectivesTurn && currentState.possiblePreviousStepsCount > 0) //wenn detektiv vorher dran war wird alles hinzugefügt
+                    if (currentState.detectivesTurn && currentState.possiblePreviousStepsCount > 0)
                     {
-                        foreach (var previousState in graph.GetPreviousPossibleStates(currentState)) // alle Knoten mit den man den jetzigen Knoten ereichen kann
+                        foreach (var previousState in graph.GetPreviousPossibleStates(currentState))
                         {
                             continueFixpoint = continueFixpoint || AddFlaggedThiefGameState(previousState);
-                        }  
+                        }
                     }
-                    else if (currentState.possiblePreviousStepsCount > 0)// Dieb war davor dran
+                    else if (currentState.possiblePreviousStepsCount > 0)
                     {
-                        foreach (var previousState in graph.GetPreviousPossibleStates(currentState)) // alle Knoten mit den man jetzigen Knoten ereichen kann
+                        foreach (var previousState in graph.GetPreviousPossibleStates(currentState))
                         {
-                            continueFixpoint = continueFixpoint || AddFlaggedDetectiveGameState(previousState, currentState); // fügt Detektivknoten hinzu
+                            continueFixpoint = continueFixpoint || AddFlaggedDetectiveGameState(previousState, currentState);
                         }
                     }
                 }
-
-            } while (continueFixpoint); // macht ewweiter , wenn neuen Knoten oder och nicht Startknoten gefunden wurde
+            } while (continueFixpoint);
         }
 
         /// <summary>
-        /// fügt Knoten wo Dieb dran ist zu GameStateGraph hinzu
+        /// Fügt Knoten, wo der Dieb dran ist, zum GameStateGraph hinzu.
         /// </summary>
         /// <param name="previousState"></param>
         private bool AddThiefGameState(GameState<V> previousState)
         {
-            if (GetExistingState(previousState) == null) //checken ob schon vorhandener Knoten
+            if (GetExistingState(previousState) == null)
             {
                 var nextPossibleStates = graph.GetNextPossibleStates(previousState);
-                foreach (var targetState in nextPossibleStates) // checkt, ob alle ausgehenden Kanten wieder in den GameStateGraph führen
+                foreach (var targetState in nextPossibleStates)
                 {
-                    if(GetExistingState(targetState) == null) return false; //wenn nicht alle Kanten in den Baum führen gewinnt der Detektiv nicht sicher
+                    if (GetExistingState(targetState) == null) return false;
                 }
                 previousState.possiblePreviousStepsCount = graph.GetPreviousPossibleStates(previousState).Count;
                 AddVertex(previousState);
-                foreach (var targetState in nextPossibleStates) // alle Kanten vom Knoten werden hinzugefügt
+                foreach (var targetState in nextPossibleStates)
                 {
                     GetExistingState(targetState).possiblePreviousStepsCount--;
-                    AddEdge(new Edge<GameState<V>>(previousState, GetExistingState(targetState)));                        
+                    AddEdge(new Edge<GameState<V>>(previousState, GetExistingState(targetState)));
                 }
                 return true;
             }
@@ -249,7 +247,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// fügt Knoten zum GameStateGraph mit Gewinnwahrschleinlichkeit für Detektiv bei zufälliger Zugwahl des Diebes
+        /// Fügt Knoten zum GameStateGraph mit Gewinnwahrscheinlichkeit für den Detektiv bei zufälliger Zugwahl des Diebes hinzu.
         /// </summary>
         /// <param name="previousState"></param>
         /// <returns></returns>
@@ -264,17 +262,17 @@ namespace EntaglementOfGraphs
             if (isNewPState == null)
             {
                 previousState.possiblePreviousStepsCount = graph.GetPreviousPossibleStates(previousState).Count;
-                AddVertex(previousState); //fügt alle Knoten hinzu
+                AddVertex(previousState);
                 sourceState = previousState;
             }
 
-            foreach (var nextState in nextPossibleStates) // checkt, ob alle ausgehenden Kanten wieder in den sicheren GameStateGraph führen
+            foreach (var nextState in nextPossibleStates)
             {
                 var isNewState = GetExistingState(nextState);
                 if (isNewState != null)
                 {
-                    winningChanceSum += isNewState.winningChance; // summiert die Gewinnchancen des Detektivs
-                    if (isNewState.distanceToWin < minDistanceToWin) // sucht kürzesten Weg zum Gewinn
+                    winningChanceSum += isNewState.winningChance;
+                    if (isNewState.distanceToWin < minDistanceToWin)
                     {
                         minDistanceToWin = isNewState.distanceToWin;
                     }
@@ -284,14 +282,14 @@ namespace EntaglementOfGraphs
                         AddEdge(new Edge<GameState<V>>(sourceState, isNewState));
                     }
                 }
-            }            
+            }
 
-            previousState.winningChance = winningChanceSum / nextPossibleStates.Count; // Wahrscheinlichkeit des Gewinns bei Zufälliger Zugwahl
-            previousState.distanceToWin += minDistanceToWin + 1;           
-                
-            if(isNewPState != null)
+            previousState.winningChance = winningChanceSum / nextPossibleStates.Count;
+            previousState.distanceToWin += minDistanceToWin + 1;
+
+            if (isNewPState != null)
             {
-                if ((previousState.winningChance) < (isNewPState.winningChance))
+                if (previousState.winningChance < isNewPState.winningChance)
                 {
                     isNewPState.distanceToWin = previousState.distanceToWin + 1;
                     isNewPState.winningChance = previousState.winningChance;
@@ -299,16 +297,15 @@ namespace EntaglementOfGraphs
                 }
                 return false;
             }
-           return true;
+            return true;
         }
 
-            /// <summary>
-            /// ändert alle abhängigen Gewinnwahrscheinlichkeiten
-            /// </summary>
-            /// <param name="state"></param>
-            /// <param name="newWC"></param>
+        /// <summary>
+        /// Ändert alle abhängigen Gewinnwahrscheinlichkeiten.
+        /// </summary>
+        /// <param name="state"></param>
         private void changeAllPreviousWC(GameState<V> state)
-        {            
+        {
             foreach (var previousState in GetIncomingStates(state))
             {
                 if (previousState.winningChance < state.winningChance)
@@ -323,45 +320,49 @@ namespace EntaglementOfGraphs
                         previousState.winningChance = state.winningChance;
                     }
                     changeAllPreviousWC(previousState);
-                }                
+                }
             }
-            
         }
 
         /// <summary>
-        /// fügt Knoten hinzu, wo der Detektiv dran ist (mit möglicher Gewinnwahrscheinlichkeit für Detektiv)
+        /// Fügt Knoten hinzu, wo der Detektiv dran ist.
         /// </summary>
         /// <param name="previousState"></param>
         /// <param name="currentState"></param>
-        /// <param name="flagged"></param>
         /// <returns></returns>
-        private bool? AddDetectiveGameState (GameState<V> previousState, GameState<V> currentState)
+        private bool? AddDetectiveGameState(GameState<V> previousState, GameState<V> currentState)
         {
-            var isNewState = GetExistingState(previousState); //checken ob schon vorhandener Knoten
+            var isNewState = GetExistingState(previousState);
             if (isNewState == null)
             {
                 previousState.possiblePreviousStepsCount = graph.GetPreviousPossibleStates(previousState).Count;
-                AddVertex(previousState); // Hinzufügen, wenn neu
+                AddVertex(previousState);
                 currentState.possiblePreviousStepsCount--;
                 AddEdge(new Edge<GameState<V>>(previousState, currentState));
                 return true;
-            }            
-            if (AllStartStatesFoundAndAdded(isNewState, currentState)) return null; // prüft ob Startknoten gefunden                       
+            }
+            if (AllStartStatesFoundAndAdded(isNewState, currentState)) return null;
             return false;
         }
 
+
+        /// <summary>
+        /// Fügt Knoten zum GameStateGraph mit Gewinnwahrscheinlichkeit für den Detektiv bei zufälliger Zugwahl des Diebes hinzu.
+        /// </summary>
+        /// <param name="previousState"></param>
+        /// <param name="currentState"></param>
+        /// <returns></returns>
         private bool AddFlaggedDetectiveGameState(GameState<V> previousState, GameState<V> currentState)
         {
-            var isNewState = GetExistingState(previousState); //checken ob schon vorhandener Knoten
-            //GameState<V> cloned = currentState.Clone().ChangeTurn();
-            if (isNewState == null) // hier auch falsch
-            {        
+            var isNewState = GetExistingState(previousState);
+            if (isNewState == null)
+            {
                 previousState.distanceToWin = currentState.distanceToWin + 1;
                 previousState.winningChance = currentState.winningChance;
                 previousState.possiblePreviousStepsCount = graph.GetPreviousPossibleStates(previousState).Count;
-                AddVertex(previousState); // Hinzufügen, wenn neu und auch möglich
+                AddVertex(previousState);
                 currentState.possiblePreviousStepsCount--;
-                AddEdge(new Edge<GameState<V>>(previousState, currentState)); // Kante hinzufügen
+                AddEdge(new Edge<GameState<V>>(previousState, currentState));
                 return true;
             }
             else if (isNewState.winningChance < currentState.winningChance)
@@ -371,7 +372,7 @@ namespace EntaglementOfGraphs
                 changeAllPreviousWC(isNewState);
                 if (!isExistingEdge(isNewState, currentState))
                 {
-                    AddEdge(new Edge<GameState<V>>(isNewState, currentState)); // Kante hinzufügen
+                    AddEdge(new Edge<GameState<V>>(isNewState, currentState));
                 }
                 changeAllPreviousWC(isNewState);
             }
@@ -379,27 +380,25 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// erstellt Stategien für beide Spieler
+        /// Erstellt Strategien für beide Spieler.
         /// </summary>
         public void CreateStrategies()
         {
-            foreach (var state in Vertices) // geht alle Knoten im Spielbaum durch
+            foreach (var state in Vertices)
             {
                 if (state.detectivesTurn)
                 {
-                    nextDetectiveMove(state); // berechnet besten Zug wenn Detektiv an der reihe ist
+                    nextDetectiveMove(state);
                 }
                 else
                 {
-                    nextThiefMove(state); // brechnet besten Zug wenn Dieb an der Reihe ist
+                    nextThiefMove(state);
                 }
             }
-            var temp2 = Edges;
-            var temp = VertexCount;
         }
 
         /// <summary>
-        /// erstellt eine Liste an besten Zügen zu den jeweiligem Status des Spiels
+        /// Erstellt eine Liste an besten Zügen zu dem jeweiligen Status des Spiels.
         /// </summary>
         /// <param name="currentState"></param>
         private void nextDetectiveMove(GameState<V> currentState)
@@ -407,66 +406,72 @@ namespace EntaglementOfGraphs
             List<GameState<V>> bestDetectiveMoves = [];
             double bestWinningChance = 0;
             int bestDistanceToWin = VertexCount;
-            foreach (var nextState in GetOutgoingStates(currentState)) // findet die beste Gewinnwahrscheinlichkeit
-            {                
+            foreach (var nextState in GetOutgoingStates(currentState))
+            {
                 if (nextState.winningChance > bestWinningChance)
                 {
                     bestWinningChance = nextState.winningChance;
                     bestDistanceToWin = nextState.distanceToWin;
                     bestDetectiveMoves = [nextState];
                 }
-                else if ((nextState.winningChance == bestWinningChance) && (nextState.distanceToWin < bestDistanceToWin))
+                else if (nextState.winningChance == bestWinningChance && nextState.distanceToWin < bestDistanceToWin)
                 {
                     bestDistanceToWin = nextState.distanceToWin;
                     bestDetectiveMoves = [nextState];
                 }
-                else if ((nextState.winningChance == bestWinningChance) && (nextState.distanceToWin == bestDistanceToWin))
+                else if (nextState.winningChance == bestWinningChance && nextState.distanceToWin == bestDistanceToWin)
                 {
                     bestDetectiveMoves.Add(nextState);
                 }
             }
-            if (bestDetectiveMoves.Count != 0) // es wurden keine guten Züge gefunden
+            if (bestDetectiveMoves.Count != 0)
             {
                 detectiveStrategy.Add(new Move<V>(currentState, bestDetectiveMoves));
             }
         }
 
         /// <summary>
-        /// erstellt eine Liste an besten Zügen zu den jeweiligem Status des Spiels
+        /// Erstellt eine Liste an besten Zügen zu dem jeweiligen Status des Spiels.
         /// </summary>
         /// <param name="currentState"></param>
         private void nextThiefMove(GameState<V> currentState)
-        {            
+        {
             List<GameState<V>> bestThiefMoves = [];
             var outgoingVertex = GetOutgoingStates(currentState);
             double worstWinningChance = 1;
             int worstDistanceToWin = 0;
-            foreach (var possibleNextState in graph.GetNextPossibleStates(currentState)) //prüft ob Dieb sicher gewinnen kann
+            foreach (var possibleNextState in graph.GetNextPossibleStates(currentState))
             {
+                bool saveWinFound = true;
                 foreach (var state in outgoingVertex)
                 {
-                    if (!possibleNextState.Equals(state)) // ist im GameStateGraph
+                    if (possibleNextState.Equals(state))
                     {
-                        bestThiefMoves.Add(possibleNextState);
-                        return;
+                        saveWinFound = false;
+                        break;
                     }
+                }
+                if (saveWinFound)
+                {
+                    bestThiefMoves.Add(possibleNextState);
+                    return;
                 }
             }
             foreach (var nextState in outgoingVertex)
             {
-                if ((nextState.winningChance < worstWinningChance))
-                {   // finde die schlechteste Gewinnwahrscheinlichkeit
+                if (nextState.winningChance < worstWinningChance)
+                {
                     worstWinningChance = nextState.winningChance;
                     worstDistanceToWin = nextState.distanceToWin;
                     bestThiefMoves = [nextState];
                 }
-                else if ((nextState.winningChance == worstWinningChance) && (nextState.distanceToWin > worstDistanceToWin))
-                {   // finde zur schlechtesten Gewinnwahrscheinlichkeit den längsten Weg
+                else if (nextState.winningChance == worstWinningChance && nextState.distanceToWin > worstDistanceToWin)
+                {
                     worstDistanceToWin = nextState.distanceToWin;
                     bestThiefMoves = [nextState];
                 }
-                else if ((nextState.winningChance == worstWinningChance) && (nextState.distanceToWin == worstDistanceToWin))
-                {   // füge alle längsten und schlechtesten Möglichkeiten hinzu
+                else if (nextState.winningChance == worstWinningChance && nextState.distanceToWin == worstDistanceToWin)
+                {
                     bestThiefMoves.Add(nextState);
                 }
             }
@@ -474,7 +479,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus und gibt in zurück mit der Angabe ob sich Detektiv bewegt hat 
+        /// Sucht einen der besten Spielzüge zum aktuellen Spielstatus aus und gibt ihn zurück mit der Angabe, ob sich der Detektiv bewegt hat.
         /// </summary>
         /// <param name="currentState"></param>
         /// <returns></returns>
@@ -482,39 +487,39 @@ namespace EntaglementOfGraphs
         {
             var cloned = currentState.Clone();
             cloned.ChangeTurn();
-            foreach (var move in detectiveStrategy) // geht jeden Zug der Strategie durch
+            foreach (var move in detectiveStrategy)
             {
-                if (move.source.Equals(currentState)) // findet den passenden zur currentState
+                if (move.source.Equals(currentState))
                 {
-                    if (cloned.Equals(move.target.First())) // der Detektiv bewegt sich nicht
+                    if (cloned.Equals(move.target.First()))
                     {
                         return (default, false);
                     }
                     return (currentState.getMovedDetective(move.target.First()), true);
                 }
             }
-            return (default, false); // wenn kein passender Gefunden, Gewinn nicht mehr möglch
+            return (default, false);
         }
 
         /// <summary>
-        /// sucht einen der besten Spielzüge zum aktuellen Spielstatus aus
+        /// Sucht einen der besten Spielzüge zum aktuellen Spielstatus aus.
         /// </summary>
         /// <param name="currentState"></param>
         /// <returns></returns>
         public V BestThiefMove(GameState<V> currentState)
         {
-            foreach (var move in thiefStrategy) // geht jeden Zug der Strategie durch
+            foreach (var move in thiefStrategy)
             {
-                if (move.source.Equals(currentState)) // findet den passenden zur currentState
+                if (move.source.Equals(currentState))
                 {
                     return move.target.First().thiefPos;
                 }
             }
-            return graph.GetNextPossibleStates(currentState).First().thiefPos; // wenn kein passender Gefunden, Gewinn sicher
+            return graph.GetNextPossibleStates(currentState).First().thiefPos;
         }
 
         /// <summary>
-        /// gibt schon vorhandene Position zurück, wenn Position doppelt
+        /// Gibt schon vorhandene Position zurück, wenn Position doppelt ist.
         /// </summary>
         /// <param name="state"></param>
         /// <returns></returns>
@@ -524,9 +529,16 @@ namespace EntaglementOfGraphs
             {
                 if (s.Equals(state)) return s;
             }
-            return null;            
+            return null;
         }
 
+
+        /// <summary>
+        /// Prüft, ob Kante schon vorhanden ist.
+        /// </summary>
+        /// <param name="sourceState"></param>
+        /// <param name="targetState"></param>
+        /// <returns></returns>
         public bool isExistingEdge(GameState<V> sourceState, GameState<V> targetState)
         {
             foreach (var e in Edges)
@@ -555,7 +567,6 @@ namespace EntaglementOfGraphs
                         tempState.detectives.Add(outgoingStates[i]);// setzt Detektive auf die Fluchtmöglichkeit
                         tempState.winningChance = 1;
                         tempState.distanceToWin = 0;
-                        tempState.savePathFound = true;
                     }
                                        
                     if (detectiveMaxAmount == outgoingStateCount)
@@ -574,12 +585,40 @@ namespace EntaglementOfGraphs
                 var cloned = finalState.Clone().ChangeTurn();
                 cloned.distanceToWin = finalState.distanceToWin;
                 cloned.winningChance = finalState.winningChance;
-                cloned.savePathFound = finalState.savePathFound;
                 result.Add(cloned);
             }
             return result;
         }
 
+        /// <summary>
+        /// Hilfsfunktion für FinalStates um alle möglichen freien Detektive zu positioniernen
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="blockedVertices"></param>
+        /// <param name="result"></param>
+        private void AddAllDetektivesToState(GameState<V> state, List<GameState<V>> result)
+        { 
+            foreach (var s in graph.Vertices.Except(state.detectives)) //Konten die noch frei sind
+            {               
+                var finalState = state.Clone();
+                finalState.winningChance = 1;
+                finalState.distanceToWin = 0;
+                finalState.detectives.Add(s);
+                if (finalState.detectives.Count == detectiveMaxAmount)
+                {
+                    result.Add(finalState);
+                }
+                else
+                {
+                    AddAllDetektivesToState(finalState, result);
+                }
+            }
+        }
+
+        /// <summary>
+        /// gibt alle möglichen Startzustände zurück
+        /// </summary>
+        /// <returns></returns>
         public List<GameState<V>> GetAllStartStates()
         {
             var result = new List<GameState<V>>();
@@ -590,6 +629,12 @@ namespace EntaglementOfGraphs
             return result;
         }
 
+        /// <summary>
+        /// prüft ob alle Startzustände gefunden und hinzugefügt wurden
+        /// </summary>
+        /// <param name="possibleStartState"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public bool AllStartStatesFoundAndAdded(GameState<V> possibleStartState, GameState<V> state)
         {
             foreach (var startState in allStartStates)
@@ -608,32 +653,6 @@ namespace EntaglementOfGraphs
                 return true;
             }
             return false;
-        }
-
-        /// <summary>
-        /// Hilfsfunktion für FinalStates um alle möglichen freien Detektive zu positioniernen
-        /// </summary>
-        /// <param name="state"></param>
-        /// <param name="blockedVertices"></param>
-        /// <param name="result"></param>
-        private void AddAllDetektivesToState(GameState<V> state, List<GameState<V>> result)
-        { 
-            foreach (var s in graph.Vertices.Except(state.detectives)) //Konten die noch frei sind
-            {               
-                var finalState = state.Clone();
-                finalState.winningChance = 1;
-                finalState.distanceToWin = 0;
-                finalState.savePathFound = true;
-                finalState.detectives.Add(s);
-                if (finalState.detectives.Count == detectiveMaxAmount)
-                {
-                    result.Add(finalState);
-                }
-                else
-                {
-                    AddAllDetektivesToState(finalState, result);
-                }
-            }
         }
 
         /// <summary>

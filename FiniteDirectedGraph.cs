@@ -12,18 +12,18 @@ using System.Threading.Tasks;
 
 namespace EntaglementOfGraphs
 {
-    internal class FiniteDirectedGraph <V> : AdjacencyGraph<V, Edge<V>> where V : IEquatable<V>
+    internal class FiniteDirectedGraph<V> : AdjacencyGraph<V, Edge<V>> where V : IEquatable<V>
     {
         protected Microsoft.Msagl.Drawing.Graph? msaglGraph = new Microsoft.Msagl.Drawing.Graph("");
         protected Microsoft.Msagl.GraphViewerGdi.GraphRenderer? renderer;
 
         /// <summary>
-        /// Konstruktor für Grapherstellung
+        /// Konstruktor für die Erstellung des Graphen
         /// </summary>
         /// <param name="vertexes"></param>
         /// <param name="edges"></param>
-        public FiniteDirectedGraph(List<V> vertexes, List<(V,V)> edges) 
-        { 
+        public FiniteDirectedGraph(List<V> vertexes, List<(V, V)> edges)
+        {
             foreach (var vertex in vertexes)
             {
                 AddVertex(vertex);
@@ -32,7 +32,7 @@ namespace EntaglementOfGraphs
 
             foreach (var edge in edges)
             {
-                AddEdge(new Edge<V>(edge.Item1,edge.Item2));
+                AddEdge(new Edge<V>(edge.Item1, edge.Item2));
                 AddEdgeToMsagl(edge.Item1, edge.Item2);
             }
         }
@@ -43,10 +43,10 @@ namespace EntaglementOfGraphs
         public FiniteDirectedGraph()
         {
 
-        }        
+        }
 
         /// <summary>
-        /// gibt alle möglichen Zustände durch nächsten Move zurück
+        /// Gibt alle möglichen Zustände zurück, die durch den nächsten Zug möglich wären
         /// </summary>
         /// <param name="currentState"></param>
         /// <returns></returns>
@@ -54,27 +54,27 @@ namespace EntaglementOfGraphs
         {
             List<GameState<V>> nextPossibleStates = [];
 
-            if (currentState.detectivesTurn) // entscheidet ob Detectives oder Thief einen Zug spielen
+            if (currentState.detectivesTurn) // Entscheidet, ob Detectives oder Thief einen Zug spielen
             {
                 nextPossibleStates.Add(currentState.Clone().ChangeTurn());
                 if (currentState.detectiveMaxAmount > currentState.detectives.Count)
                 {
                     nextPossibleStates.Add(currentState.Clone().MoveDetective(default).ChangeTurn());
                 }
-                foreach (var detective in currentState.detectives) // gehe jeden möglichen Move der Detectives durch
+                foreach (var detective in currentState.detectives) // Gehe jeden möglichen Zug der Detectives durch
                 {
                     nextPossibleStates.Add(currentState.Clone().MoveDetective(detective).ChangeTurn());
                 }
             }
             else
             {
-                List<V> possiblenextStates = GetOutgoingVertex(currentState.thiefPos).Except(currentState.detectives.ToList()).ToList(); // mögliche Züge des Diebes
+                List<V> possibleNextStates = GetOutgoingVertex(currentState.thiefPos).Except(currentState.detectives.ToList()).ToList(); // Mögliche Züge des Diebes
 
-                if (possiblenextStates.Count != 0) //prüft ob Züge möglich sind
+                if (possibleNextStates.Count != 0) // Prüft, ob Züge möglich sind
                 {
-                    for (int i = 0; i < possiblenextStates.Count; i++) // geht jeden möglichen Zug
+                    for (int i = 0; i < possibleNextStates.Count; i++) // Geht jeden möglichen Zug durch
                     {
-                        nextPossibleStates.Add(currentState.Clone().MoveThief(possiblenextStates[i]).ChangeTurn());
+                        nextPossibleStates.Add(currentState.Clone().MoveThief(possibleNextStates[i]).ChangeTurn());
                     }
                 }
             }
@@ -82,7 +82,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// gibt die möglichen Züge des Diebes zurück als String
+        /// Gibt die möglichen Züge des Diebes als String für die Ausgabe zurück
         /// </summary>
         /// <param name="currentState"></param>
         /// <returns></returns>
@@ -103,59 +103,59 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// gibt mögliche vorige Schritte zurück
+        /// Gibt mögliche vorige Schritte zurück
         /// </summary>
         /// <param name="currentState"></param>
         /// <returns></returns>
-        public List<GameState<V>> GetPreviousPossibleStates(GameState<V> currentState) 
+        public List<GameState<V>> GetPreviousPossibleStates(GameState<V> currentState)
         {
-            List <GameState<V>> result = [];
+            List<GameState<V>> result = [];
 
-            if (currentState.detectivesTurn) // wenn detektiv dran ist war davor der Dieb dran (currentState enthält den Zug des Dieb)
+            if (currentState.detectivesTurn) // Wenn der Detektiv dran ist, war davor der Dieb dran (currentState enthält den Zug des Diebes)
             {
                 foreach (var edge in Edges)
                 {
-                    if (edge.Target.Equals(currentState.thiefPos)) // alle möglichen Knoten von den der Dieb kommen kann
+                    if (edge.Target.Equals(currentState.thiefPos)) // Alle möglichen Knoten, von denen der Dieb kommen kann
                     {
                         var previousState = currentState.Clone().ChangeTurn();
                         previousState.thiefPos = edge.Source;
-                        result.Add(previousState); // werden zum Result hinzugefügt
+                        result.Add(previousState); // Werden zum Result hinzugefügt
                     }
                 }
             }
-            else // wenn Dieb dran ist waren davor die Detektive dran (Detektive dran)
+            else // Wenn der Dieb dran ist, waren davor die Detektive dran
             {
-                if (currentState.detectives.Contains(currentState.thiefPos)) // Wenn sich ein Detektiv auf der Position des Diebes befindet wurde dieser Detektiv bewegt
+                if (currentState.detectives.Contains(currentState.thiefPos)) // Wenn sich ein Detektiv auf der Position des Diebes befindet, wurde dieser Detektiv bewegt
                 {
                     var previousPos = currentState.Clone().ChangeTurn();
-                    previousPos.detectives.Remove(currentState.thiefPos);                    
+                    previousPos.detectives.Remove(currentState.thiefPos);
                     result.Add(previousPos);
-                    foreach (var vertex in Vertices.Except(currentState.detectives.ToList())) //bewegt den Dieb zu jedem möglichen Knoten
+                    foreach (var vertex in Vertices.Except(currentState.detectives.ToList())) // Bewegt den Dieb zu jedem möglichen Knoten
                     {
                         previousPos = currentState.Clone().ChangeTurn();
                         previousPos.detectives.Remove(currentState.thiefPos);
                         previousPos.detectives.Add(vertex);
                         result.Add(previousPos);
                     }
-                    
+
                 }
                 else // Diebe haben sich nicht bewegt
                 {
-                    result.Add(currentState.Clone().ChangeTurn()); // gleiche Position wird hinzugefügt, nur mit der Info das Dieb dran war
+                    result.Add(currentState.Clone().ChangeTurn()); // Gleiche Position wird hinzugefügt, nur mit der Info, dass der Dieb dran war
                 }
             }
             return result;
         }
 
         /// <summary>
-        /// berechnet minimalstest Entanglement
+        /// Berechnet das Entanglement mit BFS oder DFS
         /// </summary>
-        /// <param name="thiefPos"></param>
+        /// <param name="gameStateGraphTyp"></param>
         /// <returns></returns>
         public int? MinEntanglement(GameStateGraphTyp gameStateGraphTyp)
         {
             int possibleMinEnt = VertexCount;
-            foreach (var vertex in Vertices)
+            foreach (var vertex in Vertices) // Berechnet minimal mögliches Entanglement
             {
                 var temp = GetOutgoingVertex(vertex).Count;
                 if (temp < possibleMinEnt)
@@ -163,31 +163,31 @@ namespace EntaglementOfGraphs
                     possibleMinEnt = temp;
                 }
             }
-            if (gameStateGraphTyp == GameStateGraphTyp.Fixpoint)
+            if (gameStateGraphTyp == GameStateGraphTyp.BFS)
             {
-                for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
+                for (int i = possibleMinEnt; i <= VertexCount; i++) // Geht von possibleMinEnt bis Anzahl an Knoten
                 {
-                    if (new GameStateGraph<V>(this,i).BuildGameStateGraphFixpoint()) //prüft Entanglment
+                    if (new GameStateGraph<V>(this, i).BuildGameStateGraphBFS()) // Prüft Entanglement
                     {
-                        return i; //minimalstes Entanglement
+                        return i; // Minimalstes Entanglement
                     }
                 }
             }
-            else 
+            else
             {
-                for (int i = possibleMinEnt; i <= VertexCount; i++) // geht von possibleMinEnt bis Anzahl an Knoten
+                for (int i = possibleMinEnt; i <= VertexCount; i++) // Geht von possibleMinEnt bis Anzahl an Knoten
                 {
-                    if (new GameStateGraph<V>(this, i).BuildGameStateGraphBackwards()) //prüft Entanglment
+                    if (new GameStateGraph<V>(this, i).BuildGameStateGraphDFS()) // Prüft Entanglement
                     {
-                        return i; //minimalstes Entanglement
+                        return i; // Minimalstes Entanglement
                     }
                 }
-            }                
-            return null; // Fehler wenn kein Entanglement gefunden wurde
+            }
+            return null; // Fehler, wenn kein Entanglement gefunden wurde
         }
 
         /// <summary>
-        /// fügt Knoten zur Zeichnung hinzu
+        /// Fügt Knoten zur Zeichnung hinzu
         /// </summary>
         /// <param name="vertex"></param>
         public void AddVertexToMsagl(V vertex)
@@ -196,7 +196,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// löscht Knoten von der Zeichnung
+        /// Löscht Knoten von der Zeichnung
         /// </summary>
         /// <param name="vertex"></param>
         public void DeleteVertexToMsagl(V vertex)
@@ -205,7 +205,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// fügt Kante zur Zeichnung hinzu
+        /// Fügt Kante zur Zeichnung hinzu
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -215,26 +215,25 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// löscht eine Kante im Graphen
+        /// Löscht eine Kante im Graphen
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
         public void DeleteEdgeToMsagl(V source, V target)
         {
             var edge = msaglGraph.Edges.FirstOrDefault(e => e.Source == source.ToString() && e.Target == target.ToString());
-            
             msaglGraph.RemoveEdge(edge);
         }
 
         /// <summary>
-        /// Erstellt ein mögöiches Layout des Graphen bereit gezeichnet zu werden.
+        /// Erstellt ein mögliches Layout des Graphen, bereit gezeichnet zu werden
         /// </summary>
         /// <param name="pb"></param>
         public void CreateImage(PictureBox pb)
         {
             var layoutSettings = new Microsoft.Msagl.Layout.Layered.SugiyamaLayoutSettings();
             msaglGraph.LayoutAlgorithmSettings = layoutSettings;
-            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);            
+            renderer = new Microsoft.Msagl.GraphViewerGdi.GraphRenderer(msaglGraph);
             renderer.CalculateLayout();
         }
 
@@ -249,7 +248,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// Färbt gegebenen Knoten ind gegebener Farbe ein
+        /// Färbt gegebenen Knoten in der gegebenen Farbe ein
         /// </summary>
         /// <param name="vertex"></param>
         /// <param name="color"></param>
@@ -261,7 +260,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// formt den Knoten in gegebene Form um
+        /// Formt den Knoten in die gegebene Form um
         /// </summary>
         /// <param name="vertex"></param>
         /// <param name="shape"></param>
@@ -273,7 +272,7 @@ namespace EntaglementOfGraphs
         }
 
         /// <summary>
-        /// gibt die ereichbaren Knoten von einem anderen Knoten zurück
+        /// Gibt die erreichbaren Knoten von einem anderen Knoten zurück
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>

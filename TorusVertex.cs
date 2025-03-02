@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace EntaglementOfGraphs
 {
     /// <summary>
-    /// Sturktur für Torusknoten (x_Label,x_Label)
+    /// Sturktur für Torusknoten (erster Graph, zweiter Graph)
     /// </summary>
     public struct TorusVertex(int ersterWert, int zweiterWert) : IEquatable<TorusVertex>
     {

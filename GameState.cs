@@ -22,8 +22,7 @@ namespace EntaglementOfGraphs
         public int detectiveMaxAmount = detectiveAmount;
         public int distanceToWin;
         public double winningChance;
-        public int possiblePreviousStepsCount;
-        public bool savePathFound = false;
+        public int possiblePreviousStepsCount; // Anzahl der möglichen vorherigen Schritte für die Breitensuche
 
         /// <summary>
         /// clont Instanz zur weitere Verarbeitung

@@ -11,22 +11,25 @@ namespace EntanglementOfGraphs
 {
     class UndirectedGirdGraph : FiniteDirectedGraph<int>
     {
+        /// <summary>
+        /// Konstruktor für ein ungerichtetes Gittergraphen der Größe n x m
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="m"></param>
         public UndirectedGirdGraph(int n, int m) 
         {
             int counter = 0;
-            // Knoten hinzufügen
-            for (int i = 1; i <= n; i++)
+            for (int i = 1; i <= n; i++) //Knoten hinzufügen
             {
                 for (int j = 0; j < m; j++)
                 {
-                    //int vertex = i * m + j;
                     AddVertex(i+j+counter);
                     AddVertexToMsagl(i+j+counter);
                 }
                 counter += m -1;
             }
             counter = 0;
-            for (int i = 1; i <= n; i++)
+            for (int i = 1; i <= n; i++) // Kanten hinzufügen
             {
                 for (int j = 0; j < m; j++)
                 {
@@ -46,38 +49,7 @@ namespace EntanglementOfGraphs
                     }
                 }
                 counter += m -1;
-            }
-
-
-            /*
-            // Kanten hinzufügen
-            for (int i = 1; i <= n; i++)
-            {
-                for (int j = 1; j <= m; j++)
-                {
-                    int vertex = i * m + j;
-
-                    // Kante nach rechts hinzufügen
-                    if (j < m - 1)
-                    {
-                        int rightVertex = vertex + 1;
-                        AddEdge(new Edge<int>(vertex, rightVertex));
-                        AddEdge(new Edge<int>(rightVertex, vertex));
-                        AddEdgeToMsagl(vertex, rightVertex);
-                        AddEdgeToMsagl(rightVertex, vertex);
-                    }
-
-                    // Kante nach unten hinzufügen
-                    if (i < n - 1)
-                    {
-                        int bottomVertex = vertex + m;
-                        AddEdge(new Edge<int>(vertex, bottomVertex));
-                        AddEdge(new Edge<int>(bottomVertex, vertex));
-                        AddEdgeToMsagl(vertex, bottomVertex);
-                        AddEdgeToMsagl(bottomVertex, vertex);
-                    }
-                }
-            }*/
+            }           
         }
     }
 }
