@@ -31,7 +31,7 @@ namespace EntanglementOfGraphs
             InitializeComponent();
             graph.CreateImage(graph_PictureBox);
             chooseDFSOrBFS_ComboBox.SelectedIndex = 0;
-            chooseGraphTyp_ComboBox.SelectedIndex = 0;            
+            chooseGraphTyp_ComboBox.SelectedIndex = 0;
             progressforEnt = new Progress<string>(s =>
             {
                 ActivateAllButtons();
@@ -127,7 +127,7 @@ namespace EntanglementOfGraphs
             cancellationTokenForInnerStopwatch.Cancel();
             memoryMonitorTask.Wait();
             string result = $"Das Entanglement ist {entanglement}. " +
-                  $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed/1000} KiloBytes.";
+                  $"Die benötigte Zeit ist {stopwatch.ElapsedMilliseconds} ms und der maximal verbrauchte Speicher war {maxMemoryUsed / 1000} KiloBytes.";
             progressforEnt?.Report(result);
         }
 
@@ -138,10 +138,7 @@ namespace EntanglementOfGraphs
         /// <param name="e"></param>
         private void entanglement_Click(object sender, EventArgs e)
         {
-
             TextOutput_TextBox.Clear();
-
-
             string selectedCalcultaion = (string)chooseDFSOrBFS_ComboBox.SelectedItem;
             if (selectedCalcultaion.Equals("Breitensuche"))
             {
@@ -157,6 +154,7 @@ namespace EntanglementOfGraphs
                 return;
             }
             DeactivateAllButtons();
+            TextOutput_TextBox.Text = "Berechnung läuft...";
             GC.Collect();
             var t = new Thread(new ThreadStart(CalculateEntanglementOfThread), 1000000000);
             t.Start();
@@ -232,7 +230,7 @@ namespace EntanglementOfGraphs
             graph = new FiniteDirectedGraph<int>();
             graph.CreateImage(graph_PictureBox);
             graph_PictureBox.Refresh();
-            
+
         }
 
         /// <summary>
@@ -254,6 +252,7 @@ namespace EntanglementOfGraphs
             playGraph_Button.Hide();
             GameSettings_Panel.Show();
             editGraph_Button.Show();
+            headline_Label.Text = "Tool zum Spielen von Cobs and Robbers auf dem Graphen";
             gamestarted = false;
         }
 
@@ -282,6 +281,7 @@ namespace EntanglementOfGraphs
             detMovement_Panel.Hide();
             thiefMovement_Panel.Hide();
             restartGame_Button.Hide();
+            headline_Label.Text = "Tool zur Berechnung des Entanglements eines Graphen";
             if (gamestarted) // löscht die Einfärbung des Graphen
             {
                 graph.ColorVertex(currentState.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.White);
@@ -375,13 +375,13 @@ namespace EntanglementOfGraphs
         /// berechnet das Entanglement des Graphen
         /// </summary>
         private void CalculateStrategiesOfThread()
-        {            
+        {
             gameStateGraph = new GameStateGraph<int>(graph, currentState);
             gameStateGraph.BuildFlaggedGameStateGraphBFS();
             gameStateGraph.CreateStrategies();
             graph.ColorVertex(currentState.thiefPos.ToString(), Microsoft.Msagl.Drawing.Color.Red);
             if (choosedPlayer) // Spieler ist Detektiv
-            {              
+            {
                 string result = $"Du bist am Zug! Wähle einen Detektiv (Knotenummer) oder tue nichts. Noch nicht Plazierte Detektive (-1): {gameStateGraph.detectiveMaxAmount - currentState.detectives.Count}.";
                 progressforDetective?.Report(result);
             }
@@ -645,17 +645,18 @@ namespace EntanglementOfGraphs
             bool isNTorusNumber = int.TryParse(torusN_TextBox.Text, out nTorus);
             bool isMTorusNumber = int.TryParse(torusM_TextBox.Text, out mTorus);
 
-            if (isNTorusNumber && isMTorusNumber) // prüft ob Eingaben gültige Zahl und erstellt dann Graphen
+            if (isNTorusNumber && isMTorusNumber && nTorus > 0 && mTorus > 0) // prüft ob Eingaben gültige Zahl und erstellt dann Graphen
             {
                 graph = new TorusGraph(nTorus, mTorus).TranslateToInt();
                 graph.CreateImage(graph_PictureBox);
                 graph_PictureBox.Refresh();
                 torusN_TextBox.Clear();
                 torusM_TextBox.Clear();
+                TextOutput_TextBox.Text = $"{nTorus}x{mTorus}-Torusgraph erstellt.";
             }
             else // kein Gültige Zahl eingegeben
             {
-                TextOutput_TextBox.Text = "Bitte Ganzzahlen für den Torusgraphen eingeben.";
+                TextOutput_TextBox.Text = "Bitte eine Ganzzahlen größer 0 für den Torusgraphen eingeben.";
                 torusN_TextBox.Clear();
                 torusM_TextBox.Clear();
                 torusN_TextBox.Focus();
@@ -672,16 +673,17 @@ namespace EntanglementOfGraphs
             TextOutput_TextBox.Clear();
             int size;
             bool isNumber = int.TryParse(unCircleSizeInput_TextBox.Text, out size);
-            if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
+            if (isNumber && size > 0) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
             {
                 graph = new UndirectedCircleGraph(size);
                 graph.CreateImage(graph_PictureBox);
                 graph_PictureBox.Refresh();
                 unCircleSizeInput_TextBox.Clear();
+                TextOutput_TextBox.Text = $"Ungerichteter Kreisgraph mit {size} Knoten erstellt.";
             }
             else // Eingabe unpassend
             {
-                TextOutput_TextBox.Text = "Bitte eine Ganzzahl für die Größe eingeben.";
+                TextOutput_TextBox.Text = "Bitte eine Ganzzahl größer 0 für die Größe eingeben.";
                 unCircleSizeInput_TextBox.Clear();
             }
             unCircleSizeInput_TextBox.Focus();
@@ -697,16 +699,17 @@ namespace EntanglementOfGraphs
             TextOutput_TextBox.Clear();
             int size;
             bool isNumber = int.TryParse(diCircleSizeInput_TextBox.Text, out size);
-            if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
+            if (isNumber && size > 0) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
             {
                 graph = new DirectedCircleGraph(size);
                 graph.CreateImage(graph_PictureBox);
                 graph_PictureBox.Refresh();
                 diCircleSizeInput_TextBox.Clear();
+                TextOutput_TextBox.Text = $"Gerichteter Kreisgraph mit {size} Knoten erstellt.";
             }
             else // Eingabe unpassend
             {
-                TextOutput_TextBox.Text = "Bitte eine Ganzzahl für die Größe eingeben.";
+                TextOutput_TextBox.Text = "Bitte eine Ganzzahl größer 0 für die Größe eingeben.";
                 diCircleSizeInput_TextBox.Clear();
             }
             diCircleSizeInput_TextBox.Focus();
@@ -722,16 +725,17 @@ namespace EntanglementOfGraphs
             TextOutput_TextBox.Clear();
             int size;
             bool isNumber = int.TryParse(fullyConSizeInput_TextBox.Text, out size);
-            if (isNumber) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
+            if (isNumber && size > 0) // prüft ob Eingabe Zahl und fügt ihn dann hinzu
             {
                 graph = new FullyConnectedGraph(size);
                 graph.CreateImage(graph_PictureBox);
                 graph_PictureBox.Refresh();
                 fullyConSizeInput_TextBox.Clear();
+                TextOutput_TextBox.Text = $"Vollständig verbundener Graph mit {size} Knoten erstellt.";
             }
             else // Eingabe unpassend
             {
-                TextOutput_TextBox.Text = "Bitte eine Ganzzahl für die Größe eingeben.";
+                TextOutput_TextBox.Text = "Bitte eine Ganzzahl größer 0 für die Größe eingeben.";
                 fullyConSizeInput_TextBox.Clear();
             }
             fullyConSizeInput_TextBox.Focus();
@@ -800,7 +804,7 @@ namespace EntanglementOfGraphs
                     }
                     else // kein gültiger targetknoten
                     {
-                        TextOutput_TextBox.Text = "Bitte einen exsistierenden Zielknoten eingeben.";
+                        TextOutput_TextBox.Text = "Bitte eine exsistierende Kante eingeben.";
                         edgeTarget_TextBox.Clear();
                         edgeSource_TextBox.Clear();
                         edgeSource_TextBox.Focus();
@@ -833,7 +837,7 @@ namespace EntanglementOfGraphs
             int m;
             bool isNNumber = int.TryParse(GirdN_TextBox.Text, out n);
             bool istMNumber = int.TryParse(GridM_TextBox.Text, out m);
-            if (isNNumber && istMNumber)
+            if (isNNumber && istMNumber && n > 0 && m > 0)
             {
                 graph = new UndirectedGirdGraph(n, m);
                 graph.CreateImage(graph_PictureBox);
@@ -841,10 +845,11 @@ namespace EntanglementOfGraphs
                 GirdN_TextBox.Clear();
                 GridM_TextBox.Clear();
                 GirdN_TextBox.Focus();
+                TextOutput_TextBox.Text = $"{n}x{m}-Gittergraph erstellt.";
             }
             else
             {
-                TextOutput_TextBox.Text = "Bitte Ganzzahlen für die Größe eingeben.";
+                TextOutput_TextBox.Text = "Bitte Ganzzahlen größer 0 für die Größe eingeben.";
                 GirdN_TextBox.Clear();
                 GridM_TextBox.Clear();
                 GirdN_TextBox.Focus();
@@ -856,11 +861,6 @@ namespace EntanglementOfGraphs
         /// </summary>
         private void DeactivateAllButtons()
         {
-            deleteGraph_Button.Enabled = false;
-            newVertex_Button.Enabled = false;
-            addEdge_Button.Enabled = false;
-            deleteVertex_Button.Enabled = false;
-            deleteEdge_Button.Enabled = false;
             entanglement_Button.Enabled = false;
             playGraph_Button.Enabled = false;
             editGraph_Button.Enabled = false;
@@ -869,12 +869,7 @@ namespace EntanglementOfGraphs
             moveDetective_Button.Enabled = false;
             doNothingDet_Button.Enabled = false;
             moveThiefToTarget_Button.Enabled = false;
-            restartGame_Button.Enabled = false;
-            createTorusGraph_Button.Enabled = false;
-            createUndirectedCircleGraph_Button.Enabled = false;
-            createDirectedCircleGraph_Button.Enabled = false;
-            fullyConCreate_Button.Enabled = false;
-            GridGraphCreate_Button.Enabled = false;
+            restartGame_Button.Enabled = false;            
         }
 
         /// <summary>
@@ -882,11 +877,6 @@ namespace EntanglementOfGraphs
         /// </summary>
         private void ActivateAllButtons()
         {
-            deleteGraph_Button.Enabled = true;
-            newVertex_Button.Enabled = true;
-            addEdge_Button.Enabled = true;
-            deleteVertex_Button.Enabled = true;
-            deleteEdge_Button.Enabled = true;
             entanglement_Button.Enabled = true;
             playGraph_Button.Enabled = true;
             editGraph_Button.Enabled = true;
@@ -895,12 +885,120 @@ namespace EntanglementOfGraphs
             moveDetective_Button.Enabled = true;
             doNothingDet_Button.Enabled = true;
             moveThiefToTarget_Button.Enabled = true;
-            restartGame_Button.Enabled = true;
-            createTorusGraph_Button.Enabled = true;
-            createUndirectedCircleGraph_Button.Enabled = true;
-            createDirectedCircleGraph_Button.Enabled = true;
-            fullyConCreate_Button.Enabled = true;
-            GridGraphCreate_Button.Enabled = true;
+            restartGame_Button.Enabled = true;            
+        }
+
+        private void GirdN_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                GridGraphCreate_Button_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        /// <summary>
+        /// Erstellt einen Gittegraphen bei Enter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridM_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                GridGraphCreate_Button_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void diCircleSizeInput_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                createDirectedCircleGraph_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void fullyConSizeInput_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                fullyConCreate_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void unCircleSizeInput_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                createUndirectedCircleGraph_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void torusN_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                createTorusGraph_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void torusM_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                createTorusGraph_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void vertexInput_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                newVertex_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void edgeSource_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addEdge_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void edgeTarget_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addEdge_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void movedDet_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                moveDetective_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void targetThiefInput_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                moveThiefToTarget_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

@@ -131,8 +131,11 @@
   <data name="vertexInput_TextBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
+  <data name="vertexInput_TextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>92, 24</value>
+  </data>
   <data name="vertexInput_TextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 29</value>
+    <value>215, 29</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="headline_Label.AutoSize" type="System.Boolean, mscorlib">
@@ -142,10 +145,10 @@
     <value>Segoe UI, 14pt</value>
   </data>
   <data name="headline_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>460, 25</value>
+    <value>477, 25</value>
   </data>
   <data name="headline_Label.Text" xml:space="preserve">
-    <value>Tool zum Berechnen vom Entanglement von Graphen</value>
+    <value>Tool zur Berechnung des Entanglements eines Graphen</value>
   </data>
   <data name="vertexInput_Label.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -226,7 +229,7 @@
     <value>Segoe UI, 12pt</value>
   </data>
   <data name="edgeTo_Label.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 64</value>
+    <value>184, 62</value>
   </data>
   <data name="edgeTo_Label.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 21</value>
@@ -237,17 +240,20 @@
   <data name="edgeSource_TextBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
+  <data name="edgeSource_TextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>92, 59</value>
+  </data>
   <data name="edgeSource_TextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 29</value>
+    <value>88, 29</value>
   </data>
   <data name="edgeTarget_TextBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
   <data name="edgeTarget_TextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 59</value>
+    <value>219, 59</value>
   </data>
   <data name="edgeTarget_TextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 29</value>
+    <value>88, 29</value>
   </data>
   <data name="addEdge_Button.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
@@ -369,23 +375,14 @@
   <data name="computeEnt_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="chooseFixOrBack_ComboBox.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="chooseDFSOrBFS_ComboBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
-  <data name="chooseFixOrBack_ComboBox.Items" xml:space="preserve">
-    <value>Berechnungsart auswählen...</value>
+  <data name="chooseDFSOrBFS_ComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 49</value>
   </data>
-  <data name="chooseFixOrBack_ComboBox.Items1" xml:space="preserve">
-    <value>Tiefensuche</value>
-  </data>
-  <data name="chooseFixOrBack_ComboBox.Items2" xml:space="preserve">
-    <value>Breitensuche</value>
-  </data>
-  <data name="chooseFixOrBack_ComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 49</value>
-  </data>
-  <data name="chooseFixOrBack_ComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 29</value>
+  <data name="chooseDFSOrBFS_ComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 29</value>
   </data>
   <data name="computeEnt_Panel.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 156</value>
@@ -571,6 +568,15 @@ Diamand Form = Position der Detektive
   <data name="torusM_TextBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
+  <data name="createTorusGraph_Button.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="createTorusGraph_Button.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 31</value>
+  </data>
+  <data name="createTorusGraph_Button.Text" xml:space="preserve">
+    <value>Torusgraph erstellen</value>
+  </data>
   <data name="x_Label.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -729,6 +735,9 @@ Diamand Form = Position der Detektive
   </data>
   <data name="createFullyConGraph_Panel.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="createGirdGraph_Panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="GridGraphCreate_Button.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>

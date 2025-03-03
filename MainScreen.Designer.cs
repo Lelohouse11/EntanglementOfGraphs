@@ -127,6 +127,7 @@ namespace EntanglementOfGraphs
             vertexInput_TextBox.BackColor = SystemColors.Window;
             vertexInput_TextBox.ForeColor = SystemColors.WindowText;
             vertexInput_TextBox.Name = "vertexInput_TextBox";
+            vertexInput_TextBox.KeyDown += vertexInput_TextBox_KeyDown;
             // 
             // headline_Label
             // 
@@ -190,6 +191,7 @@ namespace EntanglementOfGraphs
             edgeSource_TextBox.BackColor = SystemColors.Window;
             edgeSource_TextBox.ForeColor = SystemColors.WindowText;
             edgeSource_TextBox.Name = "edgeSource_TextBox";
+            edgeSource_TextBox.KeyDown += edgeSource_TextBox_KeyDown;
             // 
             // edgeTarget_TextBox
             // 
@@ -197,6 +199,7 @@ namespace EntanglementOfGraphs
             edgeTarget_TextBox.BackColor = SystemColors.Window;
             edgeTarget_TextBox.ForeColor = SystemColors.WindowText;
             edgeTarget_TextBox.Name = "edgeTarget_TextBox";
+            edgeTarget_TextBox.KeyDown += edgeTarget_TextBox_KeyDown;
             // 
             // addEdge_Button
             // 
@@ -290,6 +293,7 @@ namespace EntanglementOfGraphs
             movedDet.BackColor = SystemColors.Window;
             movedDet.ForeColor = SystemColors.WindowText;
             movedDet.Name = "movedDet";
+            movedDet.KeyDown += movedDet_KeyDown;
             // 
             // detective_Label
             // 
@@ -313,11 +317,11 @@ namespace EntanglementOfGraphs
             // 
             // chooseDFSOrBFS_ComboBox
             // 
-            resources.ApplyResources(chooseDFSOrBFS_ComboBox, "chooseFixOrBack_ComboBox");
+            resources.ApplyResources(chooseDFSOrBFS_ComboBox, "chooseDFSOrBFS_ComboBox");
             chooseDFSOrBFS_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             chooseDFSOrBFS_ComboBox.FormattingEnabled = true;
-            chooseDFSOrBFS_ComboBox.Items.AddRange(new object[] { resources.GetString("chooseFixOrBack_ComboBox.Items"), resources.GetString("chooseFixOrBack_ComboBox.Items1"), resources.GetString("chooseFixOrBack_ComboBox.Items2") });
-            chooseDFSOrBFS_ComboBox.Name = "chooseFixOrBack_ComboBox";
+            chooseDFSOrBFS_ComboBox.Items.AddRange(new object[] { resources.GetString("chooseDFSOrBFS_ComboBox.Items"), resources.GetString("chooseDFSOrBFS_ComboBox.Items1"), resources.GetString("chooseDFSOrBFS_ComboBox.Items2") });
+            chooseDFSOrBFS_ComboBox.Name = "chooseDFSOrBFS_ComboBox";
             chooseDFSOrBFS_ComboBox.Tag = "";
             // 
             // startPosPlay_Label
@@ -433,6 +437,7 @@ namespace EntanglementOfGraphs
             // 
             resources.ApplyResources(targetThiefInput_TextBox, "targetThiefInput_TextBox");
             targetThiefInput_TextBox.Name = "targetThiefInput_TextBox";
+            targetThiefInput_TextBox.KeyDown += targetThiefInput_TextBox_KeyDown;
             // 
             // targetVertexofThief_Label
             // 
@@ -466,6 +471,7 @@ namespace EntanglementOfGraphs
             torusN_TextBox.BackColor = SystemColors.Window;
             torusN_TextBox.ForeColor = SystemColors.WindowText;
             torusN_TextBox.Name = "torusN_TextBox";
+            torusN_TextBox.KeyDown += torusN_TextBox_KeyDown;
             // 
             // torusM_TextBox
             // 
@@ -473,13 +479,14 @@ namespace EntanglementOfGraphs
             torusM_TextBox.BackColor = SystemColors.Window;
             torusM_TextBox.ForeColor = SystemColors.WindowText;
             torusM_TextBox.Name = "torusM_TextBox";
+            torusM_TextBox.KeyDown += torusM_TextBox_KeyDown;
             // 
             // createTorusGraph_Button
             // 
-            resources.ApplyResources(createTorusGraph_Button, "createTorusGraph");
+            resources.ApplyResources(createTorusGraph_Button, "createTorusGraph_Button");
             createTorusGraph_Button.BackColor = SystemColors.ButtonHighlight;
             createTorusGraph_Button.ForeColor = SystemColors.ControlText;
-            createTorusGraph_Button.Name = "createTorusGraph";
+            createTorusGraph_Button.Name = "createTorusGraph_Button";
             createTorusGraph_Button.UseVisualStyleBackColor = false;
             createTorusGraph_Button.Click += createTorusGraph_Click;
             // 
@@ -522,6 +529,7 @@ namespace EntanglementOfGraphs
             // 
             resources.ApplyResources(unCircleSizeInput_TextBox, "unCircleSizeInput_TextBox");
             unCircleSizeInput_TextBox.Name = "unCircleSizeInput_TextBox";
+            unCircleSizeInput_TextBox.KeyDown += unCircleSizeInput_TextBox_KeyDown;
             // 
             // createDiCircleGraph_Panel
             // 
@@ -547,6 +555,7 @@ namespace EntanglementOfGraphs
             // 
             resources.ApplyResources(diCircleSizeInput_TextBox, "diCircleSizeInput_TextBox");
             diCircleSizeInput_TextBox.Name = "diCircleSizeInput_TextBox";
+            diCircleSizeInput_TextBox.KeyDown += diCircleSizeInput_TextBox_KeyDown;
             // 
             // openFileDialog1
             // 
@@ -572,6 +581,7 @@ namespace EntanglementOfGraphs
             // 
             resources.ApplyResources(fullyConSizeInput_TextBox, "fullyConSizeInput_TextBox");
             fullyConSizeInput_TextBox.Name = "fullyConSizeInput_TextBox";
+            fullyConSizeInput_TextBox.KeyDown += fullyConSizeInput_TextBox_KeyDown;
             // 
             // fullyConSize_Label
             // 
@@ -604,11 +614,13 @@ namespace EntanglementOfGraphs
             // 
             resources.ApplyResources(GridM_TextBox, "GridM_TextBox");
             GridM_TextBox.Name = "GridM_TextBox";
+            GridM_TextBox.KeyDown += GridM_TextBox_KeyDown;
             // 
             // GirdN_TextBox
             // 
             resources.ApplyResources(GirdN_TextBox, "GirdN_TextBox");
             GirdN_TextBox.Name = "GirdN_TextBox";
+            GirdN_TextBox.KeyDown += GirdN_TextBox_KeyDown;
             // 
             // GirdGraphSize_Label
             // 
@@ -620,23 +632,23 @@ namespace EntanglementOfGraphs
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            Controls.Add(createGirdGraph_Panel);
             Controls.Add(graphCreate_Panel);
-            Controls.Add(createFullyConGraph_Panel);
-            Controls.Add(createUnCircleGraph_Panel);
-            Controls.Add(createDiCircleGraph_Panel);
-            Controls.Add(restartGame_Button);
+            Controls.Add(thiefMovement_Panel);
+            Controls.Add(GameSettings_Panel);
             Controls.Add(detMovement_Panel);
+            Controls.Add(TorusCreate_Panel);
+            Controls.Add(createUnCircleGraph_Panel);
+            Controls.Add(createFullyConGraph_Panel);
+            Controls.Add(createDiCircleGraph_Panel);
+            Controls.Add(createGirdGraph_Panel);
+            Controls.Add(restartGame_Button);
             Controls.Add(graph_PictureBox);
             Controls.Add(editGraph_Button);
             Controls.Add(computeEnt_Panel);
             Controls.Add(playGraph_Button);
             Controls.Add(TextOutput_TextBox);
             Controls.Add(headline_Label);
-            Controls.Add(GameSettings_Panel);
             Controls.Add(chooseGraphTyp_ComboBox);
-            Controls.Add(TorusCreate_Panel);
-            Controls.Add(thiefMovement_Panel);
             Name = "MainScreen";
             ((System.ComponentModel.ISupportInitialize)graph_PictureBox).EndInit();
             graphCreate_Panel.ResumeLayout(false);
